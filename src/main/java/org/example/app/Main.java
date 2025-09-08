@@ -1,12 +1,9 @@
 package org.example.app;
 
-import org.example.dao.factory.DAOFactory;
-import org.example.dao.interfaces.ClienteDAO;
-import org.example.entity.Cliente;
+import org.example.app.dao.factory.DAOFactory;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 
 public class Main {
 
@@ -31,7 +28,7 @@ public class Main {
             }
 
             if (db == DAOFactory.POSTGRES_JDBC) {
-                try (Connection conn = org.example.utils.PostgresSingletonConnection.getConnection()) {
+                try (Connection conn = org.example.app.utils.PostgresSingletonConnection.getConnection()) {
                     if (conn != null && !conn.isClosed()) {
                         conn.close();
                         System.out.println("Conexión PostgreSQL cerrada.");

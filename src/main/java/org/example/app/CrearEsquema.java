@@ -1,8 +1,7 @@
 package org.example.app;
 
-import org.example.dao.factory.DAOFactory;
-import org.example.utils.ConnectionFactory;
-import org.example.utils.PostgresSingletonConnection;
+import org.example.app.dao.factory.DAOFactory;
+import org.example.app.utils.PostgresSingletonConnection;
 
 import java.sql.Connection;
 import java.sql.SQLException;
