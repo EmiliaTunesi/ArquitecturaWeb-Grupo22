@@ -1,62 +1,62 @@
 package org.example.app;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.example.dao.factory.DAOFactory;
 import org.example.dao.interfaces.ClienteDAO;
 import org.example.dao.interfaces.ProductoDAO;
 import org.example.dao.interfaces.FacturaDAO;
 import org.example.dao.interfaces.FactProductoDAO;
-import org.example.dao.factory.DAOFactory;
 import org.example.entity.Cliente;
 import org.example.entity.Producto;
 import org.example.entity.Factura;
 import org.example.entity.FacturaProducto;
 
 import java.io.FileReader;
-import java.sql.SQLException;
+import java.io.IOException;
 
 public class CargarDatos {
 
-    public static void run() throws SQLException {
-        DAOFactory factory = DAOFactory.getDAOFactory(DAOFactory.DERBY_JDBC);
-        ClienteDAO clienteDAO = factory.getClientDAO();
-        ProductoDAO productoDAO = factory.getProductDAO();
-        FacturaDAO facturaDAO = factory.getFactureDAO();
-        FactProductoDAO facturaProductoDAO = factory.getFacture_ProductDAO();
+    public static void run(int dbId) {
+        boolean esPostgres = (dbId == DAOFactory.POSTGRES_JDBC);
 
         try {
+            DAOFactory daoFactory = DAOFactory.getDAOFactory(dbId);
+
+            ClienteDAO clienteDAO = daoFactory.getClientDAO();
+            ProductoDAO productoDAO = daoFactory.getProductDAO();
+            FacturaDAO facturaDAO = daoFactory.getFactureDAO();
+            FactProductoDAO facturaProductoDAO = daoFactory.getFacture_ProductDAO();
+
             leerClientesDesdeCSV(clienteDAO, "src/main/resources/clientes.csv");
             leerProductosDesdeCSV(productoDAO, "src/main/resources/productos.csv");
             leerFacturasDesdeCSV(facturaDAO, "src/main/resources/facturas.csv");
-            leerFacturaProductosDesdeCSV(facturaProductoDAO, "src/main/resources/factura_producto.csv");
+            leerFacturaProductosDesdeCSV(facturaProductoDAO, "src/main/resources/facturas-productos.csv");
 
-            System.out.println("Datos cargados exitosamente desde CSV.");
+            System.out.println("Datos cargados");
 
         } catch (Exception e) {
+            System.err.println("Error cargando datos: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    private static void leerClientesDesdeCSV(ClienteDAO dao, String path) throws Exception {
-        CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader(path));
+    private static void leerClientesDesdeCSV(ClienteDAO dao, String path) throws IOException {
+        CSVParser parser = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(new FileReader(path));
+
         for (CSVRecord row : parser) {
             String idClienteStr = row.get("idCliente");
-            if (idClienteStr == null || idClienteStr.trim().isEmpty()) {
-                System.err.println("Saltando fila - idCliente vacío o null");
-                continue;
-            }
+            if (idClienteStr == null || idClienteStr.trim().isEmpty()) continue;
 
             String nombre = row.get("nombre");
-            if (nombre == null || nombre.trim().isEmpty()) nombre = "";
-
             String email = row.get("email");
-            if (email == null || email.trim().isEmpty()) email = "";
 
             try {
                 Cliente c = new Cliente(
                         Integer.parseInt(idClienteStr.trim()),
-                        nombre.trim(),
-                        email.trim()
+                        nombre != null ? nombre.trim() : "",
+                        email != null ? email.trim() : ""
                 );
                 dao.insertar(c);
             } catch (NumberFormatException e) {
@@ -65,20 +65,17 @@ public class CargarDatos {
         }
     }
 
-    private static void leerProductosDesdeCSV(ProductoDAO dao, String path) throws Exception {
-        CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader(path));
+    private static void leerProductosDesdeCSV(ProductoDAO dao, String path) throws IOException {
+        CSVParser parser = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(new FileReader(path));
+
         for (CSVRecord row : parser) {
             String idProductoStr = row.get("idProducto");
-            if (idProductoStr == null || idProductoStr.trim().isEmpty()) {
-                System.err.println("Saltando fila - idProducto vacío o null");
-                continue;
-            }
+            if (idProductoStr == null || idProductoStr.trim().isEmpty()) continue;
 
             String nombre = row.get("nombre");
-            if (nombre == null || nombre.trim().isEmpty()) nombre = "";
+            String valorStr = row.get("valor");
 
             float valor = 0;
-            String valorStr = row.get("valor");
             if (valorStr != null && !valorStr.trim().isEmpty()) {
                 try {
                     valor = Float.parseFloat(valorStr.trim());
@@ -90,7 +87,7 @@ public class CargarDatos {
             try {
                 Producto p = new Producto(
                         Integer.parseInt(idProductoStr.trim()),
-                        nombre.trim(),
+                        nombre != null ? nombre.trim() : "",
                         valor
                 );
                 dao.insertar(p);
@@ -100,83 +97,55 @@ public class CargarDatos {
         }
     }
 
-    private static void leerFacturasDesdeCSV(FacturaDAO dao, String path) throws Exception {
-        CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader(path));
+    private static void leerFacturasDesdeCSV(FacturaDAO dao, String path) throws IOException {
+        CSVParser parser = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(new FileReader(path));
+
         for (CSVRecord row : parser) {
             String idFacturaStr = row.get("idFactura");
-            if (idFacturaStr == null || idFacturaStr.trim().isEmpty()) {
-                System.err.println("Saltando fila - idFactura vacío o null");
-                continue;
-            }
+            String idClienteStr = row.get("idCliente");
 
-            int idFactura = 0;
+            if (idFacturaStr == null || idFacturaStr.trim().isEmpty()) continue;
+
+            int idFactura, idCliente = 0;
             try {
                 idFactura = Integer.parseInt(idFacturaStr.trim());
-            } catch (NumberFormatException e) {
-                System.err.println("Error parsing idFactura: " + idFacturaStr);
-                continue;
-            }
-
-            int idCliente = 0;
-            String idClienteStr = row.get("idCliente");
-            if (idClienteStr != null && !idClienteStr.trim().isEmpty()) {
-                try {
+                if (idClienteStr != null && !idClienteStr.trim().isEmpty())
                     idCliente = Integer.parseInt(idClienteStr.trim());
-                } catch (NumberFormatException e) {
-                    System.err.println("Error parsing idCliente: " + idClienteStr);
-                }
-            }
 
-            Factura f = new Factura(idFactura, idCliente);
-            dao.insertar(f);
+                Factura f = new Factura(idFactura, idCliente);
+                dao.insertar(f);
+
+            } catch (NumberFormatException e) {
+                System.err.println("Error parsing factura o cliente: " + idFacturaStr + ", " + idClienteStr);
+            }
         }
     }
 
-    private static void leerFacturaProductosDesdeCSV(FactProductoDAO dao, String path) throws Exception {
-        CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader(path));
+    private static void leerFacturaProductosDesdeCSV(FactProductoDAO dao, String path) throws IOException {
+        CSVParser parser = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(new FileReader(path));
+
         for (CSVRecord row : parser) {
             String idFacturaStr = row.get("idFactura");
             String idProductoStr = row.get("idProducto");
             String cantidadStr = row.get("cantidad");
 
-            if (idFacturaStr == null || idFacturaStr.trim().isEmpty()) {
-                System.err.println("Saltando fila - idFactura vacío o null");
-                continue;
-            }
-            if (idProductoStr == null || idProductoStr.trim().isEmpty()) {
-                System.err.println("Saltando fila - idProducto vacío o null");
-                continue;
-            }
+            if (idFacturaStr == null || idFacturaStr.trim().isEmpty() ||
+                    idProductoStr == null || idProductoStr.trim().isEmpty()) continue;
 
-            int idFactura = 0;
-            int idProducto = 0;
-            int cantidad = 0;
-
+            int idFactura = 0, idProducto = 0, cantidad = 0;
             try {
                 idFactura = Integer.parseInt(idFacturaStr.trim());
-            } catch (NumberFormatException e) {
-                System.err.println("Error parsing idFactura: " + idFacturaStr);
-                continue;
-            }
-
-            try {
                 idProducto = Integer.parseInt(idProductoStr.trim());
-            } catch (NumberFormatException e) {
-                System.err.println("Error parsing idProducto: " + idProductoStr);
-                continue;
-            }
-
-            if (cantidadStr != null && !cantidadStr.trim().isEmpty()) {
-                try {
+                if (cantidadStr != null && !cantidadStr.trim().isEmpty())
                     cantidad = Integer.parseInt(cantidadStr.trim());
-                } catch (NumberFormatException e) {
-                    System.err.println("Error parsing cantidad: " + cantidadStr);
-                }
-            }
 
-            FacturaProducto fp = new FacturaProducto(idFactura, idProducto, cantidad);
-            dao.insertar(fp);
+                FacturaProducto fp = new FacturaProducto(idFactura, idProducto, cantidad);
+                dao.insertar(fp);
+
+            } catch (NumberFormatException e) {
+                System.err.println("Error parsing factura_producto: " +
+                        idFacturaStr + ", " + idProductoStr + ", " + cantidadStr);
+            }
         }
     }
 }
-

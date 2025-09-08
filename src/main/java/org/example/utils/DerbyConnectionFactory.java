@@ -21,11 +21,3 @@ public class DerbyConnectionFactory implements ConnectionFactory {
         return DriverManager.getConnection(URL);
     }
 }
-
-
-//esta es la manera de pedir una conexion derby
-//ConnectionFactory factory = new DerbyConnectionFactory(); // o MySQLConnectionFactory en el futuro
-//try (Connection conn = factory.getConnection()) {
-//    System.out.println("Conectado a la base!");
-//}
-//Abrir conexiones en todos los DAOS para hacer el CRUD
