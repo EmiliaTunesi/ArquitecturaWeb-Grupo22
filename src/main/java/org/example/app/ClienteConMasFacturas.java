@@ -27,7 +27,7 @@ public class ClienteConMasFacturas {
                 : factory.getConnection();
              PreparedStatement st = conn.prepareStatement(sql);
              ResultSet rs = st.executeQuery()) {
-
+            System.out.println("\nLista ordenada de clientes:");
             while (rs.next()) {
                 int idCliente = rs.getInt("id_client");
 
@@ -39,7 +39,6 @@ public class ClienteConMasFacturas {
 
                 int cantidad = rs.getInt("cantidad_facturas");
 
-                System.out.println("\nLista ordenada de clientes:");
                 System.out.println(idCliente + " - " + nombre + " - " + email + " - Facturas: " + cantidad);
             }
 
