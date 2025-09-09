@@ -29,10 +29,10 @@ public class CargarDatos {
             FacturaDAO facturaDAO = daoFactory.getFactureDAO();
             FactProductoDAO facturaProductoDAO = daoFactory.getFacture_ProductDAO();
 
-            leerClientesDesdeCSV(clienteDAO, "src/main/resources/clientes.csv");
-            leerProductosDesdeCSV(productoDAO, "src/main/resources/productos.csv");
-            leerFacturasDesdeCSV(facturaDAO, "src/main/resources/facturas.csv");
-            leerFacturaProductosDesdeCSV(facturaProductoDAO, "src/main/resources/facturas-productos.csv");
+            leerClientesDesdeCSV(clienteDAO, "src/main/java/org/example/app/utils/resources/clientes.csv");
+            leerProductosDesdeCSV(productoDAO, "src/main/java/org/example/app/utils/resources/productos.csv");
+            leerFacturasDesdeCSV(facturaDAO, "src/main/java/org/example/app/utils/resources/facturas.csv");
+            leerFacturaProductosDesdeCSV(facturaProductoDAO, "src/main/java/org/example/app/utils/resources/facturas-productos.csv");
 
             System.out.println("Datos cargados");
 
