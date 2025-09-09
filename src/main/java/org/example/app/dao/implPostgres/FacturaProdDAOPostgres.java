@@ -16,14 +16,14 @@ public class FacturaProdDAOPostgres implements FactProductoDAO {
     public void insertar(FacturaProducto fac) {
         String sql = "INSERT INTO factura_producto (id_factura, id_producto, cantidad) VALUES (?,?,?)";
 
-        try (Connection conn = PostgresSingletonConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, fac.getIdFacture());
-            ps.setInt(2, fac.getIdProduct());
-            ps.setInt(3, fac.getCantidad());
-
-            ps.executeUpdate();
+        try {
+            Connection conn = PostgresSingletonConnection.getConnection(); // no cerrar
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, fac.getIdFacture());
+                ps.setInt(2, fac.getIdProduct());
+                ps.setInt(3, fac.getCantidad());
+                ps.executeUpdate();
+            }
 
         } catch (SQLException e) {
             System.err.println("Error insertando factura_producto: " + e.getMessage());
@@ -35,18 +35,19 @@ public class FacturaProdDAOPostgres implements FactProductoDAO {
         String sql = "SELECT id_factura, id_producto, cantidad FROM factura_producto WHERE id_factura = ? LIMIT 1";
         FacturaProducto fp = null;
 
-        try (Connection conn = PostgresSingletonConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try {
+            Connection conn = PostgresSingletonConnection.getConnection(); // no cerrar
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, id);
 
-            ps.setInt(1, id);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    fp = new FacturaProducto(
-                            rs.getInt("id_factura"),
-                            rs.getInt("id_producto"),
-                            rs.getInt("cantidad")
-                    );
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        fp = new FacturaProducto(
+                                rs.getInt("id_factura"),
+                                rs.getInt("id_producto"),
+                                rs.getInt("cantidad")
+                        );
+                    }
                 }
             }
 
@@ -62,16 +63,18 @@ public class FacturaProdDAOPostgres implements FactProductoDAO {
         String sql = "SELECT id_factura, id_producto, cantidad FROM factura_producto";
         List<FacturaProducto> lista = new ArrayList<>();
 
-        try (Connection conn = PostgresSingletonConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try {
+            Connection conn = PostgresSingletonConnection.getConnection(); // no cerrar
+            try (PreparedStatement ps = conn.prepareStatement(sql);
+                 ResultSet rs = ps.executeQuery()) {
 
-            while (rs.next()) {
-                lista.add(new FacturaProducto(
-                        rs.getInt("id_factura"),
-                        rs.getInt("id_producto"),
-                        rs.getInt("cantidad")
-                ));
+                while (rs.next()) {
+                    lista.add(new FacturaProducto(
+                            rs.getInt("id_factura"),
+                            rs.getInt("id_producto"),
+                            rs.getInt("cantidad")
+                    ));
+                }
             }
 
         } catch (SQLException e) {
@@ -85,14 +88,14 @@ public class FacturaProdDAOPostgres implements FactProductoDAO {
     public void actualizar(FacturaProducto fac) {
         String sql = "UPDATE factura_producto SET cantidad = ? WHERE id_factura = ? AND id_producto = ?";
 
-        try (Connection conn = PostgresSingletonConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, fac.getCantidad());
-            ps.setInt(2, fac.getIdFacture());
-            ps.setInt(3, fac.getIdProduct());
-
-            ps.executeUpdate();
+        try {
+            Connection conn = PostgresSingletonConnection.getConnection(); // no cerrar
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, fac.getCantidad());
+                ps.setInt(2, fac.getIdFacture());
+                ps.setInt(3, fac.getIdProduct());
+                ps.executeUpdate();
+            }
 
         } catch (SQLException e) {
             System.err.println("Error actualizando factura_producto: " + e.getMessage());
@@ -103,11 +106,12 @@ public class FacturaProdDAOPostgres implements FactProductoDAO {
     public void eliminar(int id) {
         String sql = "DELETE FROM factura_producto WHERE id_factura = ?";
 
-        try (Connection conn = PostgresSingletonConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, id);
-            ps.executeUpdate();
+        try {
+            Connection conn = PostgresSingletonConnection.getConnection(); // no cerrar
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, id);
+                ps.executeUpdate();
+            }
 
         } catch (SQLException e) {
             System.err.println("Error eliminando factura_producto: " + e.getMessage());

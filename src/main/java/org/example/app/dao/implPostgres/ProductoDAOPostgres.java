@@ -16,13 +16,14 @@ public class ProductoDAOPostgres implements ProductoDAO {
     public void insertar(Producto p) {
         String sql = "INSERT INTO producto (nombre, valor) VALUES (?, ?) RETURNING id_producto";
 
-        try (Connection conn = PostgresSingletonConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try {
+            Connection conn = PostgresSingletonConnection.getConnection(); // no cerrar
+            try (PreparedStatement ps = conn.prepareStatement(sql);
+                 ResultSet rs = ps.executeQuery()) {
 
-            ps.setString(1, p.getNombre());
-            ps.setFloat(2, p.getValue());
+                ps.setString(1, p.getNombre());
+                ps.setFloat(2, p.getValue());
 
-            try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     p.setIdProduct(rs.getInt(1)); // ID generado automáticamente
                 }
@@ -38,18 +39,19 @@ public class ProductoDAOPostgres implements ProductoDAO {
         String sql = "SELECT id_producto, nombre, valor FROM producto WHERE id_producto = ?";
         Producto prod = null;
 
-        try (Connection conn = PostgresSingletonConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try {
+            Connection conn = PostgresSingletonConnection.getConnection(); // no cerrar
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, id);
 
-            ps.setInt(1, id);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    prod = new Producto(
-                            rs.getInt("id_producto"),
-                            rs.getString("nombre"),
-                            rs.getFloat("valor")
-                    );
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        prod = new Producto(
+                                rs.getInt("id_producto"),
+                                rs.getString("nombre"),
+                                rs.getFloat("valor")
+                        );
+                    }
                 }
             }
 
@@ -65,16 +67,18 @@ public class ProductoDAOPostgres implements ProductoDAO {
         String sql = "SELECT id_producto, nombre, valor FROM producto";
         List<Producto> lista = new ArrayList<>();
 
-        try (Connection conn = PostgresSingletonConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try {
+            Connection conn = PostgresSingletonConnection.getConnection(); // no cerrar
+            try (PreparedStatement ps = conn.prepareStatement(sql);
+                 ResultSet rs = ps.executeQuery()) {
 
-            while (rs.next()) {
-                lista.add(new Producto(
-                        rs.getInt("id_producto"),
-                        rs.getString("nombre"),
-                        rs.getFloat("valor")
-                ));
+                while (rs.next()) {
+                    lista.add(new Producto(
+                            rs.getInt("id_producto"),
+                            rs.getString("nombre"),
+                            rs.getFloat("valor")
+                    ));
+                }
             }
 
         } catch (SQLException e) {
@@ -88,14 +92,14 @@ public class ProductoDAOPostgres implements ProductoDAO {
     public void actualizar(Producto p) {
         String sql = "UPDATE producto SET nombre = ?, valor = ? WHERE id_producto = ?";
 
-        try (Connection conn = PostgresSingletonConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setString(1, p.getNombre());
-            ps.setFloat(2, p.getValue());
-            ps.setInt(3, p.getIdProduct());
-
-            ps.executeUpdate();
+        try {
+            Connection conn = PostgresSingletonConnection.getConnection(); // no cerrar
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, p.getNombre());
+                ps.setFloat(2, p.getValue());
+                ps.setInt(3, p.getIdProduct());
+                ps.executeUpdate();
+            }
 
         } catch (SQLException e) {
             System.err.println("Error actualizando producto: " + e.getMessage());
@@ -106,11 +110,12 @@ public class ProductoDAOPostgres implements ProductoDAO {
     public void eliminar(int id) {
         String sql = "DELETE FROM producto WHERE id_producto = ?";
 
-        try (Connection conn = PostgresSingletonConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, id);
-            ps.executeUpdate();
+        try {
+            Connection conn = PostgresSingletonConnection.getConnection(); // no cerrar
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, id);
+                ps.executeUpdate();
+            }
 
         } catch (SQLException e) {
             System.err.println("Error eliminando producto: " + e.getMessage());

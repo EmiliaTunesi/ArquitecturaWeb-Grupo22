@@ -20,14 +20,26 @@ public class PostgresSingletonConnection {
 
     public static Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
-            // Crear la base si no existe
             crearBaseSiNoExiste();
-
-            // Conexión única para toda la app
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
+
+            connection.setAutoCommit(false);
 
         }
         return connection;
+    }
+
+    public static void closeConnection() {
+        if (connection != null) {
+            try {
+                connection.close();
+
+            } catch (SQLException e) {
+
+            } finally {
+                connection = null;
+            }
+        }
     }
 
     private static void crearBaseSiNoExiste() {
@@ -45,3 +57,4 @@ public class PostgresSingletonConnection {
         }
     }
 }
+

@@ -16,12 +16,13 @@ public class FacturaDAOPostgres implements FacturaDAO {
     public void insertar(Factura fac) {
         String sql = "INSERT INTO factura (id_client) VALUES (?) RETURNING id_factura";
 
-        try (Connection conn = PostgresSingletonConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try {
+            Connection conn = PostgresSingletonConnection.getConnection(); // no cerrar
+            try (PreparedStatement ps = conn.prepareStatement(sql);
+                 ResultSet rs = ps.executeQuery()) {
 
-            ps.setInt(1, fac.getIdClient());
+                ps.setInt(1, fac.getIdClient());
 
-            try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     fac.setIdFacture(rs.getInt(1)); // actualiza el id generado
                 }
@@ -37,14 +38,15 @@ public class FacturaDAOPostgres implements FacturaDAO {
         String sql = "SELECT id_factura, id_client FROM factura WHERE id_factura = ?";
         Factura fac = null;
 
-        try (Connection conn = PostgresSingletonConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try {
+            Connection conn = PostgresSingletonConnection.getConnection(); // no cerrar
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, id);
 
-            ps.setInt(1, id);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    fac = new Factura(rs.getInt("id_factura"), rs.getInt("id_client"));
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        fac = new Factura(rs.getInt("id_factura"), rs.getInt("id_client"));
+                    }
                 }
             }
 
@@ -60,12 +62,14 @@ public class FacturaDAOPostgres implements FacturaDAO {
         String sql = "SELECT id_factura, id_client FROM factura";
         List<Factura> facturas = new ArrayList<>();
 
-        try (Connection conn = PostgresSingletonConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try {
+            Connection conn = PostgresSingletonConnection.getConnection(); // no cerrar
+            try (PreparedStatement ps = conn.prepareStatement(sql);
+                 ResultSet rs = ps.executeQuery()) {
 
-            while (rs.next()) {
-                facturas.add(new Factura(rs.getInt("id_factura"), rs.getInt("id_client")));
+                while (rs.next()) {
+                    facturas.add(new Factura(rs.getInt("id_factura"), rs.getInt("id_client")));
+                }
             }
 
         } catch (SQLException e) {
@@ -79,13 +83,13 @@ public class FacturaDAOPostgres implements FacturaDAO {
     public void actualizar(Factura fac) {
         String sql = "UPDATE factura SET id_client = ? WHERE id_factura = ?";
 
-        try (Connection conn = PostgresSingletonConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, fac.getIdClient());
-            ps.setInt(2, fac.getIdFacture());
-
-            ps.executeUpdate();
+        try {
+            Connection conn = PostgresSingletonConnection.getConnection(); // no cerrar
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, fac.getIdClient());
+                ps.setInt(2, fac.getIdFacture());
+                ps.executeUpdate();
+            }
 
         } catch (SQLException e) {
             System.err.println("Error actualizando factura: " + e.getMessage());
@@ -96,11 +100,12 @@ public class FacturaDAOPostgres implements FacturaDAO {
     public void eliminar(int id) {
         String sql = "DELETE FROM factura WHERE id_factura = ?";
 
-        try (Connection conn = PostgresSingletonConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, id);
-            ps.executeUpdate();
+        try {
+            Connection conn = PostgresSingletonConnection.getConnection(); // no cerrar
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, id);
+                ps.executeUpdate();
+            }
 
         } catch (SQLException e) {
             System.err.println("Error eliminando factura: " + e.getMessage());

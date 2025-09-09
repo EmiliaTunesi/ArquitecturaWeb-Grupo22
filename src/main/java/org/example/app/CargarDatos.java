@@ -12,36 +12,44 @@ import org.example.app.entity.Cliente;
 import org.example.app.entity.Producto;
 import org.example.app.entity.Factura;
 import org.example.app.entity.FacturaProducto;
+import org.example.app.utils.PostgresSingletonConnection;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class CargarDatos {
 
     public static void run(int dbId) {
-        boolean esPostgres = (dbId == DAOFactory.POSTGRES_JDBC);
+        Connection conn = null;
 
         try {
-            DAOFactory daoFactory = DAOFactory.getDAOFactory(dbId);
+            conn = PostgresSingletonConnection.getConnection();
 
-            ClienteDAO clienteDAO = daoFactory.getClientDAO();
-            ProductoDAO productoDAO = daoFactory.getProductDAO();
-            FacturaDAO facturaDAO = daoFactory.getFactureDAO();
-            FactProductoDAO facturaProductoDAO = daoFactory.getFacture_ProductDAO();
-            leerClientesDesdeCSV(clienteDAO, "src\\main\\java\\org\\example\\app\\utils\\resources\\clientes.csv");
-            leerProductosDesdeCSV(productoDAO, "src\\main\\java\\org\\example\\app\\utils\\resources\\productos.csv");
-            leerFacturasDesdeCSV(facturaDAO, "src\\main\\java\\org\\example\\app\\utils\\resources\\facturas.csv");
-            leerFacturaProductosDesdeCSV(facturaProductoDAO, "src\\main\\java\\org\\example\\app\\utils\\resources\\facturas-productos.csv");
-            System.out.println("Datos cargados");
+            DAOFactory daoFactory = DAOFactory.getDAOFactory(dbId);
+            leerClientesDesdeCSV(daoFactory.getClientDAO(), "clientes.csv");
+
+            leerProductosDesdeCSV(daoFactory.getProductDAO(), "productos.csv");
+
+            leerFacturasDesdeCSV(daoFactory.getFactureDAO(), "facturas.csv");
+
+            leerFacturaProductosDesdeCSV(daoFactory.getFacture_ProductDAO(), "facturas-productos.csv");
+
+            conn.commit();
 
         } catch (Exception e) {
-            System.err.println("Error cargando datos: " + e.getMessage());
-            e.printStackTrace();
+            e.getMessage();
+        } finally {
+            PostgresSingletonConnection.closeConnection();
         }
     }
 
+
     private static void leerClientesDesdeCSV(ClienteDAO dao, String path) throws IOException {
+
         CSVParser parser = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(new FileReader(path));
+        int count = 0;
 
         for (CSVRecord row : parser) {
             String idClienteStr = row.get("idCliente");
@@ -57,14 +65,19 @@ public class CargarDatos {
                         email != null ? email.trim() : ""
                 );
                 dao.insertar(c);
+                count++;
+
             } catch (NumberFormatException e) {
-                System.err.println("Error parsing idCliente: " + idClienteStr);
+                System.err.println("[ERROR] Error parsing idCliente: " + idClienteStr);
             }
         }
+
     }
 
     private static void leerProductosDesdeCSV(ProductoDAO dao, String path) throws IOException {
+
         CSVParser parser = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(new FileReader(path));
+        int count = 0;
 
         for (CSVRecord row : parser) {
             String idProductoStr = row.get("idProducto");
@@ -78,7 +91,7 @@ public class CargarDatos {
                 try {
                     valor = Float.parseFloat(valorStr.trim());
                 } catch (NumberFormatException e) {
-                    System.err.println("Error parsing valor: " + valorStr);
+                    System.err.println("[ERROR] Error parsing valor: " + valorStr);
                 }
             }
 
@@ -89,14 +102,19 @@ public class CargarDatos {
                         valor
                 );
                 dao.insertar(p);
+                count++;
+
             } catch (NumberFormatException e) {
-                System.err.println("Error parsing idProducto: " + idProductoStr);
+                System.err.println("[ERROR] Error parsing idProducto: " + idProductoStr);
             }
         }
+
     }
 
     private static void leerFacturasDesdeCSV(FacturaDAO dao, String path) throws IOException {
+
         CSVParser parser = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(new FileReader(path));
+        int count = 0;
 
         for (CSVRecord row : parser) {
             String idFacturaStr = row.get("idFactura");
@@ -112,15 +130,17 @@ public class CargarDatos {
 
                 Factura f = new Factura(idFactura, idCliente);
                 dao.insertar(f);
-
+                count++;
             } catch (NumberFormatException e) {
-                System.err.println("Error parsing factura o cliente: " + idFacturaStr + ", " + idClienteStr);
+                System.err.println("[ERROR] Error parsing factura o cliente: " + idFacturaStr + ", " + idClienteStr);
             }
         }
     }
 
     private static void leerFacturaProductosDesdeCSV(FactProductoDAO dao, String path) throws IOException {
+
         CSVParser parser = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(new FileReader(path));
+        int count = 0;
 
         for (CSVRecord row : parser) {
             String idFacturaStr = row.get("idFactura");
@@ -139,11 +159,13 @@ public class CargarDatos {
 
                 FacturaProducto fp = new FacturaProducto(idFactura, idProducto, cantidad);
                 dao.insertar(fp);
+                count++;
 
             } catch (NumberFormatException e) {
-                System.err.println("Error parsing factura_producto: " +
+                System.err.println("[ERROR] Error parsing factura_producto: " +
                         idFacturaStr + ", " + idProductoStr + ", " + cantidadStr);
             }
         }
     }
 }
+

@@ -15,7 +15,6 @@ public class Main {
             CrearEsquema.run(db);
             CargarDatos.run(db);
 
-
             DevolverMaxRecaudacion.run(db);
             ClienteConMasFacturas.run(db);
 
@@ -23,23 +22,17 @@ public class Main {
                 try {
                     java.sql.DriverManager.getConnection("jdbc:derby:;shutdown=true");
                 } catch (SQLException e) {
-                    System.out.println("Derby cerrado correctamente.");
+                    System.out.println("Conexión Derby cerrada");
                 }
             }
 
             if (db == DAOFactory.POSTGRES_JDBC) {
-                try (Connection conn = org.example.app.utils.PostgresSingletonConnection.getConnection()) {
-                    if (conn != null && !conn.isClosed()) {
-                        conn.close();
-                        System.out.println("Conexión PostgreSQL cerrada.");
-                    }
-                } catch (SQLException e) {
-                    System.err.println("Error cerrando conexión PostgreSQL: " + e.getMessage());
-                }
+                org.example.app.utils.PostgresSingletonConnection.closeConnection();
             }
 
         } catch (Exception e) {
             e.printStackTrace();
+            System.err.println("[ERROR] Ocurrió un problema durante la ejecución.");
         }
 
         System.out.println("App finalizada");

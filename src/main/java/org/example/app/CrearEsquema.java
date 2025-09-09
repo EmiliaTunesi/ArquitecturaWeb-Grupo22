@@ -43,7 +43,7 @@ public class CrearEsquema {
             stmt.execute(tableFactura);
             stmt.execute(tableFacturaProducto);
 
-            System.out.println("✅ Esquema de tablas creado para DB ID: " + dbId);
+            System.out.println("Esquema de tablas creado");
 
         } catch (SQLException e) {
             e.printStackTrace();
