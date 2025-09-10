@@ -18,14 +18,15 @@ public class ProductoDAOPostgres implements ProductoDAO {
 
         try {
             Connection conn = PostgresSingletonConnection.getConnection(); // no cerrar
-            try (PreparedStatement ps = conn.prepareStatement(sql);
-                 ResultSet rs = ps.executeQuery()) {
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
                 ps.setString(1, p.getNombre());
                 ps.setFloat(2, p.getValue());
 
-                if (rs.next()) {
-                    p.setIdProduct(rs.getInt(1)); // ID generado automáticamente
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        p.setIdProduct(rs.getInt(1)); // ID generado automáticamente
+                    }
                 }
             }
 
@@ -33,6 +34,7 @@ public class ProductoDAOPostgres implements ProductoDAO {
             System.err.println("Error insertando producto: " + e.getMessage());
         }
     }
+
 
     @Override
     public Producto obtenerPorId(int id) {

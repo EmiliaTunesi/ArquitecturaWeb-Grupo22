@@ -14,17 +14,21 @@ public class FacturaProdDAOPostgres implements FactProductoDAO {
 
     @Override
     public void insertar(FacturaProducto fac) {
-        String sql = "INSERT INTO factura_producto (id_factura, id_producto, cantidad) VALUES (?,?,?)";
+        String sql = """
+            INSERT INTO factura_producto (id_factura, id_producto, cantidad)
+            VALUES (?, ?, ?)
+            ON CONFLICT (id_factura, id_producto)
+            DO UPDATE SET cantidad = EXCLUDED.cantidad
+            """;
 
         try {
-            Connection conn = PostgresSingletonConnection.getConnection(); // no cerrar
+            Connection conn = PostgresSingletonConnection.getConnection();
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setInt(1, fac.getIdFacture());
                 ps.setInt(2, fac.getIdProduct());
                 ps.setInt(3, fac.getCantidad());
                 ps.executeUpdate();
             }
-
         } catch (SQLException e) {
             System.err.println("Error insertando factura_producto: " + e.getMessage());
         }
@@ -32,14 +36,14 @@ public class FacturaProdDAOPostgres implements FactProductoDAO {
 
     @Override
     public FacturaProducto obtenerPorId(int id) {
+        // Mantiene la interfaz original (solo busca por id_factura)
         String sql = "SELECT id_factura, id_producto, cantidad FROM factura_producto WHERE id_factura = ? LIMIT 1";
         FacturaProducto fp = null;
 
         try {
-            Connection conn = PostgresSingletonConnection.getConnection(); // no cerrar
+            Connection conn = PostgresSingletonConnection.getConnection();
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setInt(1, id);
-
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
                         fp = new FacturaProducto(
@@ -50,13 +54,13 @@ public class FacturaProdDAOPostgres implements FactProductoDAO {
                     }
                 }
             }
-
         } catch (SQLException e) {
             System.err.println("Error obteniendo factura_producto: " + e.getMessage());
         }
 
         return fp;
     }
+
 
     @Override
     public List<FacturaProducto> obtenerTodos() {

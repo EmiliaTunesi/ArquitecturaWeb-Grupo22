@@ -18,16 +18,15 @@ public class FacturaDAOPostgres implements FacturaDAO {
 
         try {
             Connection conn = PostgresSingletonConnection.getConnection(); // no cerrar
-            try (PreparedStatement ps = conn.prepareStatement(sql);
-                 ResultSet rs = ps.executeQuery()) {
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, fac.getIdClient()); // solo id_client, la PK la genera DB
 
-                ps.setInt(1, fac.getIdClient());
-
-                if (rs.next()) {
-                    fac.setIdFacture(rs.getInt(1)); // actualiza el id generado
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        fac.setIdFacture(rs.getInt(1)); // actualizar id generado
+                    }
                 }
             }
-
         } catch (SQLException e) {
             System.err.println("Error insertando factura: " + e.getMessage());
         }

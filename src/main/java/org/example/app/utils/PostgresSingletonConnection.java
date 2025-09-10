@@ -12,7 +12,7 @@ public class PostgresSingletonConnection {
     private static final String DB_NAME = "arquitectura_db";
     private static final String URL = "jdbc:postgresql://localhost:5432/" + DB_NAME;
     private static final String USER = "postgres";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "41146697db";
 
     private static Connection connection;
 

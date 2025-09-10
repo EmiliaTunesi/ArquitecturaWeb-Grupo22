@@ -24,8 +24,8 @@ public class DevolverMaxRecaudacion {
                             "JOIN factura_producto fp ON p.id_producto = fp.id_producto " +
                             "GROUP BY p.id_producto, p.nombre " +
                             "ORDER BY recaudacion DESC " +
-                            "FETCH FIRST ROW ONLY";
-        } else {
+                            "LIMIT 1";
+        } else { //es derby
             sqlMaxRecaudacion =
                     "SELECT p.idProducto, p.nombre, SUM(fp.cantidad * p.valor) AS recaudacion " +
                             "FROM producto p " +
