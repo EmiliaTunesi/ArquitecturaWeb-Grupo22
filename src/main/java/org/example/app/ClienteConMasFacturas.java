@@ -1,6 +1,7 @@
 package org.example.app;
 
 import org.example.app.dao.factory.DAOFactory;
+import org.example.app.entity.Cliente;
 import org.example.app.utils.ConnectionFactory;
 import org.example.app.utils.PostgresSingletonConnection;
 
@@ -48,7 +49,10 @@ public class ClienteConMasFacturas {
 
                 int cantidad = rs.getInt("cantidad_facturas");
 
-                System.out.println(idCliente + " - " + nombre + " - " + email + " - Facturas: " + cantidad);
+                Cliente cliente = new Cliente(idCliente,
+                        nombre,email);
+
+                System.out.println(cliente + " - Facturas: " + cantidad);
             }
 
         } catch (SQLException e) {
