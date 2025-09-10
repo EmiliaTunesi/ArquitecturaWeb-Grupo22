@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        int db = DAOFactory.POSTGRES_JDBC; // O DAOFactory.DERBY_JDBC
+        int db = /*DAOFactory.POSTGRES_JDBC;*/ DAOFactory.DERBY_JDBC;
 
         try {
             CrearEsquema.run(db);
