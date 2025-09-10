@@ -16,11 +16,12 @@ public class ClienteDAOPostgres implements ClienteDAO {
 
         try {
             Connection conn = PostgresSingletonConnection.getConnection(); // no cerrar
-            try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
                 ps.setString(1, c.getNombre());
                 ps.setString(2, c.getEmail());
                 ps.executeUpdate();
+
 
                 try (ResultSet rs = ps.getGeneratedKeys()) {
                     if (rs.next()) {

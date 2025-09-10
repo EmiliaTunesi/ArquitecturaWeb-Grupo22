@@ -66,6 +66,7 @@ public class CargarDatos {
                         nombre != null ? nombre.trim() : "",
                         email != null ? email.trim() : ""
                 );
+
                 dao.insertar(c);
                 count++;
 

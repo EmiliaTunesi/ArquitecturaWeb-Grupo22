@@ -18,11 +18,14 @@ public class ClienteConMasFacturas {
 
         String sql;
         if (esPostgres) {
-            sql = "SELECT c.id_client, c.nombre, c.email, COUNT(f.id_client) AS cantidad_facturas " +
-                    "FROM cliente c " +
-                    "LEFT JOIN factura f ON c.id_client = f.id_client " +
-                    "GROUP BY c.id_client, c.nombre, c.email " +
+            sql = "SELECT * FROM (" +
+                    "    SELECT c.id_client, c.nombre, c.email, COUNT(f.id_client) AS cantidad_facturas " +
+                    "    FROM cliente c " +
+                    "    LEFT JOIN factura f ON c.id_client = f.id_client " +
+                    "    GROUP BY c.id_client, c.nombre, c.email" +
+                    ") AS sub " +
                     "ORDER BY cantidad_facturas DESC";
+
         } else {
             sql = "SELECT c.idCliente, c.nombre, c.email, COUNT(f.idCliente) AS cantidad_facturas " +
                     "FROM cliente c " +

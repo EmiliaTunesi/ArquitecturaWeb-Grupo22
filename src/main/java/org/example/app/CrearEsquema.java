@@ -27,9 +27,9 @@ public class CrearEsquema {
             String tableCliente, tableProducto, tableFactura, tableFacturaProducto;
 
             if (esPostgres) {
-                tableCliente = "CREATE TABLE cliente(id_client SERIAL PRIMARY KEY, nombre VARCHAR(500), email VARCHAR(500))";
-                tableProducto = "CREATE TABLE producto(id_producto SERIAL PRIMARY KEY, nombre VARCHAR(45), valor FLOAT)";
-                tableFactura = "CREATE TABLE factura(id_factura SERIAL PRIMARY KEY, id_client INT REFERENCES cliente(id_client))";
+                tableCliente = "CREATE TABLE cliente(id_client INT PRIMARY KEY, nombre VARCHAR(500), email VARCHAR(500))";
+                tableProducto = "CREATE TABLE producto(id_producto INT PRIMARY KEY, nombre VARCHAR(45), valor FLOAT)";
+                tableFactura = "CREATE TABLE factura(id_factura INT PRIMARY KEY, id_client INT REFERENCES cliente(id_client))";
                 tableFacturaProducto = "CREATE TABLE factura_producto(id_factura INT REFERENCES factura(id_factura), id_producto INT REFERENCES producto(id_producto), cantidad INT, PRIMARY KEY(id_factura, id_producto))";
             } else {
                 tableCliente = "CREATE TABLE cliente(idCliente INT PRIMARY KEY, nombre VARCHAR(500), email VARCHAR(500))";
