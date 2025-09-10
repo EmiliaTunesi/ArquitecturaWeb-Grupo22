@@ -1,19 +1,19 @@
 ----------------------------------------------------------------
-Wed Sep 03 11:50:47 UYT 2025:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-0199-100f-1395-00000ec315f0 
-on database directory C:\ArquitecturaWeb-Grupo28\integradorDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@60e53b93 
-Loaded from file:/C:/Users/User/.m2/repository/org/apache/derby/derby/10.15.2.0/derby-10.15.2.0.jar
+Wed Sep 10 17:16:56 ART 2025:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-0199-3546-2df0-00000f69f608 
+on database directory C:\Users\Usuario\Desktop\TUADI- UNICEN\2º año- 2º cuatri\ArqWeb-G28-TP1-EJ1\integradorDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@60e53b93 
+Loaded from file:/C:/Users/Usuario/.m2/repository/org/apache/derby/derby/10.15.2.0/derby-10.15.2.0.jar
 java.vendor=Microsoft
 java.runtime.version=17.0.16+8-LTS
-user.dir=C:\ArquitecturaWeb-Grupo28
-os.name=Windows 10
+user.dir=C:\Users\Usuario\Desktop\TUADI- UNICEN\2º año- 2º cuatri\ArqWeb-G28-TP1-EJ1
+os.name=Windows 11
 os.arch=amd64
 os.version=10.0
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-Wed Sep 03 11:50:48 UYT 2025: Shutting down Derby engine
+Wed Sep 10 17:16:57 ART 2025: Shutting down Derby engine
 ----------------------------------------------------------------
-Wed Sep 03 11:50:48 UYT 2025:
-Shutting down instance a816c00e-0199-100f-1395-00000ec315f0 on database directory C:\ArquitecturaWeb-Grupo28\integradorDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@60e53b93 
+Wed Sep 10 17:16:57 ART 2025:
+Shutting down instance a816c00e-0199-3546-2df0-00000f69f608 on database directory C:\Users\Usuario\Desktop\TUADI- UNICEN\2º año- 2º cuatri\ArqWeb-G28-TP1-EJ1\integradorDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@60e53b93 
 ----------------------------------------------------------------

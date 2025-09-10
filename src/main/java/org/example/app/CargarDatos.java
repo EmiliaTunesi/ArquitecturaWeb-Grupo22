@@ -12,6 +12,7 @@ import org.example.app.entity.Cliente;
 import org.example.app.entity.Producto;
 import org.example.app.entity.Factura;
 import org.example.app.entity.FacturaProducto;
+import org.example.app.utils.ConnectionFactory;
 import org.example.app.utils.PostgresSingletonConnection;
 
 import java.io.FileReader;
@@ -22,12 +23,13 @@ import java.sql.SQLException;
 public class CargarDatos {
 
     public static void run(int dbId) {
-        Connection conn = null;
+        ConnectionFactory factory = DAOFactory.getConnectionFactory(dbId);
 
-        try {
-            conn = PostgresSingletonConnection.getConnection();
+        try (Connection conn = factory.getConnection()) {
 
             DAOFactory daoFactory = DAOFactory.getDAOFactory(dbId);
+
+
             leerClientesDesdeCSV(daoFactory.getClientDAO(), "clientes.csv");
 
             leerProductosDesdeCSV(daoFactory.getProductDAO(), "productos.csv");
