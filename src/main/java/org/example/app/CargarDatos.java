@@ -30,13 +30,13 @@ public class CargarDatos {
             DAOFactory daoFactory = DAOFactory.getDAOFactory(dbId);
 
 
-            leerClientesDesdeCSV(daoFactory.getClientDAO(), "clientes.csv");
+            leerClientesDesdeCSV(daoFactory.getClientDAO(), "src/main/resources/clientes.csv");
 
-            leerProductosDesdeCSV(daoFactory.getProductDAO(), "productos.csv");
+            leerProductosDesdeCSV(daoFactory.getProductDAO(), "src/main/resources/productos.csv");
 
-            leerFacturasDesdeCSV(daoFactory.getFactureDAO(), "facturas.csv");
+            leerFacturasDesdeCSV(daoFactory.getFactureDAO(), "src/main/resources/facturas.csv");
 
-            leerFacturaProductosDesdeCSV(daoFactory.getFacture_ProductDAO(), "facturas-productos.csv");
+            leerFacturaProductosDesdeCSV(daoFactory.getFacture_ProductDAO(), "src/main/resources/facturas-productos.csv");
 
             conn.commit();
 
