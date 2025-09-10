@@ -1,6 +1,7 @@
 package org.example.app;
 
 import org.example.app.dao.factory.DAOFactory;
+import org.example.app.DTOS.ProductoDTO;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -15,7 +16,11 @@ public class Main {
             CrearEsquema.run(db);
             CargarDatos.run(db);
 
-            DevolverMaxRecaudacion.run(db);
+            ProductoDTO producto = DevolverMaxRecaudacion.run(db);
+            if (producto != null) {
+                System.out.println(producto);
+            }
+            //DevolverMaxRecaudacion.run(db);
             ClienteConMasFacturas.run(db);
 
             if (db == DAOFactory.DERBY_JDBC) {
