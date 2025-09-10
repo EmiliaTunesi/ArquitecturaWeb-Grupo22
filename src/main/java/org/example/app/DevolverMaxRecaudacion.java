@@ -32,19 +32,10 @@ public class DevolverMaxRecaudacion {
             if (rs.next()) {
                 return new ProductoDTO(
                         rs.getString("nombre"),
-                        rs.getDouble("totalRecaudado")
+                        rs.getDouble("recaudacion")
                 );
             }
-
-           /* if (rs.next()) {
-                int idProducto = rs.getInt("id_producto");
-                String nombre = rs.getString("nombre");
-                if (nombre == null) nombre = "";
-                double recaudacion = rs.getDouble("recaudacion");
-
-                System.out.println("\nProducto que más recaudó:");
-                System.out.println(idProducto + " - " + nombre + " - Recaudación: " + recaudacion);
-            } */else {
+            else {
                 System.out.println("No hay productos vendidos.");
                 return null;
             }

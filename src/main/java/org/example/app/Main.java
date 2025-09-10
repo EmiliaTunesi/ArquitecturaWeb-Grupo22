@@ -20,7 +20,6 @@ public class Main {
             if (producto != null) {
                 System.out.println(producto);
             }
-            //DevolverMaxRecaudacion.run(db);
             ClienteConMasFacturas.run(db);
 
             if (db == DAOFactory.DERBY_JDBC) {
