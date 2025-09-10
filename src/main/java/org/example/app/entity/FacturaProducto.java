@@ -33,10 +33,9 @@ public class FacturaProducto {
 
     @Override
     public String toString() {
-        return "Facture_Product{" +
-                "idFacture=" + idFacture +
-                ", idProduct=" + idProduct +
-                ", cantidad=" + cantidad +
-                '}';
+        return "FacturaProducto: " +
+                ", idFactura: " + idFacture +
+                ", idProducto: " + idProduct +
+                ", cantidad: " + cantidad;
     }
 }
