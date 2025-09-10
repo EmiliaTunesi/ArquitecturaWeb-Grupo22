@@ -43,7 +43,7 @@ La aplicación realiza las siguientes tareas principales:
     git checkout master
     ```
     
-2. En el código (`Main.java`) se definir con qué base de datos trabajar:
+2. En el código (`Main.java`) definir con qué base de datos trabajar:
 
 ```java
 int db = DAOFactory.POSTGRES_JDBC; // o DAOFactory.DERBY_JDBC
