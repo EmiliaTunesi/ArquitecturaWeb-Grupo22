@@ -51,8 +51,8 @@ int db = DAOFactory.POSTGRES_JDBC; // o DAOFactory.DERBY_JDBC
 ```
 
 ## Integrantes
-Candela Echazú Gomez
-Joaquin Hevia
-Lautaro Acosta
-María Emilia Tunesi
-Matías Falucchi
+Candela Echazú Gomez  
+Joaquin Hevia  
+Lautaro Acosta  
+María Emilia Tunesi  
+Matías Falucchi  
