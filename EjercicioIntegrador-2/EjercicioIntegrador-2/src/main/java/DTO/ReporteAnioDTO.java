@@ -6,9 +6,9 @@ public class ReporteAnioDTO {
 
         String nombreCarrera;
         Map<Integer,CarreraReporteDTO>infoPorAnio;
-        public ReporteDTO(String nombreCarrera) {
+        public ReporteAnioDTO(String nombreCarrera) {
             this.nombreCarrera = nombreCarrera;
-            this.infoPorAnio = new TreeMap<>(); // Para mantener los años en orden
+            this.infoPorAnio = new TreeMap<>();
         }
 
         @Override
