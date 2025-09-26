@@ -5,153 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a49e4b5b-692d-413f-9313-0ab9cf3791e7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/derby.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/log/log.ctrl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/log/logmirror.ctrl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/.idea/uiDesigner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/Readme.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/derby.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/documentacion.md" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/documentacion.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/README_DO_NOT_TOUCH_FILES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/README_DO_NOT_TOUCH_FILES.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/log/README_DO_NOT_TOUCH_FILES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/log/README_DO_NOT_TOUCH_FILES.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/log/log.ctrl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/log/log11.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/log/logmirror.ctrl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/README_DO_NOT_TOUCH_FILES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/README_DO_NOT_TOUCH_FILES.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c10.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c10.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c101.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c101.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c111.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c111.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c121.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c121.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c130.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c130.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c141.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c141.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c1460.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c1471.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c1480.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c1491.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c14a0.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c14b1.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c14c1.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c14d0.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c14e1.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c14f1.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c150.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c150.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c1501.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c161.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c161.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c171.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c171.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c180.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c180.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c191.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c191.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c1a1.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c1a1.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c1b1.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c1b1.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c1c0.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c1c0.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c1d1.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c1d1.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c1e0.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c1e0.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c1f1.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c1f1.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c20.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c20.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c200.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c200.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c211.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c211.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c221.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c221.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c230.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c230.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c241.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c241.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c251.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c251.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c260.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c260.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c271.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c271.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c281.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c281.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c290.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c290.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c2a1.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c2a1.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c2b1.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c2b1.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c2c1.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c2c1.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c2d0.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c2d0.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c2e1.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c2e1.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c2f0.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c2f0.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c300.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c300.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c31.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c31.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c311.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c311.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c321.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c321.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c331.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c331.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c340.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c340.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c351.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c351.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c361.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c361.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c371.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c371.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c380.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c380.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c391.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c391.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c3a1.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c3a1.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c3b1.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c3b1.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c3c0.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c3c0.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c3d1.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c3d1.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c3e1.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c3e1.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c3f1.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c3f1.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c400.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c400.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c41.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c41.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c411.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c411.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c421.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c421.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c430.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c430.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c441.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c441.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c451.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c451.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c461.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c461.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c470.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c470.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c481.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c481.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c51.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c51.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c60.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c60.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c71.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c71.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c81.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c81.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/c90.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/c90.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/ca1.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/ca1.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/cb1.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/cb1.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/cc0.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/cc0.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/cd1.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/cd1.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/cd80.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/cd80.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/cd91.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/cd91.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/cda0.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/cda0.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/cdb1.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/cdb1.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/cdc0.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/cdc0.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/cdd1.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/cdd1.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/cde1.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/cde1.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/cdf0.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/cdf0.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/ce01.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/ce01.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/ce1.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/ce1.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/ce11.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/ce11.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/ce21.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/ce21.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/seg0/cf0.dat" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/seg0/cf0.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integradorDB/service.properties" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/integradorDB/service.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/CargarDatos.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/CargarDatos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/ClienteConMasFacturas.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/ClienteConMasFacturas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/CrearEsquema.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/CrearEsquema.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/DTOS/ProductoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/DTOS/ProductoDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/DevolverMaxRecaudacion.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/DevolverMaxRecaudacion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/dao/factory/DAOFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/dao/factory/DAOFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/dao/factory/DerbyDAOFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/dao/factory/DerbyDAOFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/dao/factory/PostgresDAOFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/dao/factory/PostgresDAOFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/dao/impl/ClienDAODerby.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/dao/impl/ClienDAODerby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/dao/impl/FacturDAODerby.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/dao/impl/FacturDAODerby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/dao/impl/FacturProdDAODerby.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/dao/impl/FacturProdDAODerby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/dao/impl/ProducDAODerby.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/dao/impl/ProducDAODerby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/dao/implPostgres/ClienteDAOPostgres.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/dao/implPostgres/ClienteDAOPostgres.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/dao/implPostgres/FacturaDAOPostgres.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/dao/implPostgres/FacturaDAOPostgres.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/dao/implPostgres/FacturaProdDAOPostgres.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/dao/implPostgres/FacturaProdDAOPostgres.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/dao/implPostgres/ProductoDAOPostgres.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/dao/implPostgres/ProductoDAOPostgres.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/dao/interfaces/ClienteDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/dao/interfaces/ClienteDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/dao/interfaces/FactProductoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/dao/interfaces/FactProductoDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/dao/interfaces/FacturaDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/dao/interfaces/FacturaDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/dao/interfaces/ProductoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/dao/interfaces/ProductoDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/entity/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/entity/Cliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/entity/Factura.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/entity/Factura.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/entity/FacturaProducto.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/entity/FacturaProducto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/entity/Producto.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/entity/Producto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/utils/ConnectionFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/utils/ConnectionFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/utils/DerbyConnectionFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/utils/DerbyConnectionFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/utils/PostgresConnectionFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/utils/PostgresConnectionFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/app/utils/PostgresSingletonConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/java/org/example/app/utils/PostgresSingletonConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/clientes.csv" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/resources/clientes.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/facturas-productos.csv" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/resources/facturas-productos.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/facturas.csv" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/resources/facturas.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/productos.csv" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-1/src/main/resources/productos.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-2/Integrador2/pom.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,13 +16,25 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 3
+}]]></component>
+  <component name="ProjectId" id="33FAZBY9h54aQ3RHXab7C6FrPOQ" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Main.executor": "Run",
-    "git-widget-placeholder": "master",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "adic",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/joaco/OneDrive/Escritorio/Tp especial Arqui/ArquitecturaWeb-Grupo28",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.0"
@@ -179,7 +45,15 @@
       <recent name="C:\Users\Usuario\Desktop\TUADI- UNICEN\2º año- 2º cuatri\ArqWeb-G28-TP1-EJ1\EjercicioIntegrador-1" />
     </key>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a49e4b5b-692d-413f-9313-0ab9cf3791e7" name="Changes" comment="" />
+      <created>1758902499536</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1758902499536</updated>
+    </task>
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
