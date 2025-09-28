@@ -10,7 +10,8 @@ public class EstudianteDTO {
         public EstudianteDTO(Estudiante estudiante){
             this.nombre = estudiante.getNombre();
             this.apellido = estudiante.getApellido();
-            this.LU = estudiante.getNroLU();
+            this.LU = estudiante.getNroLU() != null ? estudiante.getNroLU() : 0; // o algún valor por defecto
+
         }
 
         @Override

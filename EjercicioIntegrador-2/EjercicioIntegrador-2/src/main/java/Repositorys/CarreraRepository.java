@@ -24,8 +24,6 @@ public class CarreraRepository implements Repository<Carrera>{
         public Carrera findById(int id) {
             return entitymanager.find(Carrera.class, id);
         }
-
-
         //busca carreras con estudiantes inscriptos y ordena los resultados de mayor a menor por cantidad de estudiantes
         public List<CarreraDTO> EncontrarCarreraConInscriptos() {
             String jpql = "SELECT c, c.estudiantes.size FROM Carrera c WHERE c.estudiantes.size > 0 ORDER BY c.estudiantes.size DESC ";
@@ -48,13 +46,13 @@ public class CarreraRepository implements Repository<Carrera>{
                 ReporteAnioDTO reporte = new ReporteAnioDTO(carrera.getNombre());
 
                 String jpql = "SELECT ec.anio_inicio, COUNT(ec) " +
-                        "FROM Estudiante_Carrera ec " +
+                        "FROM EstudianteCarrera ec " +
                         "WHERE ec.carrera.id_carrera = :idCarrera " +
                         "GROUP BY ec.anio_inicio " +
                         "ORDER BY ec.anio_inicio";
 
                 String jpql2 = "SELECT ec.anio_fin, COUNT(ec) " +
-                        "FROM Estudiante_Carrera ec " +
+                        "FROM EstudianteCarrera ec " +
                         "WHERE ec.carrera.id_carrera = :idCarrera AND ec.anio_fin <> 0" +
                         "GROUP BY ec.anio_fin " +
                         "ORDER BY ec.anio_fin";

@@ -38,7 +38,7 @@ public class EstudianteRepository implements Repository<Estudiante>{
         }
 
         public List<Estudiante> findByCarreraAndCiudad(int id_carrera,String ciudad) {
-            String jpql = "SELECT e FROM Estudiante e JOIN Estudiante_Carrera ec ON ec.estudiante.dni = e.dni WHERE ec.carrera.id_carrera = :carrera AND e.ciudadResidencia = :ciudad";
+            String jpql = "SELECT e FROM Estudiante e JOIN EstudianteCarrera ec ON ec.estudiante.dni = e.dni WHERE ec.carrera.id_carrera = :carrera AND e.ciudadResidencia = :ciudad";
             Query query = entityManager.createQuery(jpql);
             query.setParameter("carrera", id_carrera);
             query.setParameter("ciudad", ciudad);
