@@ -11,9 +11,7 @@ import Repositorys.EstudianteRepository;
 import Repositorys.EstudianteCarreraRepository;
 
 import javax.persistence.EntityManager;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 
 public class CSVReader {
 
@@ -29,15 +27,18 @@ public class CSVReader {
             this.ecr = ecr;
         }
 
-        private Iterable<CSVRecord> getData(String archivo) throws IOException {
-            String path = "EjercicioIntegrador-2\\src\\main\\resources\\" + archivo;
-            Reader in = new FileReader(path);
-            String[] header = {};
-            CSVParser csvParser = CSVFormat.EXCEL.withHeader(header).parse(in);
-
-            Iterable<CSVRecord> records = csvParser.getRecords();
-            return records;
+    private Iterable<CSVRecord> getData(String archivo) throws IOException {
+        InputStream is = getClass().getClassLoader().getResourceAsStream(archivo);
+        if (is == null) {
+            throw new FileNotFoundException("No se encontró el archivo: " + archivo);
         }
+
+        Reader in = new InputStreamReader(is);
+        String[] header = {};
+        CSVParser csvParser = CSVFormat.EXCEL.withHeader(header).parse(in);
+
+        return csvParser.getRecords();
+    }
 
         public void populateDB() throws Exception {
             try {

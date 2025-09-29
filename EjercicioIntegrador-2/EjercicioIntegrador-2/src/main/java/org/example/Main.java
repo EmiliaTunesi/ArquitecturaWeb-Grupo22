@@ -43,7 +43,7 @@ public class Main {
         información de los inscriptos y egresados por año. Se deben ordenar las
         carreras alfabéticamente, y presentar los años de manera cronológica.
          */
-        System.out.println(serv.generarReporte());
+        //System.out.println(serv.generarReporte());
 
         em.close();
         emf.close();
