@@ -7,7 +7,9 @@ import Entitys.Carrera;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CarreraRepository implements Repository<Carrera>{
         private EntityManager entitymanager;
@@ -37,46 +39,65 @@ public class CarreraRepository implements Repository<Carrera>{
             return carreras;
         }
 
-        //Genera reporte anual de carreras con la cantidad de estudiantes que se graduaron ese año y la cantidad de estudiantes que ingresaron ese año
-        public List<ReporteAnioDTO> generarReporte() {
-            List<Carrera> carreras = entitymanager.createQuery("SELECT c FROM Carrera c ORDER BY c.nombre", Carrera.class).getResultList();
-            List<ReporteAnioDTO> reportes = new ArrayList<>();
+        /*
+        3) Generar un reporte de las carreras, que para cada carrera incluya información de los
+        inscriptos y egresados por año. Se deben ordenar las carreras alfabéticamente, y presentar
+        los años de manera cronológica
+         */
+    public List<ReporteAnioDTO> generarReporte() {
+        List<ReporteAnioDTO> reportes = new ArrayList<>();
 
-            for(Carrera carrera : carreras){
-                ReporteAnioDTO reporte = new ReporteAnioDTO(carrera.getNombre());
+        String sql = """
+        SELECT 
+            c.id_carrera,
+            c.nombre,
+            c.duracion,
+            ec.anio_inicio,
+            COUNT(*) AS inscriptos,
+            SUM(CASE WHEN ec.anio_fin != 0 THEN 1 ELSE 0 END) AS graduados
+            FROM Carrera c
+            JOIN EstudianteCarrera ec ON c.id_carrera = ec.carrera_id_carrera
+            GROUP BY c.id_carrera, c.nombre, c.duracion, ec.anio_inicio
+            ORDER BY c.nombre ASC, ec.anio_inicio ASC
+        """;
 
-                String jpql = "SELECT ec.anio_inicio, COUNT(ec) " +
-                        "FROM EstudianteCarrera ec " +
-                        "WHERE ec.carrera.id_carrera = :idCarrera " +
-                        "GROUP BY ec.anio_inicio " +
-                        "ORDER BY ec.anio_inicio";
+        Query query = entitymanager.createNativeQuery(sql);
+        List<Object[]> resultados = query.getResultList();
 
-                String jpql2 = "SELECT ec.anio_fin, COUNT(ec) " +
-                        "FROM EstudianteCarrera ec " +
-                        "WHERE ec.carrera.id_carrera = :idCarrera AND ec.anio_fin <> 0" +
-                        "GROUP BY ec.anio_fin " +
-                        "ORDER BY ec.anio_fin";
+        // Map auxiliar para evitar duplicados por carrera
+        Map<String, ReporteAnioDTO> mapaCarreras = new LinkedHashMap<>();
 
-                List<Object[]> inscriptosList = entitymanager.createQuery(jpql).setParameter("idCarrera", carrera.getId_carrera()).getResultList();
-                List<Object[]> esgresadosList = entitymanager.createQuery(jpql2).setParameter("idCarrera", carrera.getId_carrera()).getResultList();
-                for (Object[] resultado : inscriptosList){
-                    int anio = (Integer) resultado[0];
-                    int inscriptos = ((Number) resultado[1]).intValue();
-                    reporte.getInfoPorAnio().put(anio, new CarreraReporteDTO(inscriptos));
-                }
-                for (Object[] resultado : esgresadosList){
-                    int anio = (Integer) resultado[0];
-                    int egresados = ((Number) resultado[1]).intValue();
-                    CarreraReporteDTO c = reporte.getInfoPorAnio().get(anio);
-                    if (c == null){
-                        c = new CarreraReporteDTO(0);
-                    }
-                    c.setEgresados(egresados);
-                    reporte.getInfoPorAnio().put(anio, c);
-                }
-                reportes.add(reporte);
-            }
-            return reportes;
+        for (Object[] r : resultados) {
+            // Campos en el orden del SELECT
+            String nombreCarrera = (String) r[1];
+            Integer anioInicio = ((Number) r[3]).intValue();
+            Integer inscriptos = ((Number) r[4]).intValue();
+            Integer graduados = ((Number) r[5]).intValue();
+
+            // Si la carrera no esta en el map, la agregamos
+            mapaCarreras.putIfAbsent(nombreCarrera, new ReporteAnioDTO(nombreCarrera));
+
+            // Obtenemos el DTO de la carrera
+            ReporteAnioDTO reporte = mapaCarreras.get(nombreCarrera);
+
+            // Creamos el reporte del año con los valores correspondientes
+            CarreraReporteDTO infoAnio = new CarreraReporteDTO(inscriptos);
+            infoAnio.setEgresados(graduados);
+
+            // Lo guardamos en el map interno por año
+            reporte.getInfoPorAnio().put(anioInicio, infoAnio);
         }
+        // Pasamos los valores del map a la lista final
+        reportes.addAll(mapaCarreras.values());
+        return reportes;
+    }
+
+        /*EstudianteCarrera
+anio_fin           | int  | YES  |     | NULL    |       |
+| anio_inicio        | int  | YES  |     | NULL    |       |
+| antiguedad         | int  | YES  |     | NULL    |       |
+| estudiante_dni     | int  | NO   | PRI | NULL    |       |
+| carrera_id_carrera */
+
 
 }

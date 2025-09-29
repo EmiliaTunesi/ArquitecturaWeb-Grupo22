@@ -6,6 +6,7 @@ public class ReporteAnioDTO {
 
         String nombreCarrera;
         Map<Integer,CarreraReporteDTO>infoPorAnio;
+
         public ReporteAnioDTO(String nombreCarrera) {
             this.nombreCarrera = nombreCarrera;
             this.infoPorAnio = new TreeMap<>();

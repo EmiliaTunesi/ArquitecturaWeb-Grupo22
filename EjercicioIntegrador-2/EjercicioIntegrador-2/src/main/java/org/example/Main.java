@@ -17,11 +17,11 @@ public class Main {
         //serv.inicializarDB();
 
         //a) dar de alta un estudiante
-        //Estudiante estudiante = new Estudiante(10101010, "Juancito", "Zarate", 80, "Masculino", 10101, "Balcarce");
+        //Estudiante estudiante = new Estudiante(1010101000, "Juancito", "zzZarate", 80, "Masculino", 1010111, "Balcarce");
         //serv.agregarEstudiante(estudiante);
 
-        //b) matricular un estudiante en una carrera
-        //serv.matricularEstudiante(10101010, 1);
+        //b) matricular un estudiante en una carrera //mejora enviar estudiante
+        //serv.matricularEstudiante(1010101000, 1);
 
         //c) recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple.
         //System.out.println(serv.obtenerEstudiantes());
@@ -49,4 +49,3 @@ public class Main {
         emf.close();
     }
 }
-
