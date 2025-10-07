@@ -1,0 +1,11 @@
+# Archivos de IDE
+.idea/
+
+# Carpeta de compilación
+target/
+
+# Base de datos local de Docker
+EjercicioIntegrador-2/mysql_data/
+
+# Logs
+*.log
