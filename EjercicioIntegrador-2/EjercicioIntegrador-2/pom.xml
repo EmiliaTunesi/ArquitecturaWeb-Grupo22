@@ -34,11 +34,6 @@
             <artifactId>commons-csv</artifactId>
             <version>1.10.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.7.7</version>
-        </dependency>
         <!-- JPA API -->
         <dependency>
             <groupId>javax.persistence</groupId>

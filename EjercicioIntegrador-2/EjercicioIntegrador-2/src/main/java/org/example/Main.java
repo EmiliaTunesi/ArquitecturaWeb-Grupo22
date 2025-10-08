@@ -13,24 +13,23 @@ public class Main {
         EntityManager em = emf.createEntityManager();
 
         Servicios serv = new Servicios(em);
-
         //serv.inicializarDB();
 
         //a) dar de alta un estudiante
-        //Estudiante estudiante = new Estudiante(1010101000, "Juancito", "zzZarate", 80, "Masculino", 1010111, "Balcarce");
+       // Estudiante estudiante = new Estudiante(1310101008, "Soledad", "Rodriguez", 29, "Femenino", 1290811, "Balcarce");
         //serv.agregarEstudiante(estudiante);
 
         //b) matricular un estudiante en una carrera //mejora enviar estudiante
-        //serv.matricularEstudiante(1010101000, 1);
+        //serv.matricularEstudiante(1310101008, 1);
 
         //c) recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple.
-        //System.out.println(serv.obtenerEstudiantes());
+       //System.out.println(serv.obtenerEstudiantes());
 
         //d) recuperar un estudiante, en base a su número de libreta universitaria.
         //System.out.println(serv.obtenerEstudiantePorLU(95419));
 
         //e) recuperar todos los estudiantes, en base a su género.
-        //System.out.println(serv.obtenerEstudiantesPorGenero("Masculino"));
+       //System.out.println(serv.obtenerEstudiantesPorGenero("Masculino"));
 
         //f) recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad de inscriptos.
         //System.out.println(serv.obteberCarrerasConInscriptos());
