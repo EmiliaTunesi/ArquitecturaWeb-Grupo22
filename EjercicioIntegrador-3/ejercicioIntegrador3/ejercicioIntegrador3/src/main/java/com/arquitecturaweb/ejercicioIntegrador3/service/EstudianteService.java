@@ -5,6 +5,7 @@ import com.arquitecturaweb.ejercicioIntegrador3.dto.response.EstudianteResponseD
 import com.arquitecturaweb.ejercicioIntegrador3.entity.Estudiante;
 import com.arquitecturaweb.ejercicioIntegrador3.repository.EstudianteRepository;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

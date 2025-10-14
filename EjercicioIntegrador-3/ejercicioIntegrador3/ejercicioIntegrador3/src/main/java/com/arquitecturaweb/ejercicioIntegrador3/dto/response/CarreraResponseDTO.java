@@ -10,15 +10,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class EstudianteResponseDTO {
+public class CarreraResponseDTO {
 
-    private long id;
+    private Long id_carrera;
     private String nombre;
-    private String apellido;
-    private String email;
-    private int dni;
-    private String genero;
-    private int edad;
-    private String ciudad_residencia;
-    private int LU;
+    private Integer duracion;
 }
