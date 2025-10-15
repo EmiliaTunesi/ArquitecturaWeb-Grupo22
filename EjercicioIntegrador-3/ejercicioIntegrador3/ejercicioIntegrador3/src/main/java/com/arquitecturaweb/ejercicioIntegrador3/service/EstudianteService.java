@@ -6,8 +6,11 @@ import com.arquitecturaweb.ejercicioIntegrador3.entity.Estudiante;
 import com.arquitecturaweb.ejercicioIntegrador3.repository.EstudianteRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 @Service("EstudianteService")
@@ -56,6 +59,59 @@ public class EstudianteService {
         }
     }
 
+    @Transactional(readOnly = true)
+    public List<EstudianteResponseDTO> getAllEstudiantesPorApellido() {
+        try {
+            // Ordenar por apellido ascendente
+            List<Estudiante> estudiantes = estudianteRepository.findAll(Sort.by(Sort.Direction.ASC, "apellido"));
+
+            // Convertir a lista de DTOs de respuesta
+            return estudiantes.stream().map(estudiante -> {
+                EstudianteResponseDTO dto = new EstudianteResponseDTO();
+                dto.setId(estudiante.getId());
+                dto.setNombre(estudiante.getNombre());
+                dto.setApellido(estudiante.getApellido());
+                dto.setEdad(estudiante.getEdad());
+                dto.setDni(estudiante.getDni());
+                dto.setEmail(estudiante.getEmail());
+                dto.setGenero(estudiante.getGenero());
+                dto.setCiudad_residencia(estudiante.getCiudad_residencia());
+                dto.setLU(estudiante.getLU());
+                return dto;
+            }).toList();
+
+        } catch (Exception e) {
+            System.err.println("Error al recuperar los estudiantes: " + e.getMessage());
+            // Podés devolver una lista vacía o relanzar la excepción, según el caso
+            return List.of(); // devuelve lista vacía si algo falla
+        }
+    }
 
 
+    @Transactional(readOnly = true)
+    public EstudianteResponseDTO getEstudianteByLU(int lu) throws Exception {
+        try {
+            // Buscar estudiante por LU
+            Estudiante estudiante = estudianteRepository.findByLU(lu)
+                    .orElseThrow(() -> new Exception("Estudiante con LU " + lu + " no encontrado."));
+
+            // Convertir la entidad a DTO de respuesta
+            EstudianteResponseDTO dto = new EstudianteResponseDTO();
+            dto.setId(estudiante.getId());
+            dto.setNombre(estudiante.getNombre());
+            dto.setApellido(estudiante.getApellido());
+            dto.setEdad(estudiante.getEdad());
+            dto.setDni(estudiante.getDni());
+            dto.setEmail(estudiante.getEmail());
+            dto.setGenero(estudiante.getGenero());
+            dto.setCiudad_residencia(estudiante.getCiudad_residencia());
+            dto.setLU(estudiante.getLU());
+
+            return dto;
+
+        } catch (Exception e) {
+            System.err.println("Error al recuperar estudiante por LU: " + e.getMessage());
+            throw new Exception("No se pudo recuperar el estudiante con LU " + lu + ": " + e.getMessage());
+        }
+    }
 }

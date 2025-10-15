@@ -7,10 +7,9 @@ import com.arquitecturaweb.ejercicioIntegrador3.service.EstudianteService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/estudiantes")
@@ -27,6 +26,22 @@ public class EstudianteController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Error al crear el estudiante: " + e.getMessage());
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<EstudianteResponseDTO>> getAllEstudiantes() {
+        List<EstudianteResponseDTO> estudiantes = estudianteService.getAllEstudiantesPorApellido();
+        return ResponseEntity.ok(estudiantes);
+    }
+
+    @GetMapping("/lu/{lu}")
+    public ResponseEntity<EstudianteResponseDTO> getEstudianteByLU(@PathVariable int lu) {
+        try {
+            EstudianteResponseDTO estudiante = estudianteService.getEstudianteByLU(lu);
+            return ResponseEntity.ok(estudiante);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
         }
     }
 }
