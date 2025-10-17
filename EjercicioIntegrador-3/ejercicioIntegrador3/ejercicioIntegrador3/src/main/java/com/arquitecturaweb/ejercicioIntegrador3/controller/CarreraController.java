@@ -2,16 +2,17 @@ package com.arquitecturaweb.ejercicioIntegrador3.controller;
 
 
 import com.arquitecturaweb.ejercicioIntegrador3.dto.request.CarreraRequestDTO;
+import com.arquitecturaweb.ejercicioIntegrador3.dto.response.CarreraConInscriptosDTO;
 import com.arquitecturaweb.ejercicioIntegrador3.dto.response.CarreraResponseDTO;
+import com.arquitecturaweb.ejercicioIntegrador3.dto.response.EstudianteResponseDTO;
 import com.arquitecturaweb.ejercicioIntegrador3.service.CarreraService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/carreras")
@@ -29,5 +30,12 @@ public class CarreraController {
         } catch (Exception e) {
             throw new RuntimeException("Error al crear la carrera", e);
         }
+    }
+    //f) recuperar las carreras con estudiantes inscriptos,
+    // y ordenar por cantidad de inscriptos.
+    @GetMapping("/con-inscriptos")
+    public ResponseEntity<List<CarreraConInscriptosDTO>> getAllCarrerasConInscriptos() {
+        List<CarreraConInscriptosDTO> carrerasInscrip = carreraService.getAllCarrerasConInscriptos();
+        return ResponseEntity.ok(carrerasInscrip);
     }
 }

@@ -44,4 +44,16 @@ public class EstudianteController {
             return ResponseEntity.notFound().build();
         }
     }
+    //e) recuperar todos los estudiantes, en base a su género.
+    @GetMapping("/genero/{genero}")
+    public ResponseEntity<List<EstudianteResponseDTO>> getAllEstudiantesPorGenero(@PathVariable String genero) {
+        try {
+            List<EstudianteResponseDTO> estudiantesGenero = estudianteService.getAllEstudiantesPorGenero(genero);
+            return ResponseEntity.ok(estudiantesGenero);
+        }catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
 }

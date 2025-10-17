@@ -60,6 +60,29 @@ public class EstudianteService {
     }
 
     @Transactional(readOnly = true)
+    public List<EstudianteResponseDTO> getAllEstudiantesPorGenero(String genero){
+        try {
+            List<Estudiante> estudiantes = estudianteRepository.findByGeneroIgnoreCase(genero);
+            return estudiantes.stream().map(estudiante -> {
+                EstudianteResponseDTO dto = new EstudianteResponseDTO();
+                dto.setId(estudiante.getId());
+                dto.setNombre(estudiante.getNombre());
+                dto.setApellido(estudiante.getApellido());
+                dto.setEdad(estudiante.getEdad());
+                dto.setDni(estudiante.getDni());
+                dto.setEmail(estudiante.getEmail());
+                dto.setGenero(estudiante.getGenero());
+                dto.setCiudad_residencia(estudiante.getCiudad_residencia());
+                dto.setLU(estudiante.getLU());
+                return dto;
+            }).toList();
+        }catch (Exception e){
+            System.err.println("Error al recuperar los estudiantes por genero: " + e.getMessage());
+            // Podés devolver una lista vacía o relanzar la excepción, según el caso
+            return List.of(); // devuelve lista vacía si algo falla
+        }
+    }
+    @Transactional(readOnly = true)
     public List<EstudianteResponseDTO> getAllEstudiantesPorApellido() {
         try {
             // Ordenar por apellido ascendente
@@ -114,4 +137,5 @@ public class EstudianteService {
             throw new Exception("No se pudo recuperar el estudiante con LU " + lu + ": " + e.getMessage());
         }
     }
+
 }
