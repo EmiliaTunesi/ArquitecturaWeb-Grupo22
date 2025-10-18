@@ -2,7 +2,8 @@ package com.arquitecturaweb.ejercicioIntegrador3.entity;
 
 import jakarta.persistence.*;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -44,6 +45,9 @@ public class Estudiante {
     @Column
     private int LU;
 
+    @OneToMany(mappedBy = "estudiante")
+    @JsonIgnore
+    private List<Estudiante_Carrera> carreras;
 
 
 }

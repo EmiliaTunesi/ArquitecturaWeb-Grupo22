@@ -137,5 +137,28 @@ public class EstudianteService {
             throw new Exception("No se pudo recuperar el estudiante con LU " + lu + ": " + e.getMessage());
         }
     }
+    //g) recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia.
+    @Transactional(readOnly = true)
+    public List<EstudianteResponseDTO> findByCarreraCiudad(int idCarrera, String ciudad){
+        try {
+            List<Estudiante> estudiantes = estudianteRepository.findByCarreraCiudad(idCarrera, ciudad);
+            return estudiantes.stream().map(estudiante -> {
+                EstudianteResponseDTO dto = new EstudianteResponseDTO();
+                dto.setId(estudiante.getId());
+                dto.setNombre(estudiante.getNombre());
+                dto.setApellido(estudiante.getApellido());
+                dto.setEdad(estudiante.getEdad());
+                dto.setDni(estudiante.getDni());
+                dto.setEmail(estudiante.getEmail());
+                dto.setGenero(estudiante.getGenero());
+                dto.setCiudad_residencia(estudiante.getCiudad_residencia());
+                dto.setLU(estudiante.getLU());
+                return dto;
+            }).toList();
+        } catch (Exception e) {
+            System.err.println("Error al recuperar estudiante por carrera y ciudad: " + e.getMessage());
+            return List.of(); // devuelve lista vacía si algo falla
+        }
+    }
 
 }

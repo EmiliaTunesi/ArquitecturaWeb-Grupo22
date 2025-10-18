@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -56,4 +55,21 @@ public class EstudianteController {
     }
 
 
-}
+    //g) recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia.
+    @GetMapping("/carrera/{idCarrera}/ciudad/{ciudad}")
+    public ResponseEntity<List<EstudianteResponseDTO>> getEstudiantesPorCarreraYCiudad(@PathVariable int idCarrera, @PathVariable String ciudad){
+        try {
+            List<EstudianteResponseDTO> lista = estudianteService.findByCarreraCiudad(idCarrera, ciudad);
+            return ResponseEntity.ok(lista);
+        } catch (Exception ex) {
+            return ResponseEntity.notFound().build();
+        }
+        }
+    }
+
+
+
+
+
+
+

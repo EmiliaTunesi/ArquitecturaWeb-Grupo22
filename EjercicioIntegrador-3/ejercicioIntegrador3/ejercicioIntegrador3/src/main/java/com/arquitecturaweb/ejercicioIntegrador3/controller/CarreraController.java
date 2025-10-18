@@ -38,4 +38,17 @@ public class CarreraController {
         List<CarreraConInscriptosDTO> carrerasInscrip = carreraService.getAllCarrerasConInscriptos();
         return ResponseEntity.ok(carrerasInscrip);
     }
+
+    /*h)generar un reporte de las carreras, que para cada carrera incluya
+        información de los inscriptos y egresados por año. Se deben ordenar las carreras
+        alfabéticamente, y presentar los años de manera cronológica*/
+    @GetMapping("/reporte")
+    public ResponseEntity<List<CarreraConInscriptosDTO>> getAllCarrerasReporte() {
+        try {
+            List<CarreraConInscriptosDTO> reporteCarrera = carreraService.getAllCarrerasReporte();
+            return ResponseEntity.ok(reporteCarrera);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

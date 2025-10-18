@@ -37,7 +37,7 @@ INSERT INTO ESTUDIANTE (id, nombre, apellido, edad, dni, email, genero, ciudad_r
 (5, 'Sofía', 'Fernández', 25, '56789012', 'sofia.fernandez@email.com', 'Femenino', 'La Plata', 1005);
 
 
-INSERT INTO estudiante_carrera (id, estudiante_id, carrera_id_carrera, anio_inicio, anio_fin, antiguedad) VALUES
+INSERT INTO estudiante_carrera (id, estudiante_id, carrera_id, anio_inicio, anio_fin, antiguedad) VALUES
 (1, 1, 1, '2023-03-01', NULL, 1),
 (2, 2, 1, '2022-04-15', NULL, 2),
 (3, 3, 2, '2023-05-10', NULL, 1),
@@ -45,3 +45,4 @@ INSERT INTO estudiante_carrera (id, estudiante_id, carrera_id_carrera, anio_inic
 (5, 1, 2, '2022-03-01', '2023-12-01', 2),
 (6, 2, 4, '2023-07-01', NULL, 1);
  */
+

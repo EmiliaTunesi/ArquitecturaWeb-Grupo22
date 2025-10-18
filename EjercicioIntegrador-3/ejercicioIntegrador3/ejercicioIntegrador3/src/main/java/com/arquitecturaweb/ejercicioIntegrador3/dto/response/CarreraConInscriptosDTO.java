@@ -16,3 +16,4 @@ public class CarreraConInscriptosDTO {
     private long cantidadInscriptos;
 
 }
+

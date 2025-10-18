@@ -19,9 +19,11 @@ public class Estudiante_Carrera {
     private int id;
 
     @ManyToOne
+    @JoinColumn(name = "estudiante_id")
     private Estudiante estudiante;
 
     @ManyToOne
+    @JoinColumn(name = "carrera_id")
     private Carrera carrera;
 
     @Column

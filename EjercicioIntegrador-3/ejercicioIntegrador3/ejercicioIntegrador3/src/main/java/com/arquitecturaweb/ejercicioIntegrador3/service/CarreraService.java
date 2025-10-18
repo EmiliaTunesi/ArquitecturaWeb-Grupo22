@@ -55,22 +55,14 @@ public class CarreraService {
             return List.of();
         }
     }
-    /*
+
     @Transactional
-    public List<CarreraConInscriptosDTO> getAllCarrerasConInscriptos(){
-        try{
-            List<CarreraConInscriptosDTO> carreraResp = carreraRepository.findAll();
-            //convertir a lista DTO
-            return carreraResp.stream().map(carreraResp-> {
-                CarreraConInscriptosDTO dto = new CarreraConInscriptosDTO();
-                dto.setCarreraId(carreraResp.getCarreraId());
-                dto.setNombreCarrera(carreraResp.getNombreCarrera());
-                dto.setCantidadInscriptos(carreraResp.getCantidadInscriptos());
-                return dto;
-            }).toList();
+    public List<CarreraConInscriptosDTO> getAllCarrerasReporte() {
+        try {
+            return carreraRepository.getAllCarrerasReporte();
         } catch (Exception e) {
-            System.err.println("Error al recuperar las carreras con inscriptos: " + e.getMessage());
-            return List.of(); // devuelve lista vacía si algo falla
+            System.err.println("Error al recuperar el reporte de carreras: " + e.getMessage());
+            return List.of();
         }
-    }*/
+    }
 }
