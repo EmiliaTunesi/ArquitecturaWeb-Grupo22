@@ -3,8 +3,6 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Embeddable
-
-
 public class EstudianteCarrera_pk implements Serializable {
 
         private int id_carrera;
@@ -16,5 +14,4 @@ public class EstudianteCarrera_pk implements Serializable {
 
         public EstudianteCarrera_pk() {
         }
-
 }

@@ -23,10 +23,9 @@ public class Estudiante_CarreraRequestDTO {
     private Long carreraId;
 
     @NotNull(message = "El año de inicio es obligatorio")
-    @PastOrPresent(message = "El año de inicio no puede ser futuro")
-    private LocalDate anio_inicio;
+    private Integer anio_inicio;
 
-    private LocalDate anio_fin;
+    private Integer anio_fin;
 
     private Integer antiguedad;
 }

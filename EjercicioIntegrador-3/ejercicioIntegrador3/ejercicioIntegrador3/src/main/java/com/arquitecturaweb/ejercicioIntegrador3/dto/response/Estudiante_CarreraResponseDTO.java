@@ -1,5 +1,8 @@
 package com.arquitecturaweb.ejercicioIntegrador3.dto.response;
 
+import com.arquitecturaweb.ejercicioIntegrador3.entity.Estudiante_Carrera;
+import com.arquitecturaweb.ejercicioIntegrador3.entity.Estudiante_Carrera_pk;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,10 +17,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Estudiante_CarreraResponseDTO {
 
-    private Integer id;
+    private String id;
     private Long estudianteId;
     private Long carreraId;
-    private LocalDate anio_inicio;
-    private LocalDate anio_fin;
+    private Integer anio_inicio;
+    private Integer anio_fin;
     private Integer antiguedad;
 }

@@ -36,20 +36,11 @@ public class Estudiante_CarreraService {
                     .orElseThrow(() -> new Exception("Carrera no encontrada con id: " + dto.getCarreraId()));
 
             // Crear la relación
-            Estudiante_Carrera estudianteCarrera = new Estudiante_Carrera();
-            estudianteCarrera.setEstudiante(estudiante);
-            estudianteCarrera.setCarrera(carrera);
+            Estudiante_Carrera estudianteCarrera = new Estudiante_Carrera(estudiante,carrera);
             estudianteCarrera.setAnio_inicio(dto.getAnio_inicio());
             estudianteCarrera.setAnio_fin(dto.getAnio_fin());
 
-
-            if (dto.getAntiguedad() != null) {
-                estudianteCarrera.setAntiguedad(dto.getAntiguedad());
-            } else {
-                // Calcular automáticamente
-                int antiguedad = calcularAntiguedad(dto.getAnio_inicio(), dto.getAnio_fin());
-                estudianteCarrera.setAntiguedad(antiguedad);
-            }
+            estudianteCarrera.setAntiguedad(dto.getAntiguedad());
             // Guardar
             Estudiante_Carrera guardado = estudianteCarreraRepository.save(estudianteCarrera);
 
@@ -72,8 +63,5 @@ public class Estudiante_CarreraService {
         return dto;
     }
 
-    private int calcularAntiguedad(LocalDate inicio, LocalDate fin) {
-        LocalDate fechaFin = (fin != null) ? fin : LocalDate.now();
-        return fechaFin.getYear() - inicio.getYear();
-    }
+
 }

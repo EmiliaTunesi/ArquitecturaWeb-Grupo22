@@ -3,20 +3,20 @@ package com.arquitecturaweb.ejercicioIntegrador3.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 
 @Entity
 @Getter
 @Setter
-public class Estudiante_Carrera {
+public class Estudiante_Carrera implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    private int id;
+    @EmbeddedId
+    private Estudiante_Carrera_pk pk;
 
     @ManyToOne
     @JoinColumn(name = "estudiante_id")
@@ -27,13 +27,26 @@ public class Estudiante_Carrera {
     private Carrera carrera;
 
     @Column
-    private LocalDate anio_inicio;
+    private Integer anio_inicio;
 
     @Column
-    private LocalDate anio_fin;
+    private Integer anio_fin;
 
     @Column
     private int antiguedad;
 
+    public Estudiante_Carrera(Estudiante ee, Carrera cc){
+        this.pk = new Estudiante_Carrera_pk(ee.getId(),cc.getId_carrera());
+        this.estudiante = ee;
+        this.carrera = cc;
+    }
+
+    public Estudiante_Carrera() {
+
+    }
+
+    public String getId() {
+        return this.pk.toString();
+    }
 
 }
