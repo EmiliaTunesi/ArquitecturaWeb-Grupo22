@@ -16,7 +16,6 @@ import java.util.List;
 public class Carrera {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id_carrera;
 
@@ -29,4 +28,13 @@ public class Carrera {
     @OneToMany(mappedBy = "carrera")
     @JsonIgnore
     private List<Estudiante_Carrera> estudiantes;
+
+    public Carrera(long idCarrera, String nombre, int duracion) {
+        this.id_carrera = idCarrera;
+        this.nombre = nombre;
+        this.duracion = duracion;
+    }
+    public Carrera(){
+
+    }
 }

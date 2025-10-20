@@ -7,7 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class EjercicioIntegrador3Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EjercicioIntegrador3Application.class, args);
+
+        SpringApplication.run(EjercicioIntegrador3Application.class, args);
 	}
 /*
 "play" aqui

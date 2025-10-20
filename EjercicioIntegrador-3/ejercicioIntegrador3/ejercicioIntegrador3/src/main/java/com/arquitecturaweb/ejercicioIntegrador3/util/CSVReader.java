@@ -47,10 +47,8 @@ public final class CSVReader {
             e.printStackTrace();
         }
     }
-
     private void insertEstudiantes() throws IOException {
         for(CSVRecord row : getData("estudiantes.csv")) {
-            //DNI,nombre,apellido,edad,genero,ciudad,LU
             if(row.size() >= 7) {
                 String dniString = row.get(0);
                 String nombre = row.get(1);
@@ -64,7 +62,7 @@ public final class CSVReader {
                         int nroLU = Integer.parseInt(nroLUString);
                         int edad = Integer.parseInt(edadString);
                         int dni = Integer.parseInt(dniString);
-                        Estudiante estudiante = new Estudiante(dni, nombre, apellido, edad, genero, nroLU, ciudad);
+                        Estudiante estudiante = new Estudiante(nombre, apellido, dni, genero, edad, ciudad, nroLU);
 
                         er.save(estudiante);
                     } catch (NumberFormatException e) {
@@ -74,9 +72,8 @@ public final class CSVReader {
             }
         }
     }
-    private void insertCarreras() throws Exception {
+    private void insertCarreras() throws IOException {
         for(CSVRecord row : getData("carreras.csv")) {
-            //id_carrera,nombre, duracion
             if(row.size() >= 3) {
                 String id_carreraString = row.get(0);
                 String nombre = row.get(1);
@@ -105,16 +102,15 @@ public final class CSVReader {
                 String antiguedadString = row.get(5);
                 if(!dniString.isEmpty() && !id_carreraString.isEmpty() && !anio_inicioString.isEmpty() && !anio_finString.isEmpty()) {
                     try {
-                        long id = Integer.parseInt(idString);
-                        int dni = Integer.parseInt(dniString);
-                        long id_carrera = Integer.parseInt(id_carreraString);
+                        long id_estudiante= Long.parseLong(idString);
+                        long id_carrera = Long.parseLong(id_carreraString);
                         int anio_inicio = Integer.parseInt(anio_inicioString);
                         int anio_fin = Integer.parseInt(anio_finString);
                         int antiguedad = Integer.parseInt(antiguedadString);
 
-                        Estudiante estudiante = er;
-                        Carrera carrera = cr;
-                        Estudiante_Carrera estudianteCarrera = new Estudiante_Carrera(estudiante, carrera);
+                        Estudiante estudiante = er.findById(id_estudiante).get();
+                        Carrera carrera = cr.findById(id_carrera).get();
+                        Estudiante_Carrera estudianteCarrera = new Estudiante_Carrera(estudiante, carrera, anio_inicio, anio_fin, antiguedad);
                         ecr.save(estudianteCarrera);
 
                     } catch (NumberFormatException e) {
@@ -124,4 +120,4 @@ public final class CSVReader {
             }
         }
     }
-}
+    }

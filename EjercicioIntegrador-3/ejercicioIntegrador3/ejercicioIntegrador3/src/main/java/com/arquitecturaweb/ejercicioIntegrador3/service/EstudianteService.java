@@ -30,7 +30,6 @@ public class EstudianteService {
             estudiante.setApellido(estudianteDTO.getApellido());
             estudiante.setEdad(estudianteDTO.getEdad());
             estudiante.setDni(estudianteDTO.getDni());
-            estudiante.setEmail(estudianteDTO.getEmail());
             estudiante.setGenero(estudianteDTO.getGenero());
             estudiante.setCiudad_residencia(estudianteDTO.getCiudad_residencia());
             estudiante.setLU(estudianteDTO.getLu());
@@ -45,7 +44,6 @@ public class EstudianteService {
             responseDTO.setApellido(estudianteGuardado.getApellido());
             responseDTO.setEdad(estudianteGuardado.getEdad());
             responseDTO.setDni(estudianteGuardado.getDni());
-            responseDTO.setEmail(estudianteGuardado.getEmail());
             responseDTO.setGenero(estudianteGuardado.getGenero());
             responseDTO.setCiudad_residencia(estudianteGuardado.getCiudad_residencia());
             responseDTO.setLU(estudianteGuardado.getLU());
@@ -70,7 +68,6 @@ public class EstudianteService {
                 dto.setApellido(estudiante.getApellido());
                 dto.setEdad(estudiante.getEdad());
                 dto.setDni(estudiante.getDni());
-                dto.setEmail(estudiante.getEmail());
                 dto.setGenero(estudiante.getGenero());
                 dto.setCiudad_residencia(estudiante.getCiudad_residencia());
                 dto.setLU(estudiante.getLU());
@@ -96,7 +93,6 @@ public class EstudianteService {
                 dto.setApellido(estudiante.getApellido());
                 dto.setEdad(estudiante.getEdad());
                 dto.setDni(estudiante.getDni());
-                dto.setEmail(estudiante.getEmail());
                 dto.setGenero(estudiante.getGenero());
                 dto.setCiudad_residencia(estudiante.getCiudad_residencia());
                 dto.setLU(estudiante.getLU());
@@ -125,7 +121,6 @@ public class EstudianteService {
             dto.setApellido(estudiante.getApellido());
             dto.setEdad(estudiante.getEdad());
             dto.setDni(estudiante.getDni());
-            dto.setEmail(estudiante.getEmail());
             dto.setGenero(estudiante.getGenero());
             dto.setCiudad_residencia(estudiante.getCiudad_residencia());
             dto.setLU(estudiante.getLU());
@@ -149,7 +144,6 @@ public class EstudianteService {
                 dto.setApellido(estudiante.getApellido());
                 dto.setEdad(estudiante.getEdad());
                 dto.setDni(estudiante.getDni());
-                dto.setEmail(estudiante.getEmail());
                 dto.setGenero(estudiante.getGenero());
                 dto.setCiudad_residencia(estudiante.getCiudad_residencia());
                 dto.setLU(estudiante.getLU());

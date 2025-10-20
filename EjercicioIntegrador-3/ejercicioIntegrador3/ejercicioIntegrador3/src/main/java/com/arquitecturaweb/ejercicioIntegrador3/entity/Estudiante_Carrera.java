@@ -46,6 +46,15 @@ public class Estudiante_Carrera implements Serializable {
 
     }
 
+    public Estudiante_Carrera(Estudiante estudiante, Carrera carrera, int anioInicio, int anioFin, int antiguedad) {
+        this.estudiante = estudiante;
+        this.carrera = carrera;
+        this.anio_inicio = anioInicio;
+        this.anio_fin = anioFin;
+        this.antiguedad = antiguedad;
+        this.pk = new Estudiante_Carrera_pk(estudiante.getId(), carrera.getId_carrera());
+    }
+
     public String getId() {
         return this.pk.toString();
     }
