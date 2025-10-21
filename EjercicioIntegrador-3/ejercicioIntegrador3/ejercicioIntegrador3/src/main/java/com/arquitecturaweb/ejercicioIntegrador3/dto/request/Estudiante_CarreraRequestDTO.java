@@ -17,7 +17,7 @@ import java.time.LocalDate;
 public class Estudiante_CarreraRequestDTO {
 
     @NotNull(message = "El ID del estudiante es obligatorio")
-    private Long estudianteId;
+    private int dni;
 
     @NotNull(message = "El ID de la carrera es obligatorio")
     private Long carreraId;

@@ -92,6 +92,9 @@ public final class CSVReader {
         }
     }
     private void insertMatriculas() throws IOException {
+        int registrosExitosos = 0;
+        int registrosOmitidos = 0;
+
         for(CSVRecord row : getData("estudianteCarrera.csv")) {
             if(row.size() >= 6) {
                 String idString = row.get(0);
@@ -100,24 +103,39 @@ public final class CSVReader {
                 String anio_inicioString = row.get(3);
                 String anio_finString = row.get(4);
                 String antiguedadString = row.get(5);
+
                 if(!dniString.isEmpty() && !id_carreraString.isEmpty() && !anio_inicioString.isEmpty() && !anio_finString.isEmpty()) {
                     try {
-                        long id_estudiante= Long.parseLong(idString);
+                        int dni = Integer.parseInt(dniString);
                         long id_carrera = Long.parseLong(id_carreraString);
                         int anio_inicio = Integer.parseInt(anio_inicioString);
                         int anio_fin = Integer.parseInt(anio_finString);
                         int antiguedad = Integer.parseInt(antiguedadString);
 
-                        Estudiante estudiante = er.findById(id_estudiante).get();
-                        Carrera carrera = cr.findById(id_carrera).get();
-                        Estudiante_Carrera estudianteCarrera = new Estudiante_Carrera(estudiante, carrera, anio_inicio, anio_fin, antiguedad);
-                        ecr.save(estudianteCarrera);
+                        Optional<Estudiante> optEstudiante = er.findByDni(dni);
+                        Optional<Carrera> optCarrera = cr.findById(id_carrera);
+
+                        if(optEstudiante.isPresent() && optCarrera.isPresent()) {
+                            Estudiante estudiante = optEstudiante.get();
+                            Carrera carrera = optCarrera.get();
+                            Estudiante_Carrera estudianteCarrera = new Estudiante_Carrera(estudiante, carrera, anio_inicio, anio_fin, antiguedad);
+                            ecr.save(estudianteCarrera);
+                            registrosExitosos++;
+                        } else {
+                            System.err.println("⚠️ Registro omitido - No se encontró: " +
+                                    (optEstudiante.isEmpty() ? "Estudiante DNI " + dni : "") +
+                                    (optCarrera.isEmpty() ? " Carrera ID " + id_carrera : ""));
+                            registrosOmitidos++;
+                        }
 
                     } catch (NumberFormatException e) {
-                        System.err.println("Error de formato en datos de dirección: " + e.getMessage());
+                        System.err.println(" Error de formato en datos: " + e.getMessage());
+                        registrosOmitidos++;
                     }
                 }
             }
         }
+
+
     }
     }

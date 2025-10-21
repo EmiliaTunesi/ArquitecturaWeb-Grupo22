@@ -27,21 +27,17 @@ public class Estudiante_CarreraService {
     @Transactional
     public Estudiante_CarreraResponseDTO save(Estudiante_CarreraRequestDTO dto) throws Exception {
         try {
-            // Buscar el estudiante
-            Estudiante estudiante = estudianteRepository.findById(dto.getEstudianteId())
-                    .orElseThrow(() -> new Exception("Estudiante no encontrado con id: " + dto.getEstudianteId()));
+            Estudiante estudiante = estudianteRepository.findByDni(dto.getDni())
+                    .orElseThrow(() -> new Exception("Estudiante no encontrado con id: " + dto.getDni()));
 
-            // Buscar la carrera
             Carrera carrera = carreraRepository.findById(dto.getCarreraId())
                     .orElseThrow(() -> new Exception("Carrera no encontrada con id: " + dto.getCarreraId()));
 
-            // Crear la relación
             Estudiante_Carrera estudianteCarrera = new Estudiante_Carrera(estudiante,carrera);
             estudianteCarrera.setAnio_inicio(dto.getAnio_inicio());
             estudianteCarrera.setAnio_fin(dto.getAnio_fin());
 
             estudianteCarrera.setAntiguedad(dto.getAntiguedad());
-            // Guardar
             Estudiante_Carrera guardado = estudianteCarreraRepository.save(estudianteCarrera);
 
             return convertToDTO(guardado);

@@ -8,6 +8,7 @@ import com.arquitecturaweb.ejercicioIntegrador3.dto.response.EstudianteResponseD
 import com.arquitecturaweb.ejercicioIntegrador3.service.CarreraService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,16 +22,8 @@ public class CarreraController {
 
     private CarreraService carreraService;
 
-    @PostMapping
-    public ResponseEntity<CarreraResponseDTO> createCarrera(
-            @Valid @RequestBody CarreraRequestDTO carreraDTO) {
-        try {
-            CarreraResponseDTO carrera = carreraService.save(carreraDTO);
-            return new ResponseEntity<>(carrera, HttpStatus.CREATED);
-        } catch (Exception e) {
-            throw new RuntimeException("Error al crear la carrera", e);
-        }
-    }
+
+
     //f) recuperar las carreras con estudiantes inscriptos,
     // y ordenar por cantidad de inscriptos.
     @GetMapping("/con-inscriptos")
@@ -50,5 +43,11 @@ public class CarreraController {
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CarreraResponseDTO>> getCarreras() {
+        List<CarreraResponseDTO> carreras = carreraService.getCarreras();
+        return ResponseEntity.ok(carreras);
     }
 }

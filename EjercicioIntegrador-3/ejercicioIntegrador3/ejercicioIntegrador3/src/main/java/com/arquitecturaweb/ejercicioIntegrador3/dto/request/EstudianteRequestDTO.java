@@ -9,6 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class EstudianteRequestDTO {
     private String nombre;
     private String apellido;
