@@ -13,7 +13,7 @@ public class Main {
         EntityManager em = emf.createEntityManager();
 
         Servicios serv = new Servicios(em);
-        //serv.inicializarDB();
+        serv.inicializarDB();
 
         //a) dar de alta un estudiante
        // Estudiante estudiante = new Estudiante(1310101008, "Soledad", "Rodriguez", 29, "Femenino", 1290811, "Balcarce");

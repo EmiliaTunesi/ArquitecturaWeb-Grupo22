@@ -16,6 +16,7 @@ public class EstudianteCarrera implements Serializable {
     @ManyToOne
     @MapsId("id_carrera")
     private Carrera carrera;
+
     @Column
     private int anio_inicio;
     @Column
