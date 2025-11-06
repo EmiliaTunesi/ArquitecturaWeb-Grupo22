@@ -5,12 +5,12 @@ import com.trabajointegrador.microserviciousuario.entity.UsuarioCuenta;
 
 public class UsuarioCuentaMapper {
 
-    public static UsuarioCuentaDTO toDTO(UsuarioCuenta usuarioCuenta) {
-        return new UsuarioCuentaDTO(
-                usuarioCuenta.getUsuario().getNombre_usuario(),
-                usuarioCuenta.getCuenta().getNumeroIdentificador(),
-                usuarioCuenta.isActiva(),
-                usuarioCuenta.getFechaVinculacion()
-        );
+    public static UsuarioCuentaDTO toDTO(UsuarioCuenta entity) {
+        UsuarioCuentaDTO dto = new UsuarioCuentaDTO();
+        dto.setNombreUsuario(entity.getUsuario().getNombre());
+        dto.setNumeroCuenta(entity.getCuenta().getNumeroIdentificador());
+        dto.setActiva(entity.isActiva());
+        dto.setFechaVinculacion(entity.getFechaVinculacion());
+        return dto;
     }
 }

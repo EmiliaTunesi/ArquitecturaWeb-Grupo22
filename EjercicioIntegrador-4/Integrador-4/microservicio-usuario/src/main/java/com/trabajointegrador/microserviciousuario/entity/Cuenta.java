@@ -22,6 +22,12 @@ public class Cuenta {
     @Column(nullable = false)
     private TipoCuenta tipoCuenta; // BÁSICA o PREMIUM
 
+    @Column(nullable = false)
+    private boolean activa = true; // Nuevo campo para anulación temporal o permanente
+
+    @Column
+    private LocalDate fechaBaja; // Fecha de anulación o suspensión, si aplica
+
     @OneToMany(mappedBy = "cuenta", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UsuarioCuenta> usuarios = new HashSet<>();
 
@@ -31,8 +37,10 @@ public class Cuenta {
         this.numeroIdentificador = numeroIdentificador;
         this.fechaAlta = fechaAlta;
         this.tipoCuenta = tipoCuenta;
+        this.activa = true;
     }
 
+    // --- Getters y Setters ---
     public Long getId() {
         return id;
     }
@@ -71,6 +79,27 @@ public class Cuenta {
 
     public void setUsuarios(Set<UsuarioCuenta> usuarios) {
         this.usuarios = usuarios;
+    }
+
+    public boolean isActiva() {
+        return activa;
+    }
+
+    public void setActiva(boolean activa) {
+        this.activa = activa;
+        if (!activa) {
+            this.fechaBaja = LocalDate.now();
+        } else {
+            this.fechaBaja = null;
+        }
+    }
+
+    public LocalDate getFechaBaja() {
+        return fechaBaja;
+    }
+
+    public void setFechaBaja(LocalDate fechaBaja) {
+        this.fechaBaja = fechaBaja;
     }
 
     public enum TipoCuenta {
