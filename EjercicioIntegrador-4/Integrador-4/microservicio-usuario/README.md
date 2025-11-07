@@ -1,33 +1,20 @@
-📘 Sistema de Gestión de Usuarios, Cuentas y Vinculaciones
+ Sistema de Gestión de Usuarios, Cuentas y Vinculaciones
+ =======================================================
 
 API REST — Spring Boot
+----------------------
 
 Este proyecto implementa un sistema simple y extensible para manejar usuarios, cuentas y la relación muchos a muchos entre ambos.
 El resultado es una API clara, con modelos bien definidos, lógica desacoplada y documentación automática mediante Swagger.
 
-La arquitectura busca ser limpia: cada pieza tiene su trabajo y no invade al resto. Un usuario puede tener muchas cuentas, una cuenta puede tener muchos usuarios, y nadie entra en crisis existencial por ello.
-
-⭐ Características principales
+Características principales
+---------------------------
 
 Gestión completa de Usuarios (CRUD).
 
 Gestión de Cuentas con campos financieros y estados operativos.
 
 Relación N a N entre usuarios y cuentas mediante la entidad UsuarioCuenta.
-
-Endpoints para:
-
-vincular usuario–cuenta
-
-listar vinculaciones
-
-verificar si existe la vinculación
-
-obtener usuarios asociados a una cuenta
-
-DTOs y mapeadores para no mezclar café con té (ni entidades con requests).
-
-Documentación automática con Swagger UI.
 
 🔗 Explicación de la Relación N a N
 
@@ -37,24 +24,15 @@ Un Usuario puede estar asociado a varias Cuentas.
 
 Una Cuenta puede pertenecer a varios Usuarios.
 
-En bases de datos relacionales, esto se resuelve mediante una tabla intermedia:
-
-Usuario 1 -----\
-\  
-[ UsuarioCuenta ] ----- Cuenta 1
-/
-Usuario 2 -----/
-
-
-En el código, la entidad intermedia es UsuarioCuenta.
+En el código, la entidad intermedia entre ambos es UsuarioCuenta.
 Su existencia evita duplicar información, y permite agregar metadata futura sobre la relación (por ejemplo fecha de vinculación, permisos, rol dentro de la cuenta, etc.).
 
-🧠 Modelos del Sistema
-Usuario
+ Modelos del Sistema
+ -------------------
+ 
+####Usuario####
 
 Representa un cliente del sistema.
-
-Campos clave:
 
 nombreUsuario
 
@@ -70,17 +48,15 @@ fechaRegistro
 
 activo
 
-Cuenta
+####Cuenta####
 
 Representa una cuenta operativa del sistema.
 
-Incluye:
-
-número identificador
+número id
 
 fecha de alta
 
-tipo de cuenta (BÁSICA, PREMIUM, etc.)
+tipo de cuenta (BÁSICA, PREMIUM)
 
 saldo de créditos
 
@@ -90,13 +66,15 @@ activa/inactiva
 
 fecha de renovación de cupo
 
-integración opcional con Mercado Pago
+integración con Mercado Pago (hardcodeado)
 
-UsuarioCuenta
+####UsuarioCuenta####
 
 Entidad que une usuario y cuenta.
 
 Contiene solo los IDs y la relación, sin duplicar datos.
+
+
 
 ✅ Ejemplos JSON para Swagger (para usar en los “Request bodies”)
 ✅ Ejemplos para crear usuarios
@@ -167,7 +145,7 @@ Contiene solo los IDs y la relación, sin duplicar datos.
 "fechaRenovacionCupo": null
 }
 
-🔌 Endpoints principales (por categoría)
+🔌 Endpoints
 📍 Usuarios
 
 GET /usuarios
@@ -192,6 +170,13 @@ PUT /cuentas/{id}
 
 DELETE /cuentas/{id}
 
+PATCH /cuentas/{id}/anular
+Inhabilita la cuenta (soft delete).
+Marca la cuenta como inactiva y setea fechaBaja si corresponde.
+
+PATCH /cuentas/{id}/reactivar
+Vuelve a activar una cuenta previamente anulada.
+
 📍 Vinculaciones Usuario–Cuenta
 
 POST /usuarios-cuentas/vincular?usuarioId=&cuentaId=
@@ -200,9 +185,9 @@ GET /usuarios-cuentas
 
 GET /usuarios-cuentas/existe?usuarioId=&cuentaId=
 
-GET /usuarios-cuentas/cuenta/{cuentaId}/usuarios ✅ (nuevo endpoint añadido)
+GET /usuarios-cuentas/cuenta/{cuentaId}/usuarios 
 
-📚 Documentación con Swagger
+Documentación con Swagger
 
 El proyecto incluye Swagger / OpenAPI para documentar todos los endpoints y permitir probarlos desde el navegador.
 
@@ -211,21 +196,9 @@ Acceso:
 http://localhost:8080/swagger-ui/index.html
 
 
-Swagger muestra:
+Arquitectura interna
+====================
 
-modelos de request y response
-
-ejemplos listos para usar
-
-documentación de cada endpoint
-
-pruebas en tiempo real
-
-Si un humano tuviera que leer tu código, Swagger sería el mapa; si el humano no lee, al menos podrá hacer clics.
-
-🏗️ Arquitectura interna
-
-El proyecto sigue una estructura clásica y limpia:
 
 Controller → recibe requests
 
@@ -237,7 +210,7 @@ DTO / Mapper → evita fuga de entidades al exterior
 
 Entidad UsuarioCuenta → resuelve la relación N-a-N
 
-Nada está de más y nada falta. Elegancia sin floritura.
+
 
 ✅ Cómo correr el proyecto
 
@@ -245,8 +218,9 @@ Clonar el repo
 
 Importar en IntelliJ / Eclipse como proyecto Maven
 
-Configurar datasource en application.properties
+Configurar datasource en application.properties (esta aplicación esta configurada para usar postgress, se envía vacío el campo de 
+contraseña de la db)
 
 Ejecutar la aplicación
 
-Abrir Swagger y jugar
+Abrir Swagger y probar
