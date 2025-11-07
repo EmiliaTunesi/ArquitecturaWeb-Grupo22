@@ -31,7 +31,7 @@ Su existencia evita duplicar información, y permite agregar metadata futura sob
  Modelos del Sistema
  -------------------
  
-####Usuario####
+#### Usuario
 
 Representa un cliente del sistema.
 
@@ -49,7 +49,7 @@ fechaRegistro
 
 activo
 
-####Cuenta####
+#### Cuenta
 
 Representa una cuenta operativa del sistema.
 
@@ -69,7 +69,7 @@ fecha de renovación de cupo
 
 integración con Mercado Pago (hardcodeado)
 
-####UsuarioCuenta####
+#### UsuarioCuenta 
 
 Entidad que une usuario y cuenta.
 
@@ -146,8 +146,10 @@ Contiene solo los IDs y la relación, sin duplicar datos.
 "fechaRenovacionCupo": null
 }
 
-🔌 Endpoints
-📍 Usuarios
+Endpoints
+---------
+
+#### Usuarios 
 
 GET /usuarios
 
@@ -159,7 +161,7 @@ PUT /usuarios/{id}
 
 DELETE /usuarios/{id}
 
-📍 Cuentas
+#### Cuentas
 
 GET /cuentas
 
@@ -178,7 +180,7 @@ Marca la cuenta como inactiva y setea fechaBaja si corresponde.
 PATCH /cuentas/{id}/reactivar
 Vuelve a activar una cuenta previamente anulada.
 
-📍 Vinculaciones Usuario–Cuenta
+#### Vinculaciones Usuario–Cuenta
 
 POST /usuarios-cuentas/vincular?usuarioId=&cuentaId=
 
@@ -198,7 +200,7 @@ http://localhost:8080/swagger-ui/index.html
 
 
 Arquitectura interna
-====================
+--------------------
 
 
 Controller → recibe requests
@@ -213,7 +215,7 @@ Entidad UsuarioCuenta → resuelve la relación N-a-N
 
 
 
-✅ Cómo correr el proyecto
+##### Cómo correr el proyecto
 
 Clonar el repo
 
