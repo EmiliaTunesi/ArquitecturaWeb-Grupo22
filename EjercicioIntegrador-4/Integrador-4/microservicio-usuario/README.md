@@ -103,11 +103,11 @@ PUT /cuentas/{id}
 
 DELETE /cuentas/{id}
 
-PATCH /cuentas/{id}/anular
-Inhabilita la cuenta (soft delete).
-Marca la cuenta como inactiva y setea fechaBaja si corresponde.
+PATCH /cuentas/{id}/anular  <br>
+Inhabilita la cuenta (soft delete).  <br>
+Marca la cuenta como inactiva y setea fechaBaja si corresponde.  <br>
 
-PATCH /cuentas/{id}/reactivar
+PATCH /cuentas/{id}/reactivar  <br>
 Vuelve a activar una cuenta previamente anulada.
 
 #### Vinculaciones Usuario–Cuenta
