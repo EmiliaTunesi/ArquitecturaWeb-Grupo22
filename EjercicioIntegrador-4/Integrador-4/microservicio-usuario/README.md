@@ -16,7 +16,8 @@ Gestión de Cuentas con campos financieros y estados operativos.
 
 Relación N a N entre usuarios y cuentas mediante la entidad UsuarioCuenta.
 
-🔗 Explicación de la Relación N a N
+Explicación de la Relación N a N
+---------------------------------
 
 La lógica del proyecto se basa en una relación muchos a muchos:
 
