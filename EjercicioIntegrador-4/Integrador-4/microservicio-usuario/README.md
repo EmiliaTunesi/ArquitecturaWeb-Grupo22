@@ -33,118 +33,48 @@ Su existencia evita duplicar información, y permite agregar metadata futura sob
  
 #### Usuario
 
-Representa un cliente del sistema.
+**Representa un cliente del sistema.**
 
-nombreUsuario
+- nombreUsuario
 
-nombre
+- nombre
 
-apellido
+- apellido
 
-email
+- email
 
-telefono
+- telefono
 
-fechaRegistro
+- fechaRegistro
 
-activo
+- activo
 
 #### Cuenta
 
-Representa una cuenta operativa del sistema.
+**Representa una cuenta operativa del sistema.**
 
-número id
+- número id
 
-fecha de alta
+- fecha de alta
 
-tipo de cuenta (BÁSICA, PREMIUM)
+- tipo de cuenta (BÁSICA, PREMIUM)
 
-saldo de créditos
+- saldo de créditos
 
-kilómetros recorridos
+- kilómetros recorridos
 
-activa/inactiva
+- activa/inactiva
 
-fecha de renovación de cupo
+- fecha de renovación de cupo
 
-integración con Mercado Pago (hardcodeado)
+- integración con Mercado Pago (hardcodeado)
 
 #### UsuarioCuenta 
 
-Entidad que une usuario y cuenta.
+**Entidad que une usuario y cuenta.**
 
-Contiene solo los IDs y la relación, sin duplicar datos.
+Contiene solo los IDs y la relación.
 
-
-
-✅ Ejemplos JSON para Swagger (para usar en los “Request bodies”)
-✅ Ejemplos para crear usuarios
-{
-"nombreUsuario": "azulito123",
-"nombre": "Azul",
-"apellido": "Montoya",
-"email": "azul@example.com",
-"telefono": "+54911223344",
-"fechaRegistro": "2025-11-07T18:51:10.726Z",
-"activo": true
-}
-
-{
-"nombreUsuario": "marce_dev",
-"nombre": "Marcelo",
-"apellido": "Ruiz",
-"email": "marce@example.com",
-"telefono": "3512233445",
-"fechaRegistro": "2025-11-07T18:51:10.726Z",
-"activo": true
-}
-
-{
-"nombreUsuario": "luna",
-"nombre": "Luna",
-"apellido": "Pereyra",
-"email": "luna.pe@example.com",
-"telefono": "1133221100",
-"fechaRegistro": "2025-11-07T18:51:10.726Z",
-"activo": false
-}
-
-✅ Ejemplos para crear cuentas
-{
-"numeroIdentificador": "CUENTA-001",
-"fechaAlta": "2025-11-07",
-"tipoCuenta": "BASICA",
-"activa": true,
-"fechaBaja": null,
-"saldoCreditos": 50,
-"cuentaMercadoPagoId": "mp_123",
-"kmRecorridosMes": 10.5,
-"fechaRenovacionCupo": "2025-12-01"
-}
-
-{
-"numeroIdentificador": "CUENTA-002",
-"fechaAlta": "2025-11-07",
-"tipoCuenta": "PREMIUM",
-"activa": true,
-"fechaBaja": null,
-"saldoCreditos": 120.75,
-"cuentaMercadoPagoId": null,
-"kmRecorridosMes": 0,
-"fechaRenovacionCupo": null
-}
-
-{
-"numeroIdentificador": "CUENTA-003",
-"fechaAlta": "2025-11-07",
-"tipoCuenta": "BASICA",
-"activa": true,
-"fechaBaja": null,
-"saldoCreditos": 0,
-"cuentaMercadoPagoId": null,
-"kmRecorridosMes": null,
-"fechaRenovacionCupo": null
-}
 
 Endpoints
 ---------
@@ -190,7 +120,9 @@ GET /usuarios-cuentas/existe?usuarioId=&cuentaId=
 
 GET /usuarios-cuentas/cuenta/{cuentaId}/usuarios 
 
+
 Documentación con Swagger
+-------------------------
 
 El proyecto incluye Swagger / OpenAPI para documentar todos los endpoints y permitir probarlos desde el navegador.
 
