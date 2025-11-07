@@ -153,8 +153,7 @@ Clonar el repo
 
 Importar en IntelliJ / Eclipse como proyecto Maven
 
-Configurar datasource en application.properties (esta aplicación esta configurada para usar postgress, se envía vacío el campo de 
-contraseña de la db)
+Configurar datasource en application.properties (esta aplicación esta configurada para usar postgress)
 
 Ejecutar la aplicación
 
