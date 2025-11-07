@@ -1,6 +1,7 @@
 package com.trabajointegrador.microserviciousuario.controller;
 
 import com.trabajointegrador.microserviciousuario.dto.UsuarioCuentaDTO;
+import com.trabajointegrador.microserviciousuario.dto.UsuarioDTO;
 import com.trabajointegrador.microserviciousuario.service.CuentaUsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,6 @@ public class UsuarioCuentaController {
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 
-
     // Listar todas las vinculaciones
     @GetMapping
     public ResponseEntity<List<UsuarioCuentaDTO>> listarVinculaciones() {
@@ -44,5 +44,13 @@ public class UsuarioCuentaController {
     ) {
         boolean existe = usuarioCuentaService.existeVinculacion(usuarioId, cuentaId);
         return new ResponseEntity<>(existe, HttpStatus.OK);
+    }
+
+    @GetMapping("/cuenta/{cuentaId}/usuarios")
+    public ResponseEntity<List<UsuarioDTO>> obtenerUsuariosPorCuenta(
+            @PathVariable Long cuentaId
+    ) {
+        List<UsuarioDTO> usuarios = usuarioCuentaService.obtenerUsuariosPorCuenta(cuentaId);
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
 }
