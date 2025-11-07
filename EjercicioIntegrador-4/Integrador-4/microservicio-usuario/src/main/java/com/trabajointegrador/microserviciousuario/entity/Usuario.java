@@ -8,34 +8,50 @@ import java.util.Date;
 @Table(name = "usuarios")
 public class Usuario {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-        @Column(name = "nombre_usuario", nullable = false, unique = true)
-        private String nombreUsuario;
+    @Column(name = "nombre_usuario", nullable = false, unique = true)
+    private String nombreUsuario;
 
-        @Column(nullable = false)
-        private String nombre;
+    @Column(nullable = false)
+    private String nombre;
 
-        @Column(nullable = false, unique = true)
-        private String email;
+    @Column(nullable = false)
+    private String apellido;
 
-        @Column(nullable = false)
-        private String telefono;
+    @Column(nullable = false, unique = true)
+    private String email;
 
-        @Column(name = "fecha_registro")
-        private LocalDateTime fechaRegistro;
+    @Column(nullable = false)
+    private String telefono;
 
-        public Usuario() {}
+    @Column(name = "fecha_registro", nullable = false)
+    private LocalDateTime fechaRegistro;
 
-        public Usuario(String nombreUsuario, String nombre, String email, String telefono, LocalDateTime fechaRegistro) {
-            this.nombreUsuario = nombreUsuario;
-            this.nombre = nombre;
-            this.email = email;
-            this.telefono = telefono;
-            this.fechaRegistro = fechaRegistro;
-        }
+    @Column(nullable = false)
+    private Boolean activo;
+
+    public Usuario() {}
+
+    public Usuario(
+            String nombreUsuario,
+            String nombre,
+            String apellido,
+            String email,
+            String telefono,
+            LocalDateTime fechaRegistro,
+            Boolean activo
+    ) {
+        this.nombreUsuario = nombreUsuario;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.telefono = telefono;
+        this.fechaRegistro = fechaRegistro;
+        this.activo = activo;
+    }
 
     public Long getId() {
         return id;
@@ -85,14 +101,32 @@ public class Usuario {
         this.fechaRegistro = fechaRegistro;
     }
 
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
     @Override
     public String toString() {
         return "Usuario{id=" + id +
                 ", nombreUsuario='" + nombreUsuario + '\'' +
                 ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
                 ", email='" + email + '\'' +
                 ", telefono='" + telefono + '\'' +
                 ", fechaRegistro=" + fechaRegistro +
+                ", activo=" + activo +
                 '}';
     }
 }

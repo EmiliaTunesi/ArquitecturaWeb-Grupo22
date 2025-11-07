@@ -48,7 +48,7 @@ public class CuentaController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    // 🔸 Nueva funcionalidad: anular (desactivar) una cuenta
+    //anular/desactivar una cuenta
     @PatchMapping("/{id}/anular")
     public ResponseEntity<CuentaDTO> anularCuenta(@PathVariable Long id) {
         CuentaDTO cuentaAnulada = cuentaService.anularCuenta(id);

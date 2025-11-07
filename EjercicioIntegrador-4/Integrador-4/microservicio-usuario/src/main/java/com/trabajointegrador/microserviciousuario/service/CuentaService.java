@@ -49,9 +49,13 @@ public class CuentaService {
         Cuenta cuenta = cuentaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Cuenta no encontrada con ID: " + id));
 
-        cuenta.setNumeroIdentificador(dto.getNumeroIdentificador());
+        cuenta.setNumeroCuenta(dto.getNumeroIdentificador());
         cuenta.setFechaAlta(dto.getFechaAlta());
         cuenta.setTipoCuenta(Cuenta.TipoCuenta.valueOf(dto.getTipoCuenta().toUpperCase()));
+        cuenta.setKmRecorridosMes(dto.getKmRecorridosMes());
+        cuenta.setSaldoCreditos(dto.getSaldoCreditos());
+        cuenta.setFechaRenovacionCupo(dto.getFechaRenovacionCupo());
+        cuenta.setCuentaMercadoPagoId(dto.getCuentaMercadoPagoId());
 
         Cuenta actualizada = cuentaRepository.save(cuenta);
         return CuentaMapper.toDTO(actualizada);

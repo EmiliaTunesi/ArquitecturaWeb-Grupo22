@@ -6,15 +6,13 @@ public class UsuarioCuentaDTO {
 
     private String nombreUsuario;
     private String numeroCuenta;
-    private boolean activa;
     private LocalDate fechaVinculacion;
 
     public UsuarioCuentaDTO() {}
 
-    public UsuarioCuentaDTO(String nombreUsuario, String numeroCuenta, boolean activa, LocalDate fechaVinculacion) {
+    public UsuarioCuentaDTO(String nombreUsuario, String numeroCuenta, LocalDate fechaVinculacion) {
         this.nombreUsuario = nombreUsuario;
         this.numeroCuenta = numeroCuenta;
-        this.activa = activa;
         this.fechaVinculacion = fechaVinculacion;
     }
 
@@ -32,14 +30,6 @@ public class UsuarioCuentaDTO {
 
     public void setNumeroCuenta(String numeroCuenta) {
         this.numeroCuenta = numeroCuenta;
-    }
-
-    public boolean isActiva() {
-        return activa;
-    }
-
-    public void setActiva(boolean activa) {
-        this.activa = activa;
     }
 
     public LocalDate getFechaVinculacion() {

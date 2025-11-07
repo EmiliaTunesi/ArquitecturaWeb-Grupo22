@@ -46,19 +46,16 @@ public class CuentaUsuarioService {
         }
 
         Usuario usuario = usuarioRepository.findById(usuarioId)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + usuarioId));
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + usuarioId));
 
         Cuenta cuenta = cuentaRepository.findById(cuentaId)
-                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada con ID: " + cuentaId));
+                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada: " + cuentaId));
 
         UsuarioCuenta usuarioCuenta = new UsuarioCuenta(usuario, cuenta);
-        usuarioCuenta.setActiva(true);
-        usuarioCuenta.setFechaVinculacion(LocalDate.now());
-
         UsuarioCuenta guardada = usuarioCuentaRepository.save(usuarioCuenta);
+
         return UsuarioCuentaMapper.toDTO(guardada);
     }
-
 
     @Transactional(readOnly = true)
     public List<UsuarioCuentaDTO> listarVinculaciones() {
@@ -69,73 +66,22 @@ public class CuentaUsuarioService {
     }
 
     @Transactional
-    public void desactivarVinculacion(Long usuarioId, Long cuentaId) {
-        UsuarioCuentaid id = new UsuarioCuentaid(usuarioId, cuentaId);
-        UsuarioCuenta uc = usuarioCuentaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Vinculación no encontrada."));
-        uc.setActiva(false);
-        usuarioCuentaRepository.save(uc);
-    }
-
-    @Transactional
     public void anularCuenta(Long cuentaId) {
         Cuenta cuenta = cuentaRepository.findById(cuentaId)
-                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada con ID: " + cuentaId));
+                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada: " + cuentaId));
 
         cuenta.setActiva(false);
         cuenta.setFechaBaja(LocalDate.now());
         cuentaRepository.save(cuenta);
 
-        List<UsuarioCuenta> vinculaciones = usuarioCuentaRepository.findByCuentaId(cuentaId);
-        vinculaciones.forEach(uc -> uc.setActiva(false));
-        usuarioCuentaRepository.saveAll(vinculaciones);
+        // Las vinculaciones NO se eliminan, quedan históricas.
     }
 
-    // Obtener todos los usuarios activos asociados a una cuenta
     @Transactional(readOnly = true)
-    public List<UsuarioDTO> obtenerUsuariosActivosPorCuenta(Long cuentaId) {
-        List<UsuarioCuenta> vinculaciones = usuarioCuentaRepository.findByCuentaIdAndActivaTrue(cuentaId);
+    public List<UsuarioDTO> obtenerUsuariosPorCuenta(Long cuentaId) {
+        List<UsuarioCuenta> vinculaciones = usuarioCuentaRepository.findByCuentaId(cuentaId);
         return vinculaciones.stream()
                 .map(v -> UsuarioMapper.toDTO(v.getUsuario()))
-                .collect(Collectors.toList());
-    }
-
-    // Consultar uso de monopatines por usuario o cuenta (interfaz hacia otro microservicio)
-    @Transactional(readOnly = true)
-    public Map<String, Object> obtenerUsoPorCuenta(Long cuentaId) {
-        Cuenta cuenta = cuentaRepository.findById(cuentaId)
-                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada con ID: " + cuentaId));
-
-
-        Map<String, Object> reporte = new HashMap<>();
-        reporte.put("cuentaId", cuentaId);
-        reporte.put("usuariosAsociados", obtenerUsuariosActivosPorCuenta(cuentaId));
-        reporte.put("mensaje", "Datos listos para cálculo de uso (integración con microservicio de viajes)");
-        return reporte;
-    }
-
-    @Transactional
-    public void reactivarVinculacion(Long usuarioId, Long cuentaId) {
-        UsuarioCuentaid id = new UsuarioCuentaid(usuarioId, cuentaId);
-        UsuarioCuenta uc = usuarioCuentaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Vinculación no encontrada."));
-        uc.setActiva(true);
-        usuarioCuentaRepository.save(uc);
-    }
-
-    @Transactional(readOnly = true)
-    public List<UsuarioCuentaDTO> listarVinculacionesActivas() {
-        return usuarioCuentaRepository.findByActivaTrue()
-                .stream()
-                .map(UsuarioCuentaMapper::toDTO)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public List<UsuarioCuentaDTO> listarVinculacionesInactivas() {
-        return usuarioCuentaRepository.findByActivaFalse()
-                .stream()
-                .map(UsuarioCuentaMapper::toDTO)
                 .collect(Collectors.toList());
     }
 

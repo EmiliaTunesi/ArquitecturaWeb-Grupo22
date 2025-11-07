@@ -11,12 +11,13 @@ public class UsuarioDTO {
 
     private String nombreUsuario;
     private String nombre;
+    private String apellido;
     private String email;
     private String telefono;
     private LocalDateTime fechaRegistro;
+    private Boolean activo;
 
     public UsuarioDTO() {
-        System.out.println(">>> CONSTRUCTOR VACÍO LLAMADO");
     }
 
     public String getNombreUsuario() {
@@ -63,13 +64,31 @@ public class UsuarioDTO {
         this.fechaRegistro = fechaRegistro;
     }
 
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
     @Override
     public String toString() {
         return "UsuarioDTO{nombreUsuario='" + nombreUsuario + '\'' +
                 ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
                 ", email='" + email + '\'' +
                 ", telefono='" + telefono + '\'' +
                 ", fechaRegistro=" + fechaRegistro +
+                ", activo=" + activo +
                 '}';
     }
 }

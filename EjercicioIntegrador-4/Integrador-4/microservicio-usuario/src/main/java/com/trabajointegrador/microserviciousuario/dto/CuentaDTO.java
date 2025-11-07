@@ -1,5 +1,6 @@
 package com.trabajointegrador.microserviciousuario.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class CuentaDTO {
@@ -9,8 +10,44 @@ public class CuentaDTO {
     private String tipoCuenta;
     private boolean activa;
     private LocalDate fechaBaja;
+    private BigDecimal saldoCreditos;
+    private String cuentaMercadoPagoId;
+    private BigDecimal kmRecorridosMes;
+    private LocalDate fechaRenovacionCupo;
 
     public CuentaDTO() {}
+
+    public BigDecimal getSaldoCreditos() {
+        return saldoCreditos;
+    }
+
+    public void setSaldoCreditos(BigDecimal saldoCreditos) {
+        this.saldoCreditos = saldoCreditos;
+    }
+
+    public LocalDate getFechaRenovacionCupo() {
+        return fechaRenovacionCupo;
+    }
+
+    public void setFechaRenovacionCupo(LocalDate fechaRenovacionCupo) {
+        this.fechaRenovacionCupo = fechaRenovacionCupo;
+    }
+
+    public BigDecimal getKmRecorridosMes() {
+        return kmRecorridosMes;
+    }
+
+    public void setKmRecorridosMes(BigDecimal kmRecorridosMes) {
+        this.kmRecorridosMes = kmRecorridosMes;
+    }
+
+    public String getCuentaMercadoPagoId() {
+        return cuentaMercadoPagoId;
+    }
+
+    public void setCuentaMercadoPagoId(String cuentaMercadoPagoId) {
+        this.cuentaMercadoPagoId = cuentaMercadoPagoId;
+    }
 
     public CuentaDTO(String numeroIdentificador, LocalDate fechaAlta, String tipoCuenta) {
         this.numeroIdentificador = numeroIdentificador;
@@ -18,8 +55,6 @@ public class CuentaDTO {
         this.tipoCuenta = tipoCuenta;
         this.activa = true;
     }
-
-    // --- Getters y Setters ---
     public LocalDate getFechaAlta() {
         return fechaAlta;
     }

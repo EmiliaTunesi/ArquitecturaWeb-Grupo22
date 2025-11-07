@@ -1,5 +1,7 @@
 package com.trabajointegrador.microserviciousuario.entity;
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,35 +14,47 @@ public class Cuenta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String numeroIdentificador;
+    @Column(name = "numero_cuenta", nullable = false, unique = true)
+    private String numeroCuenta;
 
-    @Column(nullable = false)
+    @Column(name = "fecha_alta", nullable = false)
     private LocalDate fechaAlta;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private TipoCuenta tipoCuenta; // BÁSICA o PREMIUM
+    @Column(name = "tipo_cuenta", nullable = false)
+    private TipoCuenta tipoCuenta;
+
+    @Column(name = "saldo_creditos", nullable = false)
+    private BigDecimal saldoCreditos = BigDecimal.ZERO;
+
+    @Column(name = "cuenta_mercadopago_id")
+    private String cuentaMercadoPagoId;
 
     @Column(nullable = false)
-    private boolean activa = true; // Nuevo campo para anulación temporal o permanente
+    private boolean activa = true;
 
-    @Column
-    private LocalDate fechaBaja; // Fecha de anulación o suspensión, si aplica
+    @Column(name = "km_recorridos_mes")
+    private BigDecimal kmRecorridosMes;
+
+    @Column(name = "fecha_renovacion_cupo")
+    private LocalDate fechaRenovacionCupo;
+
+    @Column(name = "fecha_baja")
+    private LocalDate fechaBaja;
 
     @OneToMany(mappedBy = "cuenta", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UsuarioCuenta> usuarios = new HashSet<>();
 
+
     public Cuenta() {}
 
-    public Cuenta(String numeroIdentificador, LocalDate fechaAlta, TipoCuenta tipoCuenta) {
-        this.numeroIdentificador = numeroIdentificador;
+    public Cuenta(String numeroCuenta, LocalDate fechaAlta, TipoCuenta tipoCuenta) {
+        this.numeroCuenta = numeroCuenta;
         this.fechaAlta = fechaAlta;
         this.tipoCuenta = tipoCuenta;
         this.activa = true;
     }
 
-    // --- Getters y Setters ---
     public Long getId() {
         return id;
     }
@@ -49,12 +63,12 @@ public class Cuenta {
         this.id = id;
     }
 
-    public String getNumeroIdentificador() {
-        return numeroIdentificador;
+    public String getNumeroCuenta() {
+        return numeroCuenta;
     }
 
-    public void setNumeroIdentificador(String numeroIdentificador) {
-        this.numeroIdentificador = numeroIdentificador;
+    public void setNumeroCuenta(String numeroCuenta) {
+        this.numeroCuenta = numeroCuenta;
     }
 
     public LocalDate getFechaAlta() {
@@ -73,12 +87,20 @@ public class Cuenta {
         this.tipoCuenta = tipoCuenta;
     }
 
-    public Set<UsuarioCuenta> getUsuarios() {
-        return usuarios;
+    public BigDecimal getSaldoCreditos() {
+        return saldoCreditos;
     }
 
-    public void setUsuarios(Set<UsuarioCuenta> usuarios) {
-        this.usuarios = usuarios;
+    public void setSaldoCreditos(BigDecimal saldoCreditos) {
+        this.saldoCreditos = saldoCreditos;
+    }
+
+    public String getCuentaMercadoPagoId() {
+        return cuentaMercadoPagoId;
+    }
+
+    public void setCuentaMercadoPagoId(String cuentaMercadoPagoId) {
+        this.cuentaMercadoPagoId = cuentaMercadoPagoId;
     }
 
     public boolean isActiva() {
@@ -87,11 +109,23 @@ public class Cuenta {
 
     public void setActiva(boolean activa) {
         this.activa = activa;
-        if (!activa) {
-            this.fechaBaja = LocalDate.now();
-        } else {
-            this.fechaBaja = null;
-        }
+        this.fechaBaja = activa ? null : LocalDate.now();
+    }
+
+    public BigDecimal getKmRecorridosMes() {
+        return kmRecorridosMes;
+    }
+
+    public void setKmRecorridosMes(BigDecimal kmRecorridosMes) {
+        this.kmRecorridosMes = kmRecorridosMes;
+    }
+
+    public LocalDate getFechaRenovacionCupo() {
+        return fechaRenovacionCupo;
+    }
+
+    public void setFechaRenovacionCupo(LocalDate fechaRenovacionCupo) {
+        this.fechaRenovacionCupo = fechaRenovacionCupo;
     }
 
     public LocalDate getFechaBaja() {
@@ -100,6 +134,14 @@ public class Cuenta {
 
     public void setFechaBaja(LocalDate fechaBaja) {
         this.fechaBaja = fechaBaja;
+    }
+
+    public Set<UsuarioCuenta> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(Set<UsuarioCuenta> usuarios) {
+        this.usuarios = usuarios;
     }
 
     public enum TipoCuenta {
