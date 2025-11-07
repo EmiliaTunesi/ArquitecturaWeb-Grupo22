@@ -1,48 +1,56 @@
 package com.trabajointegrador.microserviciousuario.entity;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String nombre_usuario;
+        @Column(name = "nombre_usuario", nullable = false, unique = true)
+        private String nombreUsuario;
 
-    @Column(nullable = false)
-    private String nombre;
+        @Column(nullable = false)
+        private String nombre;
 
-    @Column(nullable = false, unique = true)
-    private String email;
+        @Column(nullable = false, unique = true)
+        private String email;
 
-    @Column(nullable = false)
-    private String telefono;
+        @Column(nullable = false)
+        private String telefono;
 
-    @Column
-    private Date fecha_registro;
+        @Column(name = "fecha_registro")
+        private LocalDateTime fechaRegistro;
 
+        public Usuario() {}
 
-    public Usuario() {}
+        public Usuario(String nombreUsuario, String nombre, String email, String telefono, LocalDateTime fechaRegistro) {
+            this.nombreUsuario = nombreUsuario;
+            this.nombre = nombre;
+            this.email = email;
+            this.telefono = telefono;
+            this.fechaRegistro = fechaRegistro;
+        }
 
-    public Usuario(String nombre_usuario, String nombre, String email, String telefono, Date fecha_registro) {
-        this.nombre_usuario = nombre_usuario;
-        this.nombre = nombre;
-        this.email = email;
-        this.telefono = telefono;
-        this.fecha_registro = fecha_registro;
+    public Long getId() {
+        return id;
     }
 
-    public String getNombre_usuario() {
-        return nombre_usuario;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setNombre_usuario(String nombre_usuario) {
-        this.nombre_usuario = nombre_usuario;
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
     public String getNombre() {
@@ -69,20 +77,23 @@ public class Usuario {
         this.telefono = telefono;
     }
 
-    public Date getFecha_registro() {
-        return fecha_registro;
+    public LocalDateTime getFechaRegistro() {
+        return fechaRegistro;
     }
 
-    public void setFecha_registro(Date fecha_registro) {
-        this.fecha_registro = fecha_registro;
+    public void setFechaRegistro(LocalDateTime fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public String toString() {
+        return "Usuario{id=" + id +
+                ", nombreUsuario='" + nombreUsuario + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", email='" + email + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", fechaRegistro=" + fechaRegistro +
+                '}';
     }
 }
 

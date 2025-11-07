@@ -1,37 +1,75 @@
 package com.trabajointegrador.microserviciousuario.dto;
 
+import java.time.LocalDateTime;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UsuarioDTO {
 
-    private String nombre_usuario;
+    private String nombreUsuario;
     private String nombre;
     private String email;
     private String telefono;
-    private Date fecha_registro;
+    private LocalDateTime fechaRegistro;
 
-    public UsuarioDTO() {}
-
-    public UsuarioDTO(String nombre_usuario, String nombre, String email, String telefono, Date fecha_registro) {
-        this.nombre_usuario = nombre_usuario;
-        this.nombre = nombre;
-        this.email = email;
-        this.telefono = telefono;
-        this.fecha_registro = fecha_registro;
+    public UsuarioDTO() {
+        System.out.println(">>> CONSTRUCTOR VACÍO LLAMADO");
     }
 
-    public String getNombre_usuario() { return nombre_usuario; }
-    public void setNombre_usuario(String nombre_usuario) { this.nombre_usuario = nombre_usuario; }
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
 
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
+    public void setNombreUsuario(String nombreUsuario) {
+        System.out.println(">>> setNombreUsuario: " + nombreUsuario);
+        this.nombreUsuario = nombreUsuario;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public String getNombre() {
+        return nombre;
+    }
 
-    public String getTelefono() { return telefono; }
-    public void setTelefono(String telefono) { this.telefono = telefono; }
+    public void setNombre(String nombre) {
+        System.out.println(">>> setNombre: " + nombre);
+        this.nombre = nombre;
+    }
 
-    public Date getFecha_registro() { return fecha_registro; }
-    public void setFecha_registro(Date fecha_registro) { this.fecha_registro = fecha_registro; }
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        System.out.println(">>> setEmail: " + email);
+        this.email = email;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        System.out.println(">>> setTelefono: " + telefono);
+        this.telefono = telefono;
+    }
+
+    public LocalDateTime getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(LocalDateTime fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }
+
+    @Override
+    public String toString() {
+        return "UsuarioDTO{nombreUsuario='" + nombreUsuario + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", email='" + email + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", fechaRegistro=" + fechaRegistro +
+                '}';
+    }
 }

@@ -4,45 +4,56 @@ import com.trabajointegrador.microserviciousuario.dto.UsuarioDTO;
 import com.trabajointegrador.microserviciousuario.entity.Usuario;
 import com.trabajointegrador.microserviciousuario.mappers.UsuarioMapper;
 import com.trabajointegrador.microserviciousuario.repository.UsuarioRepository;
-import org.springframework.transaction.annotation.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Service
+@Slf4j
 public class UsuarioService {
 
-    private final UsuarioRepository usuarioRepository;
+    private final UsuarioRepository repo;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
+    public UsuarioService(UsuarioRepository repo) {
+        this.repo = repo;
     }
 
-    @Transactional
     public UsuarioDTO crearUsuario(UsuarioDTO dto) {
         Usuario usuario = UsuarioMapper.toEntity(dto);
-        Usuario guardado = usuarioRepository.save(usuario);
+
+        if (usuario.getFechaRegistro() == null) {
+            usuario.setFechaRegistro(LocalDateTime.now());
+        }
+        Usuario guardado = repo.save(usuario);
         return UsuarioMapper.toDTO(guardado);
     }
 
-    @Transactional(readOnly = true)
-    public List<UsuarioDTO> listarUsuarios() {
-        return usuarioRepository.findAll()
-                .stream()
-                .map(UsuarioMapper::toDTO)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public UsuarioDTO obtenerPorId(Long id) {
-        Usuario usuario = usuarioRepository.findById(id)
+    public UsuarioDTO actualizarUsuario(Long id, UsuarioDTO dto) {
+        Usuario usuario = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        return UsuarioMapper.toDTO(usuario);
+
+        UsuarioMapper.updateEntity(usuario, dto);
+
+        Usuario guardado = repo.save(usuario);
+        return UsuarioMapper.toDTO(guardado);
     }
 
-    @Transactional
+    public List<UsuarioDTO> listarUsuarios() {
+        return repo.findAll().stream()
+                .map(UsuarioMapper::toDTO)
+                .toList();
+    }
+
+    public UsuarioDTO obtenerPorId(Long id) {
+        return repo.findById(id)
+                .map(UsuarioMapper::toDTO)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    }
+
     public void eliminarUsuario(Long id) {
-        usuarioRepository.deleteById(id);
+        repo.deleteById(id);
     }
 }

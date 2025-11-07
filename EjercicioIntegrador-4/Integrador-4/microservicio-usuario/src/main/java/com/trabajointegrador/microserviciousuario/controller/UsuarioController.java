@@ -1,9 +1,7 @@
 package com.trabajointegrador.microserviciousuario.controller;
 
 import com.trabajointegrador.microserviciousuario.dto.UsuarioDTO;
-import com.trabajointegrador.microserviciousuario.mappers.UsuarioMapper;
 import com.trabajointegrador.microserviciousuario.service.UsuarioService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,46 +18,30 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    // Crear un usuario
     @PostMapping
-    public ResponseEntity<UsuarioDTO> crearUsuario(@RequestBody UsuarioDTO dto) {
-        UsuarioDTO creado = usuarioService.crearUsuario(dto);
-        return new ResponseEntity<>(creado, HttpStatus.CREATED);
+    public ResponseEntity<UsuarioDTO> crear(@RequestBody UsuarioDTO dto) {
+        UsuarioDTO respuesta = usuarioService.crearUsuario(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(respuesta);
     }
 
-    // Listar todos los usuarios
     @GetMapping
-    public ResponseEntity<List<UsuarioDTO>> listarUsuarios() {
-        List<UsuarioDTO> usuarios = usuarioService.listarUsuarios();
-        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+    public ResponseEntity<List<UsuarioDTO>> listar() {
+        return ResponseEntity.ok(usuarioService.listarUsuarios());
     }
 
-    // Obtener usuario por ID
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioDTO> obtenerUsuario(@PathVariable Long id) {
-        UsuarioDTO usuario = usuarioService.obtenerPorId(id);
-        return new ResponseEntity<>(usuario, HttpStatus.OK);
+    public ResponseEntity<UsuarioDTO> obtener(@PathVariable Long id) {
+        return ResponseEntity.ok(usuarioService.obtenerPorId(id));
     }
 
-    // Actualizar usuario
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioDTO> actualizarUsuario(@PathVariable Long id, @RequestBody UsuarioDTO dto) {
-        UsuarioDTO usuarioExistente = usuarioService.obtenerPorId(id);
-
-        usuarioExistente.setNombre(dto.getNombre());
-        usuarioExistente.setNombre_usuario(dto.getNombre_usuario());
-        usuarioExistente.setEmail(dto.getEmail());
-        usuarioExistente.setTelefono(dto.getTelefono());
-
-        UsuarioDTO actualizado = usuarioService.crearUsuario(UsuarioMapper.toDTO(UsuarioMapper.toEntity(usuarioExistente)));
-        return new ResponseEntity<>(actualizado, HttpStatus.OK);
+    public ResponseEntity<UsuarioDTO> actualizar(@PathVariable Long id, @RequestBody UsuarioDTO dto) {
+        return ResponseEntity.ok(usuarioService.actualizarUsuario(id, dto));
     }
 
-    // Eliminar usuario
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarUsuario(@PathVariable Long id) {
-        usuarioService.obtenerPorId(id);
+    public ResponseEntity<Void> borrar(@PathVariable Long id) {
         usuarioService.eliminarUsuario(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 }
