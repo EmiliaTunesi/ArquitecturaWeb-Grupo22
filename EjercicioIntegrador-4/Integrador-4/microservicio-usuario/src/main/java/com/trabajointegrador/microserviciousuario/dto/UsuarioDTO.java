@@ -1,12 +1,11 @@
 package com.trabajointegrador.microserviciousuario.dto;
 
+import lombok.AllArgsConstructor;
+
 import java.time.LocalDateTime;
-import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
+@AllArgsConstructor
 public class UsuarioDTO {
 
     private String nombreUsuario;
