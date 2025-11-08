@@ -1,6 +1,7 @@
 package com.trabajointegrador.microserviciousuario.controller;
 
 import com.trabajointegrador.microserviciousuario.dto.UsuarioDTO;
+import com.trabajointegrador.microserviciousuario.dto.UsuarioSimpleDTO;
 import com.trabajointegrador.microserviciousuario.service.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/api/usuarios")
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
@@ -43,5 +44,12 @@ public class UsuarioController {
     public ResponseEntity<Void> borrar(@PathVariable Long id) {
         usuarioService.eliminarUsuario(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/filtrar")
+    public ResponseEntity<List<UsuarioSimpleDTO>> filtrarActivos(
+            @RequestParam boolean activo
+    ) {
+        return ResponseEntity.ok(usuarioService.obtenerPorActivo(activo));
     }
 }

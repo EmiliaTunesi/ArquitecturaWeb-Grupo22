@@ -1,11 +1,15 @@
 package com.trabajointegrador.microserviciousuario.service;
 
 import com.trabajointegrador.microserviciousuario.dto.UsuarioDTO;
+import com.trabajointegrador.microserviciousuario.dto.UsuarioSimpleDTO;
 import com.trabajointegrador.microserviciousuario.entity.Usuario;
 import com.trabajointegrador.microserviciousuario.mappers.UsuarioMapper;
 import com.trabajointegrador.microserviciousuario.repository.UsuarioRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -51,6 +55,13 @@ public class UsuarioService {
         return repo.findById(id)
                 .map(UsuarioMapper::toDTO)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    }
+
+    public List<UsuarioSimpleDTO> obtenerPorActivo(boolean activo) {
+        return repo.findByActivo(activo)
+                .stream()
+                .map(u -> new UsuarioSimpleDTO(u.getNombreUsuario()))
+                .toList();
     }
 
     public void eliminarUsuario(Long id) {
