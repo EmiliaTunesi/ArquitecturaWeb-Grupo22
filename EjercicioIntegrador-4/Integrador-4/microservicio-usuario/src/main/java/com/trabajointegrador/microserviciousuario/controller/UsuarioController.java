@@ -2,11 +2,14 @@ package com.trabajointegrador.microserviciousuario.controller;
 
 import com.trabajointegrador.microserviciousuario.dto.UsuarioDTO;
 import com.trabajointegrador.microserviciousuario.dto.UsuarioSimpleDTO;
+import com.trabajointegrador.microserviciousuario.dto.UsuarioUsoDTO;
 import com.trabajointegrador.microserviciousuario.service.UsuarioService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -51,5 +54,15 @@ public class UsuarioController {
             @RequestParam boolean activo
     ) {
         return ResponseEntity.ok(usuarioService.obtenerPorActivo(activo));
+    }
+
+    @GetMapping("/uso")
+    public ResponseEntity<UsuarioUsoDTO> obtenerUso(
+            @RequestParam Long idUsuario,
+            @RequestParam Long idCuenta,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate desde,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate hasta
+    ) {
+        return ResponseEntity.ok(usuarioService.obtenerUso(idUsuario, idCuenta, desde, hasta));
     }
 }
