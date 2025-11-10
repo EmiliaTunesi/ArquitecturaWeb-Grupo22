@@ -4,7 +4,6 @@ public enum tipoTarifa {
 
         NORMAL,
         PAUSA,
-        EXTENSA,
         PROMOCIONAL,
         FIN_SEMANA
 

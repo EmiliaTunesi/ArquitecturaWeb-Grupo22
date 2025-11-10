@@ -1,52 +1,16 @@
 spring:
-  application:
-    name: microservicio-administrador
-  cloud:
-    config:
-      enabled: false   # Deshabilita config server si no lo usas
-
-  # Configuración de base de datos H2 (en memoria)
   datasource:
-    url: jdbc:h2:mem:testdb
-    driverClassName: org.h2.Driver
-    username: sa
-    password: password
+    url: jdbc:postgresql://localhost:8080/base-microservicio
+    username: postgres
+    password: 370414
+    driver-class-name: org.postgresql.Driver
+
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
     show-sql: true
-
-# Agregar esta sección
-servicio:
-  monopatin:
-    url: http://localhost:8082  # Puerto donde estará tu otro microservicio
-
-# Configuración más detallada de Feign
-feign:
-  circuitbreaker:
-    enabled: true
-  client:
-    config:
-      default:
-        connectTimeout: 5000
-        readTimeout: 5000
-        loggerLevel: full
-
-# Configuración de logging para ver más detalles
-logging:
-  level:
-    org.example.microservicioadministrador: DEBUG
-    org.springframework.web: DEBUG
-
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 server:
-  port: 8081           # Solo el puerto, sin context-path
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-    fetch-registry: true
-    register-with-eureka: true
-  instance:
-    prefer-ip-address: true
+  port: 8088
