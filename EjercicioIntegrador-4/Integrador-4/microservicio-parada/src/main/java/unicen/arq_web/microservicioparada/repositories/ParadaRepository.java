@@ -1,15 +1,20 @@
 package unicen.arq_web.microservicioparada.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import unicen.arq_web.microservicioparada.dto.ParadaDTO;
 import unicen.arq_web.microservicioparada.entities.Parada;
+
+import java.util.ArrayList;
+import java.util.Optional;
 
 
 @Repository
 public interface ParadaRepository extends JpaRepository<Parada,Integer> {
-    @Query("SELECT '*' FROM Parada WHERE id = :id")
-    public ParadaDTO findById(@Param("id") Long id);
+    public Optional<Parada> findById(Integer id);
+
+    public ArrayList<Parada> findAll();
+
+    public void delete(Parada p);
+
+    public Optional<Parada> save(Parada nueva);
 }
