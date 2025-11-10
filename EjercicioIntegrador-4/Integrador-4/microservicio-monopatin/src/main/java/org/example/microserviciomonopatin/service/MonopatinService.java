@@ -4,9 +4,12 @@ package org.example.microserviciomonopatin.service;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.example.microserviciomonopatin.dto.dtoRequest.ActualizacionMonopatinDTO;
+import org.example.microserviciomonopatin.dto.dtoRequest.ActualizarUbicacionDTO;
 import org.example.microserviciomonopatin.dto.dtoRequest.MonopatinRequestDTO;
 import org.example.microserviciomonopatin.dto.dtoRequest.UbicarMonopatinRequestDTO;
 import org.example.microserviciomonopatin.dto.dtoResponse.MonopatinResponseDTO;
+import org.example.microserviciomonopatin.dto.dtoResponse.ReporteUsoMonopatinDTO;
 import org.example.microserviciomonopatin.entity.MonopatinEntity;
 import org.example.microserviciomonopatin.exception.ResourceNotFoundException;
 import org.example.microserviciomonopatin.repository.MonopatinRepository;
@@ -117,6 +120,83 @@ public class MonopatinService {
         return monopatinRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Monopatín no encontrado con id: " + id));
     }
+
+
+    //Limite de km en mantenimiento
+    private static final double LIMITE_KM_MANTENIMIENTO = 100.0;
+
+    public List<ReporteUsoMonopatinDTO> generarReporte(boolean incluirPausas) {
+        List<MonopatinEntity> monopatines = monopatinRepository.findAll();
+
+        return monopatines.stream().map(m -> {
+            double tiempoTotal = m.getTiempoUsoTotal();
+            if (incluirPausas && m.getTiempoPausaTotal() != null) {
+                tiempoTotal += m.getTiempoPausaTotal();
+            }
+
+            boolean requiereMantenimiento =
+                    m.getKilometrosTotales() != null && m.getKilometrosTotales() > LIMITE_KM_MANTENIMIENTO;
+
+            return new ReporteUsoMonopatinDTO(
+                    m.getId(),
+                    m.getEstado(),
+                    m.getKilometrosTotales(),
+                    m.getTiempoUsoTotal(),
+                    m.getTiempoPausaTotal(),
+                    requiereMantenimiento
+            );
+        }).collect(Collectors.toList());
     }
+
+
+    //Me devuelve si el monopatin esta disponible
+    @Transactional(readOnly = true)
+    public boolean estaDisponible(Long id) {
+        MonopatinEntity monopatin = monopatinRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Monopatín no encontrado"));
+        boolean disponible = monopatin.getEstado() == EstadoMonopatin.DISPONIBLE;
+
+        if  (disponible) {
+            monopatin.setEstado(EstadoMonopatin.EN_USO);
+        }
+        return disponible;
+    }
+
+
+    public void finalizarUso(Long id, ActualizacionMonopatinDTO dto) {
+        MonopatinEntity monopatin = monopatinRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Monopatín no encontrado"));
+
+        // Actualizar métricas
+        monopatin.setKilometrosTotales(
+                monopatin.getKilometrosTotales() + dto.getKilometrosRecorridos());
+        monopatin.setTiempoUsoTotal(
+                monopatin.getTiempoUsoTotal() + dto.getTiempoUso());
+        monopatin.setTiempoPausaTotal(
+                monopatin.getTiempoPausaTotal() + dto.getTiempoPausa());
+
+        // Cambiar estado automáticamente
+        monopatin.setEstado(EstadoMonopatin.DISPONIBLE);
+
+        monopatinRepository.save(monopatin);
+    }
+
+    @Transactional
+    public MonopatinResponseDTO actualizarUbicacion(Long id, ActualizarUbicacionDTO dto) {
+        // 1️⃣ Buscar el monopatín por ID
+        MonopatinEntity monopatin = monopatinRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Monopatín con ID " + id + " no encontrado"));
+
+        // 2️⃣ Actualizar las coordenadas
+        monopatin.setLatitudActual(dto.getLatitudFinal());
+        monopatin.setLongitudActual(dto.getLongitudFinal());
+
+        // 3️⃣ Guardar cambios
+        MonopatinEntity actualizado = monopatinRepository.save(monopatin);
+
+        // 4️⃣ Mapear a DTO de respuesta
+        return modelMapper.map(actualizado, MonopatinResponseDTO.class);
+    }
+}
 
 
