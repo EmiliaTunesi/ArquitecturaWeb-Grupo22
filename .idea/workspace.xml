@@ -6,12 +6,23 @@
   <component name="ChangeListManager">
     <list default="true" id="a49e4b5b-692d-413f-9313-0ab9cf3791e7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-administrador/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-administrador/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-administrador/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-administrador/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-administrador/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-administrador/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-administrador/src/main/java/org/example/microservicioadministrador/MicroservicioAdministradorApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-administrador/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-administrador/src/test/java/org/example/microservicioadministrador/MicroservicioAdministradorApplicationTests.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/MicroservicioParadaApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/MicroservicioParadaApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/controllers/ParadaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/controllers/ParadaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/dto/ParadaDTO.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/entities/Parada.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/entities/Parada.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/models/ParadaDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/models/ParadaDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/repositories/ParadaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/repositories/ParadaRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/services/ParadaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/services/ParadaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,6 +139,8 @@
       <workItem from="1762538853409" duration="426000" />
       <workItem from="1762615659367" duration="14036000" />
       <workItem from="1762781352592" duration="8707000" />
+      <workItem from="1762814729911" duration="145000" />
+      <workItem from="1762818628703" duration="136000" />
     </task>
     <servers />
   </component>

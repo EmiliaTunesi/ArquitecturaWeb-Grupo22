@@ -2,6 +2,8 @@ package unicen.arq_web.microservicioparada.services;
 
 import org.springframework.stereotype.Service;
 import unicen.arq_web.microservicioparada.entities.Parada;
+import unicen.arq_web.microservicioparada.feignClients.MonopatinFeignClient;
+import unicen.arq_web.microservicioparada.models.Monopatin;
 import unicen.arq_web.microservicioparada.models.ParadaDto;
 import unicen.arq_web.microservicioparada.repositories.ParadaRepository;
 
@@ -11,6 +13,7 @@ import java.util.Optional;
 @Service
 public class ParadaService {
     private ParadaRepository pr;
+    private MonopatinFeignClient fcMonop;
 
     public ParadaDto getById(Integer id){
         if (pr.findById(id).isPresent()) {
@@ -34,7 +37,7 @@ public class ParadaService {
 
     public ParadaDto update(Integer id, Parada p) {
         if (pr.findById(id).isPresent()) {
-            Parada salida = this.pr.save(p).get();
+            Parada salida = this.pr.save(p);
             ParadaDto salidaDto = new ParadaDto(salida);
             return salidaDto;
         }else{
@@ -46,11 +49,24 @@ public class ParadaService {
 
 
     public ParadaDto add(Parada p) {
-        Optional<Parada> salida = this.pr.save(p);
-        ParadaDto salidaDto = new ParadaDto(salida.get());
+        Parada salida = this.pr.save(p);
+        ParadaDto salidaDto = new ParadaDto(salida);
         return salidaDto;
     }
 
+    public ParadaDto estacionar(Integer idParada, Long idMonopatin) {
+        Monopatin m = this.fcMonop.getById(idMonopatin);
+        pr.findById(idParada).ifPresent(p -> {
+            p.addMonopatin(m);
+            pr.save(p);
+        });
+        if (pr.findById(idParada).isPresent()){
+            Parada actualizada =  pr.findById(idParada).get();
+            return new ParadaDto(actualizada);
+        }else{
+            throw new RuntimeException("No existe parada con el id: " + idParada);
+        }
+    }
 
 
 }

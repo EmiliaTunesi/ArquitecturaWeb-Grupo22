@@ -38,5 +38,7 @@ public class Parada {
         return new ArrayList<Monopatin>(this.monopEstacionados);
     }
 
-
+    public void addMonopatin(Monopatin monopatin) {
+        this.monopEstacionados.add(monopatin);
+    }
 }

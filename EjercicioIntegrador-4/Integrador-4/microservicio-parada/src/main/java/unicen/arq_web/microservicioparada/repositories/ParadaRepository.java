@@ -16,5 +16,7 @@ public interface ParadaRepository extends JpaRepository<Parada,Integer> {
 
     public void delete(Parada p);
 
-    public Optional<Parada> save(Parada nueva);
+    public Parada save(Parada nueva);
+
+
 }

@@ -1,11 +1,13 @@
 package unicen.arq_web.microservicioparada.models;
 
+import lombok.NoArgsConstructor;
 import org.antlr.v4.runtime.misc.Pair;
 import unicen.arq_web.microservicioparada.entities.Parada;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+@NoArgsConstructor
 public class ParadaDto {
 
     private Pair<Double, Double> ubicacion;

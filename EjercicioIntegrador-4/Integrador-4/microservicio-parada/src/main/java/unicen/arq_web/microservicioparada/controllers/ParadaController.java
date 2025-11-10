@@ -63,6 +63,19 @@ public class ParadaController {
         }
     }
 
+    @PutMapping("parada/{idParad}/estacionar/{idMonop}")
+    public ResponseEntity<ParadaDto> estacionar(@PathVariable("idParad") Integer idParad, @PathVariable("idMonop") Long idMonop){
+        try{
+            ps.estacionar(idParad, idMonop);
+            return ResponseEntity.ok(null);
+        }
+        catch (RuntimeException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+
 
 
 }
