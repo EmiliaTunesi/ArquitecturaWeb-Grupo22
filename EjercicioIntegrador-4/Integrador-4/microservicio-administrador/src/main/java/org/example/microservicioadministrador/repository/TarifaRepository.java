@@ -15,30 +15,33 @@ import java.util.Optional;
 
 @Repository
 public interface TarifaRepository extends JpaRepository<Tarifa, Long> {
-    /*
-     // Para el método findAll() del service
-    List<Tarifa> findAll();
-
-    // Para el método findById() del service
-    Optional<Tarifa> findById(Long id);
-
-    // Para los métodos save() y update() del service
-    Tarifa save(Tarifa tarifa);
-
-    // Para el método delete() del service
-    void deleteById(Long id);
-     */
-    Optional<Tarifa> findByTipo(tipoTarifa tipo);
 
     @Query(value = """
-        SELECT * 
-        FROM tarifa 
-        WHERE tipo = 'PROMOCION' 
-        AND :fechaActual BETWEEN vigente_desde AND vigente_hasta
-        ORDER BY vigente_desde DESC 
-        LIMIT 1
-        """,
-            nativeQuery = true)
-    Optional<Tarifa> findTarifaPromocionalVigente(@Param("fecha") LocalDate fecha);
+    SELECT t 
+    FROM Tarifa t 
+    WHERE t.tipo = :tipo
+    ORDER BY t.vigenteDesde DESC
+    LIMIT 1
+    """)
+    Optional<Tarifa> findByTipo(@Param("tipo") tipoTarifa tipo);
+
+    @Query(value = """    
+SELECT *
+FROM tarifa
+WHERE tipo = 'PROMOCIONAL'
+  AND vigente_desde <= CURRENT_DATE
+  AND vigente_hasta >= CURRENT_DATE
+UNION
+SELECT *
+FROM tarifa
+WHERE tipo = 'NORMAL'
+  AND vigente_hasta IS NULL
+ORDER BY vigente_desde DESC
+LIMIT 1;
+
+        """, nativeQuery = true)
+    Optional<Tarifa> findTarifaPromocionalVigente();
+//devuelvo la tarifa mas reciente que esta vigente hoy
+
 
 }

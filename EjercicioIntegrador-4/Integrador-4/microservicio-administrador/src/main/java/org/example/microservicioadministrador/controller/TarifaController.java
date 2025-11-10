@@ -16,14 +16,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/administrar")
+@RequestMapping("/tarifa")
 @RequiredArgsConstructor
 public class TarifaController {
 
     private final TarifaService tarifaService;
 
-
-    @PostMapping("/tarifas")
+    @PostMapping("/nueva")
     public ResponseEntity<?> createTarifa(@RequestBody TarifaRequestDTO tarifa) {
         try {
             TarifaResponseDTO tt = tarifaService.save(tarifa);
@@ -65,23 +64,22 @@ public class TarifaController {
                     .body("{\"error\":\"Error. Por favor intente más tarde.\"}");
         }
     }
-    @GetMapping
+    @GetMapping("/total")
     public ResponseEntity<?> getAlltarifas() throws Exception {
         List<TarifaResponseDTO> tt =  tarifaService.findAll();
         return ResponseEntity.ok(tt);
     }
-
-    @PostMapping("/ajuste/precio")
-    public ResponseEntity<?> ajustarPrecio(@RequestBody TarifaRequestDTO tarifaDTO) {
-        try {
-            TarifaResponseDTO tarifaActualizada = tarifaService.ajustarPrecio(tarifaDTO);
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(tarifaActualizada);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("{\"error\":\"Error al ajustar el precio. " + e.getMessage() + "\"}");
+    @GetMapping ("/tipo/{tipo}")//la tarifa mas actual del tipo seleccionado
+    public ResponseEntity<?> getTipoTarifa(@PathVariable tipoTarifa tipo) throws Exception {
+        try{
+            TarifaResponseDTO tarifa = tarifaService.findByTipo(tipo);
+            return ResponseEntity.status(HttpStatus.OK).body(tarifa);
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("{\"error\":\"Error\"}");
         }
     }
+
 
     @GetMapping("/aplicable")
     public ResponseEntity<?> obtenerTarifaAplicable() {

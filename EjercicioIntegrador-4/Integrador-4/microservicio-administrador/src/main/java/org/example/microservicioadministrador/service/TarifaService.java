@@ -21,56 +21,14 @@ public class TarifaService {
 
     private final TarifaRepository tarifaRepository;
 
-    @Transactional
-    public TarifaResponseDTO ajustarPrecio(TarifaRequestDTO tarifaDTO) throws Exception {
-        try {
-            // Buscar si existe una tarifa del mismo tipo
-            Optional<Tarifa> tarifaExistente = tarifaRepository.findByTipo(tarifaDTO.getTipo());
-
-            if (tarifaExistente.isPresent()) {
-                // Si existe, actualizar
-                Tarifa tarifa = tarifaExistente.get();
-                tarifa.setPrecio_min(tarifaDTO.getPrecio_min());
-                tarifa.setVigenteDesde(tarifaDTO.getVigenteDesde());
-                tarifa.setVigenteHasta(tarifaDTO.getVigenteHasta());
-                tarifa.setTiempoEspera(tarifaDTO.getTiempoEspera());
-
-                Tarifa tarifaActualizada = tarifaRepository.save(tarifa);
-                return convertirADTO(tarifaActualizada);
-            } else {
-                // Si no existe, crear nueva
-                Tarifa nuevaTarifa = new Tarifa();
-                nuevaTarifa.setNombre(tarifaDTO.getNombre());
-                nuevaTarifa.setPrecio_min(tarifaDTO.getPrecio_min());
-                nuevaTarifa.setTipo(tarifaDTO.getTipo());
-                nuevaTarifa.setTiempoEspera(tarifaDTO.getTiempoEspera());
-                nuevaTarifa.setVigenteDesde(tarifaDTO.getVigenteDesde());
-                nuevaTarifa.setVigenteHasta(tarifaDTO.getVigenteHasta());
-
-                Tarifa tarifaGuardada = tarifaRepository.save(nuevaTarifa);
-                return convertirADTO(tarifaGuardada);
-            }
-        } catch (Exception e) {
-            throw new Exception("Error al ajustar el precio: " + e.getMessage());
-        }
-    }
 
     @Transactional
     public TarifaResponseDTO obtenerTarifaAplicable() throws Exception {
         try {
-            LocalDate fechaActual = LocalDate.now();
+            Tarifa tarifa = tarifaRepository.findTarifaPromocionalVigente()
+                    .orElseThrow(() -> new Exception("No existe tarifa vigente configurada"));
 
-            // 1. Verificar si hay alguna promoción vigente
-            Optional<Tarifa> tarifaPromocional = tarifaRepository.findTarifaPromocionalVigente(fechaActual);
-            if (tarifaPromocional.isPresent()) {
-                return convertirADTO(tarifaPromocional.get());
-            }
-
-            // 2. Si no hay promoción, retornar la tarifa normal
-            Tarifa tarifaNormal = tarifaRepository.findByTipo(tipoTarifa.NORMAL)
-                    .orElseThrow(() -> new Exception("No existe tarifa normal configurada"));
-
-            return convertirADTO(tarifaNormal);
+            return convertirTarifaResponseDTO(tarifa);
 
         } catch (Exception e) {
             throw new Exception("Error al obtener tarifa aplicable: " + e.getMessage());
@@ -81,27 +39,11 @@ public class TarifaService {
     @Transactional
     public TarifaResponseDTO save(TarifaRequestDTO tarifaDTO) throws Exception {
         try {
-            // 1. Convertir el DTO a Entidad
-            Tarifa tarifa = new Tarifa();
-            tarifa.setNombre(tarifaDTO.getNombre());
-            tarifa.setPrecio_min(tarifaDTO.getPrecio_min());
-            tarifa.setTipo(tarifaDTO.getTipo());
-            tarifa.setTiempoEspera(tarifaDTO.getTiempoEspera());
-            tarifa.setVigenteDesde(tarifaDTO.getVigenteDesde());
-            tarifa.setVigenteHasta(tarifaDTO.getVigenteHasta());
+            Tarifa tarifa = convertirRequestAtarifa(tarifaDTO);
 
-            // 2. Guardar la entidad
-            Tarifa tarifaGuardada = tarifaRepository.save(tarifa);
+            tarifaRepository.save(tarifa);
 
-            // 3. Convertir la entidad guardada a DTO de respuesta
-            TarifaResponseDTO responseDTO = new TarifaResponseDTO();
-            responseDTO.setId(tarifaGuardada.getId());
-            responseDTO.setNombre(tarifaGuardada.getNombre());
-            responseDTO.setPrecio_min(tarifaGuardada.getPrecio_min());
-            responseDTO.setTipo(tarifaGuardada.getTipo());
-            responseDTO.setTiempoEspera(tarifaGuardada.getTiempoEspera());
-            responseDTO.setVigenteDesde(tarifaGuardada.getVigenteDesde());
-            responseDTO.setVigenteHasta(tarifaGuardada.getVigenteHasta());
+            TarifaResponseDTO responseDTO = convertirTarifaResponseDTO(tarifa);
 
             return responseDTO;
         } catch (Exception e) {
@@ -112,11 +54,9 @@ public class TarifaService {
     @Transactional
     public TarifaResponseDTO update(Long id, TarifaRequestDTO tarifaDTO) throws Exception {
         try {
-            // 1. Verificar si existe la tarifa
             Tarifa tarifaExistente = tarifaRepository.findById(id)
                     .orElseThrow(() -> new Exception("No existe tarifa con ID: " + id));
 
-            // 2. Actualizar los datos
             tarifaExistente.setNombre(tarifaDTO.getNombre());
             tarifaExistente.setPrecio_min(tarifaDTO.getPrecio_min());
             tarifaExistente.setTipo(tarifaDTO.getTipo());
@@ -124,18 +64,9 @@ public class TarifaService {
             tarifaExistente.setVigenteDesde(tarifaDTO.getVigenteDesde());
             tarifaExistente.setVigenteHasta(tarifaDTO.getVigenteHasta());
 
-            // 3. Guardar los cambios
             Tarifa tarifaActualizada = tarifaRepository.save(tarifaExistente);
 
-            // 4. Convertir a DTO de respuesta
-            TarifaResponseDTO responseDTO = new TarifaResponseDTO();
-            responseDTO.setId(tarifaActualizada.getId());
-            responseDTO.setNombre(tarifaActualizada.getNombre());
-            responseDTO.setPrecio_min(tarifaActualizada.getPrecio_min());
-            responseDTO.setTipo(tarifaActualizada.getTipo());
-            responseDTO.setTiempoEspera(tarifaActualizada.getTiempoEspera());
-            responseDTO.setVigenteDesde(tarifaActualizada.getVigenteDesde());
-            responseDTO.setVigenteHasta(tarifaActualizada.getVigenteHasta());
+            TarifaResponseDTO responseDTO = convertirTarifaResponseDTO(tarifaActualizada);
 
             return responseDTO;
         } catch (Exception e) {
@@ -145,20 +76,11 @@ public class TarifaService {
     @Transactional
     public List<TarifaResponseDTO> findAll() throws Exception {
         try {
-            // 1. Obtener todas las tarifas
             List<Tarifa> tarifas = tarifaRepository.findAll();
             List<TarifaResponseDTO> responseDTOs = new ArrayList<>();
 
-            // 2. Convertir cada entidad a DTO
             for (Tarifa tarifa : tarifas) {
-                TarifaResponseDTO dto = new TarifaResponseDTO();
-                dto.setId(tarifa.getId());
-                dto.setNombre(tarifa.getNombre());
-                dto.setPrecio_min(tarifa.getPrecio_min());
-                dto.setTipo(tarifa.getTipo());
-                dto.setTiempoEspera(tarifa.getTiempoEspera());
-                dto.setVigenteDesde(tarifa.getVigenteDesde());
-                dto.setVigenteHasta(tarifa.getVigenteHasta());
+                TarifaResponseDTO dto = convertirTarifaResponseDTO(tarifa);
                 responseDTOs.add(dto);
             }
 
@@ -171,19 +93,10 @@ public class TarifaService {
     @Transactional
     public TarifaResponseDTO findById(Long id) throws Exception {
         try {
-            // 1. Buscar la tarifa
             Tarifa tarifa = tarifaRepository.findById(id)
                     .orElseThrow(() -> new Exception("No existe tarifa con ID: " + id));
 
-            // 2. Convertir a DTO de respuesta
-            TarifaResponseDTO responseDTO = new TarifaResponseDTO();
-            responseDTO.setId(tarifa.getId());
-            responseDTO.setNombre(tarifa.getNombre());
-            responseDTO.setPrecio_min(tarifa.getPrecio_min());
-            responseDTO.setTipo(tarifa.getTipo());
-            responseDTO.setTiempoEspera(tarifa.getTiempoEspera());
-            responseDTO.setVigenteDesde(tarifa.getVigenteDesde());
-            responseDTO.setVigenteHasta(tarifa.getVigenteHasta());
+            TarifaResponseDTO responseDTO = convertirTarifaResponseDTO(tarifa);
 
             return responseDTO;
         } catch (Exception e) {
@@ -194,19 +107,29 @@ public class TarifaService {
     @Transactional
     public void delete(Long id) throws Exception {
         try {
-            // 1. Verificar si existe la tarifa
             if (!tarifaRepository.existsById(id)) {
                 throw new Exception("No existe tarifa con ID: " + id);
             }
 
-            // 2. Eliminar la tarifa
             tarifaRepository.deleteById(id);
         } catch (Exception e) {
             throw new Exception("Error al eliminar la tarifa: " + e.getMessage());
         }
     }
+    @Transactional
+    public TarifaResponseDTO findByTipo(tipoTarifa tipo) throws Exception {
+        try {
+            Tarifa tarifa = tarifaRepository.findByTipo(tipo)
+                    .orElseThrow(() -> new Exception("No existe tarifa con tipo: " + tipo));
 
-    private TarifaResponseDTO convertirADTO(Tarifa tarifa) {
+            TarifaResponseDTO responseDTO = convertirTarifaResponseDTO(tarifa);
+
+            return responseDTO;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar la tarifa: " + e.getMessage());
+        }
+    }
+    private TarifaResponseDTO convertirTarifaResponseDTO(Tarifa tarifa) {
         TarifaResponseDTO responseDTO = new TarifaResponseDTO();
         responseDTO.setId(tarifa.getId());
         responseDTO.setNombre(tarifa.getNombre());
@@ -217,5 +140,16 @@ public class TarifaService {
         responseDTO.setVigenteHasta(tarifa.getVigenteHasta());
 
         return responseDTO;
+    }
+    private Tarifa convertirRequestAtarifa(TarifaRequestDTO dto) {
+        Tarifa tarifa = new Tarifa();
+        tarifa.setNombre(dto.getNombre());
+        tarifa.setPrecio_min(dto.getPrecio_min());
+        tarifa.setTipo(dto.getTipo());
+        tarifa.setTiempoEspera(dto.getTiempoEspera());
+        tarifa.setVigenteDesde(dto.getVigenteDesde());
+        tarifa.setVigenteHasta(dto.getVigenteHasta());
+
+        return tarifa;
     }
 }
