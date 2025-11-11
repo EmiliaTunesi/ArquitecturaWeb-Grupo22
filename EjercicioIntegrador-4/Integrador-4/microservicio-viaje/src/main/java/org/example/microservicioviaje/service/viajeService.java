@@ -114,12 +114,12 @@ public class viajeService {
             int pausaTotal = viajeExistente.getPausaTotalMinutos();
             int tiempoTotal = viajeExistente.getTiempoTotalMinutos();
             // Recolectar datos necesarios para las llamadas
-            Long idUsuario = viajeExistente.getIdUsuario();
+            Long idCuenta = viajeExistente.getIdCuenta();
             Long idMonopatin = viajeExistente.getMonopatinId();
 
             try {
                 // PASO 1: Verificar Usuario Premium ---
-                Boolean esPremium = usuarioFeignClient.esUsuarioPremium(idUsuario);
+                Boolean esPremium = usuarioFeignClient.esUsuarioPremium(idCuenta);
 
                 // PASO 2: Obtener Tarifa
                 TarifaCalculadaDTO tarifaCalc = tarifaFeignClient.getTarifaAplicable(pausaTotal);

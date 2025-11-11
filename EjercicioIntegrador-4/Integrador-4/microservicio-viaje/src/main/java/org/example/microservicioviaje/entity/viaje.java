@@ -49,9 +49,6 @@ public class viaje {
     @Column(name = "pausa_total_minutos")
     private Integer pausaTotalMinutos;
 
-    @Column(name = "pausa_total_minutos")
-    private Integer pausaTotalMinutos;
-
     @Column(name = "costo_total")
     private BigDecimal costoTotal;
 
