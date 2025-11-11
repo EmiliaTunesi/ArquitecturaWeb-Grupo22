@@ -1,19 +1,18 @@
 package unicen.arq_web.microservicioparada.entities;
 
 
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import unicen.arq_web.microservicioparada.models.Monopatin;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+import jakarta.persistence.*;
+import lombok.Getter;
+
 
 @Entity
-@Table(name = "parada")
+@Table(name = "Parada")
 @Getter
-@Setter
 public class Parada {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -25,20 +24,51 @@ public class Parada {
     private Double longitud;
 
     @Column(name = "activa", nullable = false)
-    private Boolean activa = false;
+    private Boolean activa;
 
     @Convert(disableConversion = true)
-    @Column(name = "fecha_alta")
+    @Column(name = "fecha_alta", updatable = false)
     private LocalDate fechaAlta;
 
-    @Column(name = "monop_estacionados")
-    private ArrayList<Monopatin> monopEstacionados;
+    @ElementCollection
+    @CollectionTable(name = "estacionados", joinColumns = @JoinColumn(name = "id_parada"))
+    @Column(name = "id_monopatin")
+    private List<Long> idsMonopEstac = new ArrayList<>();
 
-    public ArrayList<Monopatin> getMonopEstacionados() {
-        return new ArrayList<Monopatin>(this.monopEstacionados);
+
+    public Parada(){}
+
+    public void setActiva(Boolean activa) {
+        this.activa = activa;
+        if (Boolean.TRUE.equals(activa) && this.fechaAlta == null) {
+            this.fechaAlta = LocalDate.now();
+        }
     }
 
-    public void addMonopatin(Monopatin monopatin) {
-        this.monopEstacionados.add(monopatin);
+
+    @PrePersist
+    public void darDeAlta() {
+        if (Boolean.TRUE.equals(this.activa) && this.fechaAlta == null) {
+            this.fechaAlta = LocalDate.now();
+        }
     }
+
+    public boolean agregarMonopatin(Long idMonopatin){
+        if (!this.idsMonopEstac.contains(idMonopatin)) {
+            return this.idsMonopEstac.add(idMonopatin);
+        }
+        return false;
+    }
+
+    public boolean quitarMonopatin(Long idMonopatin){
+        if (this.idsMonopEstac.contains(idMonopatin)) {
+            return this.idsMonopEstac.remove(idMonopatin);
+        }
+        return false;
+    }
+
+    public List<Long> getIdsEstacionados() {
+        return new ArrayList<>(this.idsMonopEstac);
+    }
+
 }

@@ -1,6 +1,7 @@
 package unicen.arq_web.microservicioparada.controllers;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 @RestController
 public class ParadaController {
 
+    @Autowired
     private ParadaService ps;
 
     @GetMapping("/parada/{id}")
@@ -31,6 +33,16 @@ public class ParadaController {
     public ResponseEntity<ArrayList<ParadaDto>> getAll(){
         ArrayList<ParadaDto> paradasList = ps.getAll();
         return new ResponseEntity<>(paradasList, HttpStatus.OK);
+    }
+
+    @PostMapping("paradas/new")
+    public ResponseEntity<ParadaDto> add(@RequestBody Parada parada){
+        try {
+            ParadaDto dto = ps.add(parada);
+            return ResponseEntity.ok(dto);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("parada/{id}")
@@ -53,26 +65,30 @@ public class ParadaController {
         }
     }
 
-    @PostMapping("paradas/new")
-    public ResponseEntity<ParadaDto> add(@RequestBody Parada parada){
-        try {
-            ParadaDto dto = ps.add(parada);
-            return ResponseEntity.ok(dto);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
 
     @PutMapping("parada/{idParad}/estacionar/{idMonop}")
-    public ResponseEntity<ParadaDto> estacionar(@PathVariable("idParad") Integer idParad, @PathVariable("idMonop") Long idMonop){
+    public ResponseEntity<ParadaDto> estacionar(@PathVariable("idParad") Integer idParada, @PathVariable("idMonop") Long idMonopatin){
         try{
-            ps.estacionar(idParad, idMonop);
+            ps.estacionar(idParada, idMonopatin);
             return ResponseEntity.ok(null);
         }
         catch (RuntimeException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @PatchMapping("parada/{idParad}/estacionar/{idMonop}")
+    public ResponseEntity<Boolean> quitarMonopatin(@PathVariable("idParad") Integer idParada, @PathVariable("idMonop") Long idMonopatin) {
+        try {
+            ps.quitarMonopatin(idParada, idMonopatin);
+            return ResponseEntity.ok(true);
+        }
+        catch (RuntimeException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
 
 
 

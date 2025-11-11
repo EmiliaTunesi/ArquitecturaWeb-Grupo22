@@ -6,19 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="a49e4b5b-692d-413f-9313-0ab9cf3791e7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-administrador/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-administrador/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-administrador/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-administrador/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-administrador/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-administrador/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-administrador/src/main/java/org/example/microservicioadministrador/MicroservicioAdministradorApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-administrador/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-administrador/src/test/java/org/example/microservicioadministrador/MicroservicioAdministradorApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/MicroservicioParadaApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/MicroservicioParadaApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/controllers/ParadaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/controllers/ParadaController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/entities/Parada.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/entities/Parada.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/feignClients/MonopatinFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/feignClients/MonopatinFeignClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/models/Monopatin.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/models/Monopatin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/models/ParadaDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/models/ParadaDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/repositories/ParadaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/repositories/ParadaRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/services/ParadaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/services/ParadaService.java" afterDir="false" />
@@ -75,9 +66,14 @@
   &quot;keyToString&quot;: {
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.MicroservicioParadaApplication.executor&quot;: &quot;Run&quot;,
     &quot;git-widget-placeholder&quot;: &quot;lau&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
@@ -88,7 +84,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
@@ -141,6 +137,8 @@
       <workItem from="1762781352592" duration="8707000" />
       <workItem from="1762814729911" duration="145000" />
       <workItem from="1762818628703" duration="136000" />
+      <workItem from="1762819093154" duration="3468000" />
+      <workItem from="1762881661009" duration="17956000" />
     </task>
     <servers />
   </component>

@@ -10,13 +10,14 @@ import java.util.Optional;
 
 @Repository
 public interface ParadaRepository extends JpaRepository<Parada,Integer> {
-    public Optional<Parada> findById(Integer id);
 
-    public ArrayList<Parada> findAll();
+    Optional<Parada> findById(Integer id);
 
-    public void delete(Parada p);
+    ArrayList<Parada> findAll();
 
-    public Parada save(Parada nueva);
+    void delete(Parada p);
+
+    Parada save(Parada nueva);
 
 
 }

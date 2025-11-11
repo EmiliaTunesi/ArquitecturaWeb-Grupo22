@@ -1,5 +1,8 @@
 package unicen.arq_web.microservicioparada.services;
 
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import unicen.arq_web.microservicioparada.entities.Parada;
 import unicen.arq_web.microservicioparada.feignClients.MonopatinFeignClient;
@@ -8,14 +11,18 @@ import unicen.arq_web.microservicioparada.models.ParadaDto;
 import unicen.arq_web.microservicioparada.repositories.ParadaRepository;
 
 import java.util.ArrayList;
-import java.util.Optional;
+
 
 @Service
+@RequiredArgsConstructor
 public class ParadaService {
+
+    @Autowired
     private ParadaRepository pr;
+    @Autowired
     private MonopatinFeignClient fcMonop;
 
-    public ParadaDto getById(Integer id){
+    public ParadaDto getById(Integer id){ //Devuelve (si existe) una parada con ese id
         if (pr.findById(id).isPresent()) {
             Parada salida = this.pr.findById(id).get();
             ParadaDto salidaDto = new ParadaDto(salida);
@@ -25,7 +32,7 @@ public class ParadaService {
         }
     }
 
-    public ArrayList<ParadaDto> getAll(){
+    public ArrayList<ParadaDto> getAll(){ //Devuelve todas las paradas
         ArrayList<Parada> listaIntermedia = this.pr.findAll();
         ArrayList<ParadaDto> listaFinal = new ArrayList<>();
         for(Parada parada : listaIntermedia) {
@@ -35,9 +42,9 @@ public class ParadaService {
         return listaFinal;
     }
 
-    public ParadaDto update(Integer id, Parada p) {
+    public ParadaDto update(Integer id, Parada reemplazo) {
         if (pr.findById(id).isPresent()) {
-            Parada salida = this.pr.save(p);
+            Parada salida = this.pr.save(reemplazo);
             ParadaDto salidaDto = new ParadaDto(salida);
             return salidaDto;
         }else{
@@ -55,16 +62,37 @@ public class ParadaService {
     }
 
     public ParadaDto estacionar(Integer idParada, Long idMonopatin) {
-        Monopatin m = this.fcMonop.getById(idMonopatin);
-        pr.findById(idParada).ifPresent(p -> {
-            p.addMonopatin(m);
-            pr.save(p);
-        });
-        if (pr.findById(idParada).isPresent()){
-            Parada actualizada =  pr.findById(idParada).get();
-            return new ParadaDto(actualizada);
+        Monopatin m = this.fcMonop.getMonopatinById(idMonopatin);
+        if (m != null) {
+            pr.findById(idParada).ifPresent(p -> {
+                Long idMonop = m.getId();
+                p.agregarMonopatin(idMonop);
+                pr.save(p);
+            });
+
+            if (pr.findById(idParada).isPresent()) {
+                Parada actualizada = pr.findById(idParada).get();
+                return new ParadaDto(actualizada);
+            } else {
+                throw new RuntimeException("No existe parada con el id: " + idParada);
+            }
         }else{
-            throw new RuntimeException("No existe parada con el id: " + idParada);
+            throw new RuntimeException("No existe monopatin con el id: " + idMonopatin);
+        }
+    }
+
+    public boolean quitarMonopatin(Integer idParada, Long idMonopatin) {
+        Monopatin m = this.fcMonop.getMonopatinById(idMonopatin);
+        if (m != null) {
+            pr.findById(idParada).ifPresent(p -> {
+                Long idMonop = m.getId();
+                p.quitarMonopatin(idMonop);
+                pr.save(p);
+            });
+            return pr.findById(idParada).isEmpty();
+        }
+        else  {
+            throw new RuntimeException("No existe monopatin con el id: " + idMonopatin);
         }
     }
 
