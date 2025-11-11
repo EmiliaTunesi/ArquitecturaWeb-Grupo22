@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Component
-
 public class ViajeDataLoader implements CommandLineRunner {
 
     private final viajeRepository viajeRepository;
@@ -53,39 +52,77 @@ public class ViajeDataLoader implements CommandLineRunner {
                          .build())) {
 
                 for (CSVRecord csvRecord : csvParser) {
-                    viaje viaje = new viaje();
 
-                    // 1. Campos a cargar
-                    viaje.setIdUsuario(Long.parseLong(csvRecord.get("id_usuario")));
-                    viaje.setIdCuenta(Long.parseLong(csvRecord.get("id_cuenta")));
-                    viaje.setMonopatinId(Long.parseLong(csvRecord.get("monopatin_id")));
-                    viaje.setParadaInicioId(Long.parseLong(csvRecord.get("parada_inicio_id")));
+                    try {
+                        viaje viaje = new viaje();
+
+                        // --- 1. Campos Obligatorios
+
+                        String monopatinId = csvRecord.get("monopatin_id");
+                        if (monopatinId.isEmpty())
+                            throw new IllegalArgumentException("Monopatin ID es obligatorio.");
+                        viaje.setMonopatinId(Long.parseLong(monopatinId));
+
+                        String idUsuario = csvRecord.get("id_usuario");
+                        if (idUsuario.isEmpty())
+                            throw new IllegalArgumentException("ID Usuario es obligatorio.");
+                        viaje.setIdUsuario(Long.parseLong(idUsuario));
+
+                        String idCuenta = csvRecord.get("id_cuenta");
+                        if (idCuenta.isEmpty())
+                            throw new IllegalArgumentException("ID Cuenta es obligatorio.");
+                        viaje.setIdCuenta(Long.parseLong(idCuenta));
+
+                        String paradaInicioId = csvRecord.get("parada_inicio_id");
+                        if (paradaInicioId.isEmpty())
+                            throw new IllegalArgumentException("Parada Inicio ID es obligatorio.");
+                        viaje.setParadaInicioId(Long.parseLong(paradaInicioId));
+
+                        String fechaInicio = csvRecord.get("fecha_hora_inicio");
+                        if (fechaInicio.isEmpty())
+                            throw new IllegalArgumentException("Fecha Inicio es obligatorio.");
+                        viaje.setFechaInicio(LocalDateTime.parse(fechaInicio, DATE_TIME_FORMATTER));
+                        // --- 2. Campos Opcionales (Validación si es null o vacío) ---
 
 
-                    // Manejar el campo opcional parada_fin_id
-                    String paradaFin = csvRecord.get("parada_fin_id");
-                    if (!paradaFin.isEmpty()) {
-                        viaje.setParadaFinId(Long.parseLong(paradaFin));
+                        // Opcional: fecha_hora_fin (LocalDateTime)
+                        String fechaFin = csvRecord.get("fecha_hora_fin");
+                        if (!fechaFin.isEmpty()) {
+                            viaje.setFechaFin(LocalDateTime.parse(fechaFin, DATE_TIME_FORMATTER));
+                        }
+
+                        // Opcional: km_recorridos (BigDecimal)
+                        String kmRecorridos = csvRecord.get("km_recorridos");
+                        if (!kmRecorridos.isEmpty()) {
+                            viaje.setKmRecorridos(new BigDecimal(kmRecorridos));
+                        }
+
+                        // Opcional: tarifa_id (Long)
+                        String tarifaId = csvRecord.get("tarifa_id");
+                        if (!tarifaId.isEmpty()) {
+                            viaje.setTarifaId(Long.parseLong(tarifaId));
+                        }
+
+                        // Opcional: parada_fin_id (Long)
+                        String paradaFinId = csvRecord.get("parada_fin_id");
+                        if (!paradaFinId.isEmpty()) {
+                            viaje.setParadaFinId(Long.parseLong(paradaFinId));
+                        }
+
+                        // Opcional: tiempo_total_minutos (Integer)
+                        String tiempoTotalMinutos = csvRecord.get("tiempo_total_minutos");
+                        if (!tiempoTotalMinutos.isEmpty()) {
+                            viaje.setTiempoTotalMinutos(Integer.parseInt(tiempoTotalMinutos));
+                        }
+                        // Guardar la entidad
+                        viajeRepository.save(viaje);
+
+                    } catch (Exception e) {
+                        // Reporta el error y pasa al siguiente registro
+                        System.err.println(" ERROR procesando la fila " + csvRecord.getRecordNumber() + " (Monopatin ID: " + csvRecord.get("monopatin_id") + "): " + e.getMessage());
                     }
-
-                    // 2. Campos de Fecha y Hora (LocalDateTime)
-                    viaje.setFechaInicio(LocalDateTime.parse(csvRecord.get("fecha_hora_inicio"), DATE_TIME_FORMATTER));
-
-                    // Manejar el campo opcional fecha_hora_fin
-                    String fechaFin = csvRecord.get("fecha_hora_fin");
-                    if (!fechaFin.isEmpty()) {
-                        viaje.setFechaFin(LocalDateTime.parse(fechaFin, DATE_TIME_FORMATTER));
-                    }
-
-                    // 3. Campos Numéricos (BigDecimal / Integer)
-                    viaje.setKmRecorridos(new BigDecimal(csvRecord.get("km_recorridos")));
-                    viaje.setTarifaId(Long.parseLong(csvRecord.get("tarifa_id")));
-                    viaje.setTiempoTotalMinutos(Integer.parseInt(csvRecord.get("tiempo_total_minutos")));
-                    viaje.setPausaTotalMinutos(Integer.parseInt(csvRecord.get("pausa_total_minutos")));
-                    viaje.setCostoTotal(new BigDecimal(csvRecord.get("costo_total")));
-
-                    viajeRepository.save(viaje);
                 }
+
                 System.out.println("Datos de viajes cargados exitosamente: " + viajeRepository.count() + " registros.");
             }
         } catch (Exception e) {
