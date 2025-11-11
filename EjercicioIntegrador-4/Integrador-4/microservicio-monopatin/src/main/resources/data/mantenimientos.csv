@@ -1,0 +1,6 @@
+id,monopatinId,fechaInicio,fechaFin,descripcion,tipoMantenimiento
+1,2,2025-10-01,,Cambio de batería,Eléctrico
+2,3,2025-09-10,2025-09-15,Ajuste de frenos,Mecánico
+3,7,2025-11-01,,Reemplazo de neumáticos,Mecánico
+4,9,2025-08-05,2025-08-07,Revisión completa,Sistema
+5,5,2025-09-20,2025-09-22,Actualización de firmware,Software
