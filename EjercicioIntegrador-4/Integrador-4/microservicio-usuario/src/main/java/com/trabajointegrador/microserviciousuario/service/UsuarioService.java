@@ -1,9 +1,6 @@
 package com.trabajointegrador.microserviciousuario.service;
 
-import com.trabajointegrador.microserviciousuario.dto.UsuarioDTO;
-import com.trabajointegrador.microserviciousuario.dto.UsuarioSimpleDTO;
-import com.trabajointegrador.microserviciousuario.dto.UsuarioUsoDTO;
-import com.trabajointegrador.microserviciousuario.dto.ViajeDTO;
+import com.trabajointegrador.microserviciousuario.dto.*;
 import com.trabajointegrador.microserviciousuario.entity.Usuario;
 import com.trabajointegrador.microserviciousuario.feing.ViajeClient;
 import com.trabajointegrador.microserviciousuario.mappers.UsuarioMapper;
@@ -17,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -72,41 +70,70 @@ public class UsuarioService {
     }
 
     public UsuarioUsoDTO obtenerUso(Long idUsuario, Long idCuenta, LocalDate desde, LocalDate hasta) {
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
 
-        // 1️⃣ Pedimos viajes de la cuenta en el período
-        List<ViajeDTO> viajes = viajeClient.obtenerViajesPorCuenta(
+        DateTimeFormatter f = DateTimeFormatter.ISO_LOCAL_DATE;
+
+        ConteoViajesDTO conteo = viajeClient.obtenerConteos(
+                idUsuario,
                 idCuenta,
-                desde.format(formatter),
-                hasta.format(formatter)
+                desde.format(f),
+                hasta.format(f)
         );
 
-        // 2️⃣ Calculamos kilómetros y cantidad de viajes del usuario
-        double totalKm = viajes.stream()
-                .filter(v -> v.getIdUsuario().equals(idUsuario))
-                .mapToDouble(ViajeDTO::getKilometros)
-                .sum();
+        long cantidadViajesUsuario = conteo.getCantidadViajesUsuario();
+        long cantidadViajesCuenta = conteo.getCantidadViajesCuenta();
 
-        long cantidadViajes = viajes.stream()
-                .filter(v -> v.getIdUsuario().equals(idUsuario))
-                .count();
+        boolean hayOtros = cantidadViajesCuenta > cantidadViajesUsuario;
 
-        // 3️⃣ Obtenemos otros usuarios de la misma cuenta que hicieron viajes
-        List<String> otrosUsuarios = viajes.stream()
-                .filter(v -> !v.getIdUsuario().equals(idUsuario))
-                .map(ViajeDTO::getIdUsuario)
-                .distinct()
-                .map(repo::findById)
-                .filter(java.util.Optional::isPresent)
-                .map(opt -> opt.get().getNombreUsuario())
-                .toList();
-
-        // 4️⃣ Obtenemos nombreUsuario del solicitante
         String nombreUsuario = repo.findById(idUsuario)
                 .map(Usuario::getNombreUsuario)
                 .orElse("Desconocido");
 
-        return new UsuarioUsoDTO(nombreUsuario, totalKm, cantidadViajes, otrosUsuarios);
+        return new UsuarioUsoDTO(
+                nombreUsuario,
+                cantidadViajesUsuario,
+                hayOtros
+        );
+    }
+
+    public List<UsuarioRankingDTO> obtenerTopUsuarios(int anio, Boolean activo) {
+        // 1) Traer los viajes del microservicio VIAJES
+        List<ViajeDTO> viajes = viajeClient.obtenerViajesPorAnio(anio);
+        if (viajes == null || viajes.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        // 2) Contar viajes agrupados por idUsuario
+        Map<Long, Long> conteos = viajes.stream()
+                .collect(Collectors.groupingBy(
+                        ViajeDTO::getIdUsuario,
+                        Collectors.counting()
+                ));
+
+        // 3) Traer solo los usuarios involucrados
+        List<Usuario> usuarios = repo.findAllById(conteos.keySet());
+
+        // 4) Filtrar por "activo" si el admin lo pide
+        if (activo != null) {
+            usuarios = usuarios.stream()
+                    .filter(u -> u.isActivo() == activo)
+                    .toList();
+        }
+
+        // 5) Convertir a DTO
+        List<UsuarioRankingDTO> ranking = usuarios.stream()
+                .map(u -> new UsuarioRankingDTO(
+                        u.getId(),
+                        u.getNombreUsuario(),
+                        conteos.getOrDefault(u.getId(), 0L)
+                ))
+                // 6) Orden descendente por viajes
+                .sorted(Comparator.comparingLong(UsuarioRankingDTO::getCantidadViajes).reversed())
+                // 7) Top 10
+                .limit(10)
+                .toList();
+
+        return ranking;
     }
 
     public void eliminarUsuario(Long id) {

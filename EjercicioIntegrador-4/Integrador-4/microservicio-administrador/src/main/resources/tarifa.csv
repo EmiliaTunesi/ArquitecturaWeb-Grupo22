@@ -1,0 +1,7 @@
+nombre,precio_min,tipo,tiempoEspera,vigenteDesde,vigenteHasta
+
+Normal,1500,NORMAL,20,2025-11-01,
+Normal nov,1800,NORMAL,15,2025-11-10,
+Promocional Primavera,1200,PROMOCIONAL,30,2025-11-08,2025-11-20
+Pausa,1000,PAUSA,0,2025-09-01,
+Pausa,900,PAUSA,0,2025-09-01,

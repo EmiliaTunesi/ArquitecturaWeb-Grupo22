@@ -72,4 +72,9 @@ public class CuentaController {
         List<CuentaDTO> cuentasInactivas = cuentaService.listarCuentasInactivas();
         return new ResponseEntity<>(cuentasInactivas, HttpStatus.OK);
     }
+
+    @GetMapping("/{id}/es-premium")
+    public ResponseEntity<Boolean> esCuentaPremium(@PathVariable Long id) {
+        return ResponseEntity.ok(cuentaService.esCuentaPremium(id));
+    }
 }
