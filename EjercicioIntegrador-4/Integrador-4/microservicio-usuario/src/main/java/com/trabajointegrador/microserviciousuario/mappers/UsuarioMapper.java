@@ -17,7 +17,7 @@ public class UsuarioMapper {
         dto.setEmail(usuario.getEmail());
         dto.setTelefono(usuario.getTelefono());
         dto.setFechaRegistro(usuario.getFechaRegistro());
-        dto.setActivo(usuario.getActivo());
+        dto.setActivo(usuario.isActivo());
 
         System.out.println("DTO GENERADO: " + dto);
         return dto;
