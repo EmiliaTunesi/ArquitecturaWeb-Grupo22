@@ -12,13 +12,6 @@ import java.time.LocalDate;
 @Setter
 
 public class TarifaResponseDTO {
-
-        private Long id;
-        private String nombre;
-        private Double precio_min;
-        private tipoTarifa tipo;
-        private Integer tiempoEspera;
-        private LocalDate vigenteDesde;
-        private LocalDate vigenteHasta;
-
+    private Long id;
+    private Double precio_min;
 }

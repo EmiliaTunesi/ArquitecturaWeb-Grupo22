@@ -53,6 +53,16 @@ public class TarifaController {
                     .body("{\"error\":\"Error. Por favor intente más tarde.\"}");
         }
     }
+    @DeleteMapping("/borrar")
+    public ResponseEntity<?> deleteAllTarifas() {
+        try {
+            tarifaService.deleteTotal();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("{\"error\"}");
+        }
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getTarifaById(@PathVariable Long id) {
@@ -81,10 +91,10 @@ public class TarifaController {
     }
 
 
-    @GetMapping("/aplicable")
-    public ResponseEntity<?> obtenerTarifaAplicable() {
+    @GetMapping("/aplicable/{tiempo}")
+    public ResponseEntity<?> obtenerTarifaAplicable(@PathVariable Integer tiempo) {
         try {
-            TarifaResponseDTO tarifaAplicable = tarifaService.obtenerTarifaAplicable();
+            TarifaResponseDTO tarifaAplicable = tarifaService.obtenerTarifaAplicable(tiempo);
             return ResponseEntity.status(HttpStatus.OK)
                     .body(tarifaAplicable);
         } catch (Exception e) {
@@ -92,4 +102,5 @@ public class TarifaController {
                     .body("{\"error\":\"Error al obtener tarifa aplicable. " + e.getMessage() + "\"}");
         }
     }
+
 }

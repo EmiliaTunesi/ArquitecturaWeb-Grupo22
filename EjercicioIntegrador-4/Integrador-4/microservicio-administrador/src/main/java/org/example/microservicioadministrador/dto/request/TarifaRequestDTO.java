@@ -9,12 +9,10 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class TarifaRequestDTO {
-    private Long id;
     private String nombre;
     private Double precio_min;
     private tipoTarifa tipo;
     private Integer tiempoEspera;
     private LocalDate vigenteDesde;
     private LocalDate vigenteHasta;
-
 }

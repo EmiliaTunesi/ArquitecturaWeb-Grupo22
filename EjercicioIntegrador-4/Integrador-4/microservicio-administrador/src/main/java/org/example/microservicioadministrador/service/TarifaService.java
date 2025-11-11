@@ -21,20 +21,22 @@ public class TarifaService {
 
     private final TarifaRepository tarifaRepository;
 
-
     @Transactional
-    public TarifaResponseDTO obtenerTarifaAplicable() throws Exception {
+    public TarifaResponseDTO obtenerTarifaAplicable(Integer tiempo) throws Exception {
         try {
-            Tarifa tarifa = tarifaRepository.findTarifaPromocionalVigente()
+            Tarifa vigente = tarifaRepository.findTarifaPromocionalVigente()
                     .orElseThrow(() -> new Exception("No existe tarifa vigente configurada"));
+            if (tiempo > vigente.getTiempoEspera()) {
+                Tarifa esPausa = tarifaRepository.findByTipo(tipoTarifa.PAUSA)
+                        .orElseThrow(() -> new Exception("No existe tarifa espera configurada"));
+                return convertirTarifaResponseDTO(esPausa);
+            }
+            return convertirTarifaResponseDTO(vigente);
 
-            return convertirTarifaResponseDTO(tarifa);
-
-        } catch (Exception e) {
-            throw new Exception("Error al obtener tarifa aplicable: " + e.getMessage());
+        }catch (Exception e) {
+            throw new Exception("Error al obtener tarifa aplicable: " + e.getMessage(), e);
         }
     }
-
 
     @Transactional
     public TarifaResponseDTO save(TarifaRequestDTO tarifaDTO) throws Exception {
@@ -117,6 +119,15 @@ public class TarifaService {
         }
     }
     @Transactional
+    public void deleteTotal() throws Exception {
+        try {
+            tarifaRepository.deleteAll();
+        } catch (Exception e) {
+            throw new Exception("Error"+ e.getMessage());
+        }
+    }
+
+    @Transactional
     public TarifaResponseDTO findByTipo(tipoTarifa tipo) throws Exception {
         try {
             Tarifa tarifa = tarifaRepository.findByTipo(tipo)
@@ -152,4 +163,6 @@ public class TarifaService {
 
         return tarifa;
     }
+
+
 }
