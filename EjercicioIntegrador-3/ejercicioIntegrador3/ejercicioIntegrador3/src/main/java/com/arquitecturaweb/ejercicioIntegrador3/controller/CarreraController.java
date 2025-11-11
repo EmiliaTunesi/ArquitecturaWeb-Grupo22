@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +24,6 @@ public class CarreraController {
     private CarreraService carreraService;
 
 
-
     //f) recuperar las carreras con estudiantes inscriptos,
     // y ordenar por cantidad de inscriptos.
     @GetMapping("/con-inscriptos")
@@ -31,6 +31,7 @@ public class CarreraController {
         List<CarreraConInscriptosDTO> carrerasInscrip = carreraService.getAllCarrerasConInscriptos();
         return ResponseEntity.ok(carrerasInscrip);
     }
+
 
     /*h)generar un reporte de las carreras, que para cada carrera incluya
         información de los inscriptos y egresados por año. Se deben ordenar las carreras
