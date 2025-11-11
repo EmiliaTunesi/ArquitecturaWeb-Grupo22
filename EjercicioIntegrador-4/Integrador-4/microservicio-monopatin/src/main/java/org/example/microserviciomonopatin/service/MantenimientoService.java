@@ -41,6 +41,7 @@ public class MantenimientoService {
         MonopatinEntity monopatin = monopatinService.obtenerMonopatinEntity(request.getMonopatinId());
 
         // Verificar que no esté ya en mantenimiento
+
         if (monopatin.getEstado() == EstadoMonopatin.EN_MANTENIMIENTO) {
             throw new IllegalStateException("El monopatín ya se encuentra en mantenimiento");
         }
@@ -123,9 +124,7 @@ public class MantenimientoService {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Método auxiliar para convertir a DTO con el estado del mantenimiento
-     */
+    //Metodo auxiliar
     private MantenimientoResponseDTO convertirAResponseDTO(MantenimientoEntity mantenimiento) {
         MantenimientoResponseDTO dto = modelMapper.map(mantenimiento, MantenimientoResponseDTO.class);
 
