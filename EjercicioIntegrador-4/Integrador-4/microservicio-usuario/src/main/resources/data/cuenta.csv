@@ -1,0 +1,6 @@
+id,numero_cuenta,fecha_alta,tipo_cuenta,saldo_creditos,cuenta_mercadopago_id,activa,km_recorridos_mes,fecha_renovacion_cupo,fecha_baja
+1,CUENTA-1001,2024-01-10,PREMIUM,1500.00,mp_001,true,320.5,2024-02-01,
+2,CUENTA-1002,2023-11-03,BASICA,200.00,mp_002,true,90.2,2024-01-05,
+3,CUENTA-1003,2024-02-15,PREMIUM,2300.00,mp_003,true,450.8,2024-03-01,
+4,CUENTA-1004,2023-09-20,BASICA,0.00,,false,0,2023-12-01,2024-01-10
+5,CUENTA-1005,2024-01-28,PREMIUM,900.00,mp_005,true,150.0,2024-02-15,
