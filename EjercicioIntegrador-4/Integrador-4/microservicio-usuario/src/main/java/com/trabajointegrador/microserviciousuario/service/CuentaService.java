@@ -117,4 +117,11 @@ public class CuentaService {
                 .map(CuentaMapper::toDTO)
                 .collect(Collectors.toList());
     }
+
+
+    public boolean esCuentaPremium(Long idCuenta) {
+        Cuenta cuenta = cuentaRepository.findById(idCuenta)
+                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada"));
+        return cuenta.getTipoCuenta() == Cuenta.TipoCuenta.PREMIUM;
+    }
 }

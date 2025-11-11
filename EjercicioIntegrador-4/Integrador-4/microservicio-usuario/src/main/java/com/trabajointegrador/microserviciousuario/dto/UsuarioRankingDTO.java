@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class UsuarioRankingDTO {
-        private Long idUsuario;
-        private String nombre;
-        private Long cantidadViajes;
+    private Long idUsuario;
+    private String nombreUsuario;
+    private long cantidadViajes;
 }
