@@ -26,18 +26,30 @@ public interface TarifaRepository extends JpaRepository<Tarifa, Long> {
     Optional<Tarifa> findByTipo(@Param("tipo") tipoTarifa tipo);
 
     @Query(value = """    
+
 SELECT *
 FROM tarifa
-WHERE tipo = 'PROMOCIONAL'
-  AND vigente_desde <= CURRENT_DATE
-  AND vigente_hasta >= CURRENT_DATE
-UNION
-SELECT *
-FROM tarifa
-WHERE tipo = 'NORMAL'
-  AND vigente_hasta IS NULL
-ORDER BY vigente_desde DESC
-LIMIT 1;
+WHERE
+  (
+    tipo = 'PROMOCIONAL'
+    AND vigente_desde <= now()
+    AND (vigente_hasta IS NULL OR vigente_hasta > now())
+  )
+  OR
+  (
+    tipo = 'NORMAL'
+    AND vigente_hasta IS NULL
+  )
+ORDER BY
+  CASE
+    WHEN tipo = 'PROMOCIONAL'
+         AND vigente_desde <= now()
+         AND (vigente_hasta IS NULL OR vigente_hasta > now())
+    THEN 0
+    ELSE 1
+  END,
+  vigente_desde DESC
+LIMIT 1
 
         """, nativeQuery = true)
     Optional<Tarifa> findTarifaPromocionalVigente();
