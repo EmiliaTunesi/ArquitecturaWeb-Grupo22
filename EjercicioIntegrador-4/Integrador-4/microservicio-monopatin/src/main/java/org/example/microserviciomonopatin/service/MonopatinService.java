@@ -129,24 +129,23 @@ public class MonopatinService {
         List<MonopatinEntity> monopatines = monopatinRepository.findAll();
 
         return monopatines.stream().map(m -> {
-            double tiempoTotal = m.getTiempoUsoTotal();
-            if (incluirPausas && m.getTiempoPausaTotal() != null) {
-                tiempoTotal += m.getTiempoPausaTotal();
-            }
-
             boolean requiereMantenimiento =
                     m.getKilometrosTotales() != null && m.getKilometrosTotales() > LIMITE_KM_MANTENIMIENTO;
+
+            Double tiempoPausa = incluirPausas ? m.getTiempoPausaTotal() : null;
 
             return new ReporteUsoMonopatinDTO(
                     m.getId(),
                     m.getEstado(),
                     m.getKilometrosTotales(),
                     m.getTiempoUsoTotal(),
-                    m.getTiempoPausaTotal(),
+                    tiempoPausa, // 👈 si incluirPausas=false, será null → no aparece en JSON
                     requiereMantenimiento
             );
         }).collect(Collectors.toList());
-    }
+
+
+}
 
 
     //Me devuelve si el monopatin esta disponible
