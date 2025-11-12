@@ -15,10 +15,8 @@ import org.example.microserviciomonopatin.exception.ResourceNotFoundException;
 import org.example.microserviciomonopatin.repository.MonopatinRepository;
 import org.example.microserviciomonopatin.utils.EstadoMonopatin;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -126,7 +124,7 @@ public class MonopatinService {
                     m.getEstado(),
                     m.getKilometrosTotales(),
                     m.getTiempoUsoTotal(),
-                    tiempoPausa, // 👈 si incluirPausas=false, será null → no aparece en JSON
+                    tiempoPausa,
                     requiereMantenimiento
             );
         }).collect(Collectors.toList());
@@ -135,8 +133,8 @@ public class MonopatinService {
 }
 
 
-    //Me devuelve si el monopatin esta disponible
-    @Transactional(readOnly = true)
+    //Me devuelve si el monopatin esta disponible, si es true, monopatin = EN_USO
+    @Transactional
     public boolean estaDisponible(Long id) {
         MonopatinEntity monopatin = monopatinRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Monopatín no encontrado"));
