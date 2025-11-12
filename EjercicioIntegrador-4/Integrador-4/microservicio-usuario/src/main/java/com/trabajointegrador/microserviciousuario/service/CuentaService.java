@@ -2,6 +2,7 @@ package com.trabajointegrador.microserviciousuario.service;
 
 import com.trabajointegrador.microserviciousuario.dto.CuentaDTO;
 import com.trabajointegrador.microserviciousuario.entity.Cuenta;
+import com.trabajointegrador.microserviciousuario.entity.Usuario;
 import com.trabajointegrador.microserviciousuario.mappers.CuentaMapper;
 import com.trabajointegrador.microserviciousuario.repository.CuentaRepository;
 import org.springframework.stereotype.Service;
@@ -116,6 +117,13 @@ public class CuentaService {
                 .filter(c -> !c.isActiva())
                 .map(CuentaMapper::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public boolean isCuentaDisponible(Long idCuenta) {
+        return cuentaRepository.findById(idCuenta)
+                .map(Cuenta::isActiva)
+                .orElse(false);
     }
 
 

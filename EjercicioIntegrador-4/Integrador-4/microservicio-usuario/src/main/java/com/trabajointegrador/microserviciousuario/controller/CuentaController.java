@@ -77,4 +77,10 @@ public class CuentaController {
     public ResponseEntity<Boolean> esCuentaPremium(@PathVariable Long id) {
         return ResponseEntity.ok(cuentaService.esCuentaPremium(id));
     }
+
+    @GetMapping("/{id}/disponible")
+    public ResponseEntity<Boolean> isCuentaActiva(@PathVariable Long id) {
+        boolean estaActiva = cuentaService.isCuentaDisponible(id);
+        return ResponseEntity.ok(estaActiva);
+    }
 }
