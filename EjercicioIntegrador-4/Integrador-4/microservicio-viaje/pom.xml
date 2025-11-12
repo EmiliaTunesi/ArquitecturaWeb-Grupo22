@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.arquitecturaweb</groupId>
-    <artifactId>ejercicioIntegrador3</artifactId>
+    <artifactId>ejercicioIntegrador4</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>microservicio-viajes</name>
     <description>Demo project for Spring Boot</description>

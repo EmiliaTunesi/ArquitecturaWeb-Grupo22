@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.math.BigDecimal;
+import org.example.microservicioviaje.feignclients.CuentaFeignClient;
 
 @Service
 public class viajeService {
@@ -35,25 +36,47 @@ public class viajeService {
     @Autowired
     private TarifaFeignClient tarifaFeignClient;
 
+    @Autowired
+    private CuentaFeignClient cuentaFeignClient;
+
     // Métodos CRUD
     /**
      * CREAR
      * Guarda un nuevo viaje.
      */
+    /**
+     * CREAR (INICIAR VIAJE)
+     * Valida cuenta activa y monopatín disponible antes de guardar un nuevo viaje.
+     */
     public viaje save(viaje viaje) {
-        Boolean disponible;
+        // --- PASO 1: Validar Cuenta Activa ---
+        Long idCuenta = viaje.getIdCuenta();
+        Boolean cuentaActiva;
+        try {
+            cuentaActiva = cuentaFeignClient.isCuentaActiva(idCuenta);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al consultar la disponibilidad de la cuenta: " + e.getMessage());
+        }
+
+        if (cuentaActiva == null || !cuentaActiva) {
+            // La cuenta NO está disponible (false) o la respuesta fue nula/error.
+            throw new RuntimeException("La cuenta con ID " + idCuenta + " no está activa o disponible para iniciar el viaje.");
+        }
+
+        // --- PASO 2: Validar Monopatín Disponible ---
+        Boolean monopatinDisponible;
         try {
             // Llama al método del Feign client
-            disponible = monopatinFeignClient.estaDisponible(viaje.getMonopatinId());
+            monopatinDisponible = monopatinFeignClient.estaDisponible(viaje.getMonopatinId());
 
         } catch (Exception e) {
             // Si el microservicio de monopatin falla, no crea el viaje
             throw new RuntimeException("Error al consultar disponibilidad del monopatín: " + e.getMessage());
         }
 
-        // 2. Validar la respuesta
-        if (disponible != null && disponible) {
-            // El monopatín SÍ está disponible, guarda el viaje
+        // 3. Validar la respuesta del monopatín
+        if (monopatinDisponible != null && monopatinDisponible) {
+            // Ambas validaciones OK: El monopatín SÍ está disponible, guarda el viaje
             return viajeRepository.save(viaje);
         } else {
             // El monopatín NO está disponible (false) o la respuesta fue nula

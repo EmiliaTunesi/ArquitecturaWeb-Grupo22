@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name="microservicio-cuenta", url="http://localhost:8081/api/cuenta")
 public interface CuentaFeignClient {
 
-    // Este es un ejemplo, dime qué endpoints necesitas
-    @GetMapping("/{id}")
-    Cuenta getCuenta(@PathVariable("id") Long id);
+    @GetMapping("/{id}/disponible")
+    Boolean isCuentaActiva(@PathVariable("id") Long id);
 
 }
