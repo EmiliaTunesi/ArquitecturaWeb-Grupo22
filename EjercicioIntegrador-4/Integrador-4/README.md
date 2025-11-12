@@ -4,7 +4,7 @@
 
 Podés acceder a la documentación interactiva de cada microservicio a través de los siguientes enlaces:
 
-- **Gateway / API Principal (Usuarios)** → [http://localhost:8081/swagger-ui/index.html](http://localhost:8082/swagger-ui/index.html)  
+- **Gateway / API Principal (Usuarios)** → [http://localhost:8081/swagger-ui/index.html](http://localhost:8081/swagger-ui/index.html)  
 - **Viajes Service** → [http://localhost:8083/swagger-ui/index.html](http://localhost:8083/swagger-ui/index.html)  
 - **Monopatines Service** → [http://localhost:8085/swagger-ui/index.html](http://localhost:8085/swagger-ui/index.html)  
 - **Paradas Service** → [http://localhost:8084/swagger-ui/index.html](http://localhost:8084/swagger-ui/index.html)  
