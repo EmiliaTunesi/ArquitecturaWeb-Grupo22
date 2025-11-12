@@ -4,7 +4,7 @@ Sistema de Gestión de Monopatines y Mantenimientos
 API REST — Spring Boot
 ----------------------
 
-Este microservicio forma parte del ecosistema de gestión de movilidad urbana y se encarga de administrar **monopatines eléctricos** y sus respectivos **mantenimientos**.
+Este microservicio forma parte del ecosistema de gestión de monopatines y se encarga de administrarlos y sus respectivos **mantenimientos**.
 
 Brinda una API REST clara, con modelos bien definidos, endpoints organizados y soporte para documentación automática mediante Swagger / OpenAPI.
 
@@ -30,13 +30,14 @@ Modelos del Sistema
 Campos principales:
 - id  
 - fechaAlta  
-- estado (DISPONIBLE, FUERA_DE_SERVICIO, EN_USO, etc.)  
+- estado (DISPONIBLE, FUERA_DE_SERVICIO, EN_USO)  
 - kilómetrosRecorridos  
-- tiempoUsoTotal  
+- tiempoUsoTotal
+- tiempoPausaTotal  
 - fechaÚltimoMantenimiento  
 
 **Lógica clave:**
-- Puede estar disponible, en uso o fuera de servicio.
+- Puede estar disponible, en mantenimiento, en uso o fuera de servicio.
 - Registra su historial de uso y kilómetros recorridos.
 - Permite generar reportes de uso agregados.
 
@@ -51,9 +52,9 @@ Campos principales:
 - monopatinId (referencia al vehículo mantenido)  
 - fechaInicio  
 - fechaFin  
-- tipoMantenimiento (PREVENTIVO, CORRECTIVO)  
-- descripción  
-- técnicoResponsable  
+- tipoMantenimiento  
+- descripción
+- estadoMnatenimiento    
 
 **Lógica clave:**
 - Cada mantenimiento se asocia a un monopatín.  
@@ -101,3 +102,4 @@ Documentación con Swagger
 El proyecto incluye Swagger / OpenAPI para documentar y probar los endpoints directamente desde el navegador.
 
 Acceso local:
+http://localhost:8085/swagger-ui/index.html
