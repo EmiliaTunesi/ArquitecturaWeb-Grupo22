@@ -1,90 +1,123 @@
 Sistema de Gestión de Monopatines y Mantenimientos
-
-=======================================================
+==================================================
 
 API REST — Spring Boot
+----------------------
 
-Este microservicio implementa la gestión de monopatines eléctricos y sus mantenimientos preventivos y correctivos, dentro de una arquitectura basada en microservicios.
-Provee endpoints REST claros y desacoplados para registrar, consultar y administrar monopatines, así como para gestionar los mantenimientos asociados a cada unidad.
+Este microservicio forma parte del ecosistema de gestión y administracion de **monopatines eléctricos** y sus respectivos **mantenimientos**.
 
-Incluye documentación automática con Swagger / OpenAPI.
+Brinda una API REST clara, con modelos bien definidos, endpoints organizados y soporte para documentación automática mediante Swagger / OpenAPI.
+
+---
+
+Configuración de Base de Datos
+------------------------------
+
+Este microservicio utiliza **PostgreSQL** como base de datos.
+
+Configuración de ejemplo (`src/main/resources/application.properties`):
+
+```properties
+spring.application.name=microservicio-monopatin
+server.port=8085
+
+# Conexión a PostgreSQL
+spring.datasource.url=jdbc:postgresql://localhost:5432/microservicio_monopatin_db
+spring.datasource.username=postgres
+spring.datasource.password=tu_password
+spring.datasource.driver-class-name=org.postgresql.Driver
+
 
 Características principales
+---------------------------
 
-Gestión completa de Monopatines (altas, bajas, estados, reportes).
+- Gestión completa de **Monopatines** (alta, consulta, actualización de estado, reportes de uso).  
+- Gestión de **Mantenimientos** asociados a los monopatines.  
+- Lógica de negocio desacoplada mediante servicios y repositorios.  
+- Integración con Swagger para documentación automática.  
 
-Gestión de Mantenimientos asociados a monopatines.
-
-Control de estado de servicio (en servicio, fuera de servicio, disponible, etc.).
-
-Generación de reportes de uso y consultas filtradas.
-
-Arquitectura limpia con capas bien separadas (Controller, Service, Repository).
+---
 
 Modelos del Sistema
-🛴 Monopatín
+-------------------
 
-Representa una unidad operativa del sistema de movilidad.
+### 🛴 Monopatín
 
-Atributos típicos:
+**Representa un vehículo eléctrico disponible para uso dentro del sistema.**
 
-id
+Campos principales:
+- id  
+- fechaAlta  
+- estado (DISPONIBLE, FUERA_DE_SERVICIO, EN_USO)  
+- kilómetrosRecorridos  
+- tiempoUsoTotal
+- tiempoPausaTotal
+- fechaÚltimoMantenimiento  
 
-latitud / longitud actual
+**Lógica clave:**
+- Puede estar disponible, en uso o fuera de servicio.
+- Registra su historial de uso y kilómetros recorridos.
+- Permite generar reportes de uso agregados.
 
-estado (DISPONIBLE, EN_USO, FUERA_SERVICIO, MANTENIMIENTO)
+---
 
-kilómetros recorridos
+### 🔧 Mantenimiento
 
-fecha de alta
+**Registra tareas de mantenimiento asociadas a un monopatín.**
 
-fecha de última revisión
+Campos principales:
+- id  
+- monopatinId (referencia al vehículo mantenido)  
+- fechaInicio  
+- fechaFin  
+- tipoMantenimiento
+- descripción  
+- estadoMantenimiento (EN CURSO, FINALIZADO)  
 
-activo/inactivo
+**Lógica clave:**
+- Cada mantenimiento se asocia a un monopatín.  
+- Puede marcarse como finalizado.  
+- Permite consultar mantenimientos por monopatín.  
 
-🧰 Mantenimiento
+---
 
-Representa una tarea de mantenimiento aplicada a un monopatín.
+Endpoints
+---------
 
-id
+### 🛴 Monopatines
 
-monopatinId (referencia al monopatín asociado)
+Base URL: `/api/monopatines`
 
-tipo (PREVENTIVO o CORRECTIVO)
+| Método | Endpoint | Descripción |
+|--------|-----------|-------------|
+| **POST** | `/api/monopatines` | Crea un nuevo monopatín. |
+| **PUT** | `/api/monopatines/{id}/fuera-servicio` | Marca el monopatín como fuera de servicio. |
+| **GET** | `/api/monopatines/{id}/disponible` | Verifica si un monopatín está disponible. |
+| **PUT** | `/api/monopatines/{id}/finalizar` | Marca el fin de un viaje o uso activo. |
+| **GET** | `/api/monopatines/{id}` | Obtiene un monopatín por su ID. |
+| **GET** | `/api/monopatines` | Lista todos los monopatines registrados. |
+| **GET** | `/api/monopatines/reporte-uso` | Genera un reporte de uso (tiempo, distancia, disponibilidad). |
 
-fechaInicio
+---
 
-fechaFin
+### 🔧 Mantenimientos
 
-descripción
+Base URL: `/api/mantenimientos`
 
-técnico asignado
+| Método | Endpoint | Descripción |
+|--------|-----------|-------------|
+| **POST** | `/api/mantenimientos` | Registra un nuevo mantenimiento. |
+| **PUT** | `/api/mantenimientos/{id}/finalizar` | Marca un mantenimiento como finalizado. |
+| **GET** | `/api/mantenimientos/{id}` | Obtiene un mantenimiento por ID. |
+| **GET** | `/api/mantenimientos` | Lista todos los mantenimientos. |
+| **GET** | `/api/mantenimientos/monopatin/{monopatinId}` | Lista los mantenimientos asociados a un monopatín específico. |
 
-estado (EN_PROCESO, FINALIZADO)
+---
 
-Endpoints disponibles
-🚲 Monopatines
-
-Base path: /api/monopatines
-
-Método	Endpoint	Descripción
-POST	/api/monopatines	Crea un nuevo monopatín.
-PUT	/api/monopatines/{id}/fuera-servicio	Marca un monopatín como fuera de servicio.
-GET	/api/monopatines/{id}/disponible	Marca o consulta la disponibilidad de un monopatín.
-PUT	/api/monopatines/{id}/finalizar	Finaliza un viaje o proceso asociado al monopatín.
-GET	/api/monopatines/{id}	Obtiene los datos de un monopatín específico.
-GET	/api/monopatines	Lista todos los monopatines.
-GET	/api/monopatines/reporte-uso	Devuelve un reporte agregado del uso de los monopatines.
-🔧 Mantenimientos
-
-Base path: /api/mantenimientos
-
-Método	Endpoint	Descripción
-POST	/api/mantenimientos	Registra un nuevo mantenimiento.
-PUT	/api/mantenimientos/{id}/finalizar	Marca un mantenimiento como finalizado.
-GET	/api/mantenimientos/{id}	Obtiene los datos de un mantenimiento específico.
-GET	/api/mantenimientos	Lista todos los mantenimientos.
-GET	/api/mantenimientos/monopatin/{monopatinId}	Lista los mantenimientos de un monopatín determinado.
 Documentación con Swagger
+-------------------------
 
 El proyecto incluye Swagger / OpenAPI para documentar y probar los endpoints directamente desde el navegador.
+
+Acceso local:
+http://localhost:8085/swagger-ui/index.html
