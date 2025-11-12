@@ -6,13 +6,33 @@
   <component name="ChangeListManager">
     <list default="true" id="a49e4b5b-692d-413f-9313-0ab9cf3791e7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/controllers/ParadaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/controllers/ParadaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/entities/Parada.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/entities/Parada.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/feignClients/MonopatinFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/feignClients/MonopatinFeignClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/models/Monopatin.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/models/Monopatin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/models/ParadaDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/models/ParadaDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/repositories/ParadaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/repositories/ParadaRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/services/ParadaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/java/unicen/arq_web/microservicioparada/services/ParadaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/EjercicioIntegrador-4/Integrador-4/microservicio-parada/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="cande" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
   </component>
@@ -28,6 +48,9 @@
     &quot;accountId&quot;: &quot;8e6fbfd7-740c-40d7-8b39-570a2179e175&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -42,10 +65,16 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;Spring Boot.MicroservicioParadaApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;lau&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
@@ -55,7 +84,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
@@ -63,28 +92,28 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="unicen.arq_web.microservicioparada.services" />
+      <recent name="unicen.arq_web.microservicioparada.dto" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Usuario\Desktop\TUADI- UNICEN\2º año- 2º cuatri\ArqWeb-G28-TP1-EJ1\EjercicioIntegrador-1" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="ArquitecturaWeb-Grupo22" />
+    <configuration name="MicroservicioParadaApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="microservicio-parada" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="unicen.arq_web.microservicioparada.MicroservicioParadaApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="ArquitecturaWeb-Grupo22" />
-      <option name="filePath" />
-      <method v="2" />
     </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.26830.84" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.27397.103" />
       </set>
     </attachedChunks>
   </component>
@@ -103,6 +132,13 @@
       <workItem from="1760360856856" duration="615000" />
       <workItem from="1762201659053" duration="29000" />
       <workItem from="1762201734534" duration="115000" />
+      <workItem from="1762538853409" duration="426000" />
+      <workItem from="1762615659367" duration="14036000" />
+      <workItem from="1762781352592" duration="8707000" />
+      <workItem from="1762814729911" duration="145000" />
+      <workItem from="1762818628703" duration="136000" />
+      <workItem from="1762819093154" duration="3468000" />
+      <workItem from="1762881661009" duration="17956000" />
     </task>
     <servers />
   </component>
