@@ -21,5 +21,5 @@ public class MantenimientoResponseDTO {
     private LocalDate fechaFin;
     private String descripcion;
     private String tipoMantenimiento;
-    private String estadoMantenimiento; // "EN_CURSO" o "FINALIZADO"
+    private String estadoMantenimiento;
 }

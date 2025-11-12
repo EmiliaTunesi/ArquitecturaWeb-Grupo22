@@ -1,5 +1,6 @@
 package org.example.microserviciomonopatin.dto.dtoResponse;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import org.example.microserviciomonopatin.utils.EstadoMonopatin;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ReporteUsoMonopatinDTO {
 
     private Long id;

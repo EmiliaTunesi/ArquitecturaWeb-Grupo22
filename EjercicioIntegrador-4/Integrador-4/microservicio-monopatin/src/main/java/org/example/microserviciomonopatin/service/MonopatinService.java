@@ -49,9 +49,7 @@ public class MonopatinService {
         return modelMapper.map(savedMonopatin, MonopatinResponseDTO.class);
     }
 
-    /**
-     * Quitar/eliminar monopatín
-     */
+
     @Transactional
     public MonopatinResponseDTO marcarFueraDeServicio(Long id) {
         MonopatinEntity monopatin = monopatinRepository.findById(id)
@@ -66,9 +64,6 @@ public class MonopatinService {
 
 
 
-    /**
-     * Marcar monopatín como en mantenimiento
-     */
     @Transactional
     public MonopatinResponseDTO marcarEnMantenimiento(Long id) {
         MonopatinEntity monopatin = monopatinRepository.findById(id)
@@ -79,9 +74,7 @@ public class MonopatinService {
         return modelMapper.map(savedMonopatin, MonopatinResponseDTO.class);
     }
 
-    /**
-     * Marcar monopatín como disponible (fin de mantenimiento)
-     */
+
     @Transactional
     public MonopatinResponseDTO marcarDisponible(Long id) {
         MonopatinEntity monopatin = monopatinRepository.findById(id)
@@ -92,9 +85,7 @@ public class MonopatinService {
         return modelMapper.map(savedMonopatin, MonopatinResponseDTO.class);
     }
 
-    /**
-     * Obtener monopatín por ID
-     */
+
     @Transactional(readOnly = true)
     public MonopatinResponseDTO obtenerMonopatinPorId(Long id) {
         MonopatinEntity monopatin = monopatinRepository.findById(id)
@@ -102,9 +93,7 @@ public class MonopatinService {
         return modelMapper.map(monopatin, MonopatinResponseDTO.class);
     }
 
-    /**
-     * Listar todos los monopatines
-     */
+
     @Transactional(readOnly = true)
     public List<MonopatinResponseDTO> listarTodosLosMonopatines() {
         return monopatinRepository.findAll().stream()
@@ -112,9 +101,7 @@ public class MonopatinService {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Obtener entidad de monopatín (para uso interno)
-     */
+
     @Transactional(readOnly = true)
     public MonopatinEntity obtenerMonopatinEntity(Long id) {
         return monopatinRepository.findById(id)
@@ -129,24 +116,23 @@ public class MonopatinService {
         List<MonopatinEntity> monopatines = monopatinRepository.findAll();
 
         return monopatines.stream().map(m -> {
-            double tiempoTotal = m.getTiempoUsoTotal();
-            if (incluirPausas && m.getTiempoPausaTotal() != null) {
-                tiempoTotal += m.getTiempoPausaTotal();
-            }
-
             boolean requiereMantenimiento =
                     m.getKilometrosTotales() != null && m.getKilometrosTotales() > LIMITE_KM_MANTENIMIENTO;
+
+            Double tiempoPausa = incluirPausas ? m.getTiempoPausaTotal() : null;
 
             return new ReporteUsoMonopatinDTO(
                     m.getId(),
                     m.getEstado(),
                     m.getKilometrosTotales(),
                     m.getTiempoUsoTotal(),
-                    m.getTiempoPausaTotal(),
+                    tiempoPausa, // 👈 si incluirPausas=false, será null → no aparece en JSON
                     requiereMantenimiento
             );
         }).collect(Collectors.toList());
-    }
+
+
+}
 
 
     //Me devuelve si el monopatin esta disponible
@@ -181,22 +167,7 @@ public class MonopatinService {
         monopatinRepository.save(monopatin);
     }
 
-    @Transactional
-    public MonopatinResponseDTO actualizarUbicacion(Long id, ActualizarUbicacionDTO dto) {
-        // 1️⃣ Buscar el monopatín por ID
-        MonopatinEntity monopatin = monopatinRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Monopatín con ID " + id + " no encontrado"));
 
-        // 2️⃣ Actualizar las coordenadas
-        monopatin.setLatitudActual(dto.getLatitudFinal());
-        monopatin.setLongitudActual(dto.getLongitudFinal());
-
-        // 3️⃣ Guardar cambios
-        MonopatinEntity actualizado = monopatinRepository.save(monopatin);
-
-        // 4️⃣ Mapear a DTO de respuesta
-        return modelMapper.map(actualizado, MonopatinResponseDTO.class);
-    }
 }
 
 

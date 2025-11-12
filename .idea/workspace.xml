@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49e4b5b-692d-413f-9313-0ab9cf3791e7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="a49e4b5b-692d-413f-9313-0ab9cf3791e7" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,15 +32,19 @@
     &quot;assignee&quot;: &quot;cande342&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/EmiliaTunesi/ArquitecturaWeb-Grupo22.git&quot;,
-    &quot;accountId&quot;: &quot;8e6fbfd7-740c-40d7-8b39-570a2179e175&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/EmiliaTunesi/ArquitecturaWeb-Grupo22.git",
+    "accountId": "32341edb-a2a3-465d-95ad-8e20651f5928"
   }
+<<<<<<< HEAD
+}]]></component>
+=======
 }</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
+>>>>>>> 38dc94113bce278ffa1fdb04d160035e0cb57255
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -58,6 +60,16 @@
   "keyToString": {
     "Application.Main.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+<<<<<<< HEAD
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "matias",
+    "ignore.virus.scanning.warn.message": "true",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/matia/OneDrive/Escritorio/ArquitecturaWeb-Grupo22",
+=======
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -71,12 +83,17 @@
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/joaco/OneDrive/Escritorio/Tp especial Arqui/ArquitecturaWeb-Grupo28",
+>>>>>>> 38dc94113bce278ffa1fdb04d160035e0cb57255
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+<<<<<<< HEAD
+    "project.structure.last.edited": "Project",
+=======
     "project.structure.last.edited": "Modules",
+>>>>>>> 38dc94113bce278ffa1fdb04d160035e0cb57255
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.0",
     "to.speed.mode.migration.done": "true",
@@ -115,8 +132,13 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
+<<<<<<< HEAD
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.23892.409" />
+        <option value="bundled-js-predefined-d6986cc7102b-e03c56caf84a-JavaScript-IU-252.23892.409" />
+=======
         <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
         <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.27397.103" />
+>>>>>>> 38dc94113bce278ffa1fdb04d160035e0cb57255
       </set>
     </attachedChunks>
   </component>
@@ -135,6 +157,9 @@
       <workItem from="1760360856856" duration="615000" />
       <workItem from="1762201659053" duration="29000" />
       <workItem from="1762201734534" duration="115000" />
+<<<<<<< HEAD
+      <workItem from="1762291183209" duration="46000" />
+=======
       <workItem from="1762538853409" duration="426000" />
       <workItem from="1762615659367" duration="14036000" />
       <workItem from="1762781352592" duration="8707000" />
@@ -142,6 +167,7 @@
       <workItem from="1762818628703" duration="136000" />
       <workItem from="1762819093154" duration="3468000" />
       <workItem from="1762881661009" duration="17956000" />
+>>>>>>> 38dc94113bce278ffa1fdb04d160035e0cb57255
     </task>
     <servers />
   </component>

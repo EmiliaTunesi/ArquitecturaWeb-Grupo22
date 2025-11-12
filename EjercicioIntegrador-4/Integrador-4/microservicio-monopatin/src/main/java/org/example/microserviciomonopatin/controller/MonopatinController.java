@@ -29,16 +29,14 @@ public class MonopatinController {
 
 
 
+    //Agrego un monopatin
     @PostMapping
     public ResponseEntity<MonopatinResponseDTO> agregarMonopatin(@RequestBody MonopatinRequestDTO request) {
         MonopatinResponseDTO response = monopatinService.agregarMonopatin(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    /**
-     * Quitar/eliminar monopatín
-     * DELETE /api/monopatines/{id}
-     */
+    //Borrado logico de un monopatin donde monopatin = FUERA_DE_SERVICIO
     @PutMapping("/{id}/fuera-servicio")
     public ResponseEntity<MonopatinResponseDTO> marcarFueraDeServicio(@PathVariable Long id) {
         MonopatinResponseDTO monopatinActualizado = monopatinService.marcarFueraDeServicio(id);
@@ -47,10 +45,7 @@ public class MonopatinController {
 
 
 
-    /**
-     * pregunta si el monopatin esta disponible
-     * GET /api/monopatines
-     */
+    //Devuelve true o false, si es true cambia el estado del monopatin=EN_USO
     @GetMapping("/{id}/disponible")
     public ResponseEntity<Boolean> verificarDisponibilidad(@PathVariable Long id) {
         boolean disponible = monopatinService.estaDisponible(id);
@@ -60,6 +55,8 @@ public class MonopatinController {
 
 
 
+
+    //Finaliza el uso del monopatin
     @PutMapping("/{id}/finalizar")
     public ResponseEntity<String> finalizarUso(
             @PathVariable Long id,
@@ -69,33 +66,15 @@ public class MonopatinController {
     }
 
 
-    @PutMapping("/{id}/actualizar-ubicacion")
-    public ResponseEntity<MonopatinResponseDTO> actualizarUbicacion(
-            @PathVariable Long id,
-            @RequestBody ActualizarUbicacionDTO dto) {
-        MonopatinResponseDTO response = monopatinService.actualizarUbicacion(id, dto);
-        return ResponseEntity.ok(response);
-    }
 
-
-
-
-
-
-    /**
-     * Traer un monopatin
-     * GET /api/monopatines
-     */
+    //Traer un monopatin
     @GetMapping("/{id}")
     public ResponseEntity<MonopatinResponseDTO> obtenerMonopatin(@PathVariable Long id) {
         MonopatinResponseDTO response = monopatinService.obtenerMonopatinPorId(id);
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * Listar todos los monopatines
-     * GET /api/monopatines
-     */
+    //Listar todos los monopatines
     @GetMapping
     public ResponseEntity<List<MonopatinResponseDTO>> listarMonopatines() {
         List<MonopatinResponseDTO> response = monopatinService.listarTodosLosMonopatines();
@@ -103,6 +82,7 @@ public class MonopatinController {
     }
 
 
+    //Listar monopatines para ver si necesitan mantenimiento, puede o no incluir pausas
     @GetMapping("/reporte-uso")
     public ResponseEntity<List<ReporteUsoMonopatinDTO>> generarReporte(
             @RequestParam(defaultValue = "false") boolean incluirPausas) {
