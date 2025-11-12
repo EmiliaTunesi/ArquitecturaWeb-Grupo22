@@ -19,10 +19,7 @@ public class MantenimientoController {
 
     private final MantenimientoService mantenimientoService;
 
-    /**
-     * Registrar monopatín en mantenimiento
-     * POST /api/mantenimientos
-     */
+    //Crear un mantemiento para un monopatin
     @PostMapping
     public ResponseEntity<MantenimientoResponseDTO> registrarMantenimiento(
             @RequestBody IniciarMantenimientoRequestDTO request) {
@@ -30,10 +27,7 @@ public class MantenimientoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    /**
-     * Registrar fin de mantenimiento
-     * PUT /api/mantenimientos/{id}/finalizar
-     */
+    //Termina un mantenimiento
     @PutMapping("/{id}/finalizar")
     public ResponseEntity<MantenimientoResponseDTO> finalizarMantenimiento(
             @PathVariable Long id,
@@ -47,30 +41,21 @@ public class MantenimientoController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * Obtener mantenimiento por ID
-     * GET /api/mantenimientos/{id}
-     */
+    //Me devuelve un mantenimiento por ID
     @GetMapping("/{id}")
     public ResponseEntity<MantenimientoResponseDTO> obtenerMantenimiento(@PathVariable Long id) {
         MantenimientoResponseDTO response = mantenimientoService.obtenerMantenimientoPorId(id);
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * Listar todos los mantenimientos
-     * GET /api/mantenimientos
-     */
+    //Listar todos los mantenimientos
     @GetMapping
     public ResponseEntity<List<MantenimientoResponseDTO>> listarMantenimientos() {
         List<MantenimientoResponseDTO> response = mantenimientoService.listarTodosLosMantenimientos();
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * Listar mantenimientos por monopatín
-     * GET /api/mantenimientos/monopatin/{monopatinId}
-     */
+    //Me trae todos los mantenimientos por un monopatin
     @GetMapping("/monopatin/{monopatinId}")
     public ResponseEntity<List<MantenimientoResponseDTO>> listarMantenimientosPorMonopatin(
             @PathVariable Long monopatinId) {

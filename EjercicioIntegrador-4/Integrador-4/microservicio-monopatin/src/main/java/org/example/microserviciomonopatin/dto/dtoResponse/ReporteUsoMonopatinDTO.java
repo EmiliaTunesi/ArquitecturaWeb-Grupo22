@@ -12,13 +12,13 @@ import org.example.microserviciomonopatin.utils.EstadoMonopatin;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL) // 🔹 Ignora los campos nulos en el JSON
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ReporteUsoMonopatinDTO {
 
     private Long id;
     private EstadoMonopatin estado;
     private Double kilometrosTotales;
     private Double tiempoUsoTotal;
-    private Double tiempoPausaTotal; // Se mostrará solo si no es null
+    private Double tiempoPausaTotal;
     private boolean requiereMantenimiento;
 }

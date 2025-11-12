@@ -32,9 +32,6 @@ public class MantenimientoService {
         this.modelMapper = modelMapper;
     }
 
-    /**
-     * Registrar monopatín en mantenimiento
-     */
     @Transactional
     public MantenimientoResponseDTO registrarMantenimiento(IniciarMantenimientoRequestDTO request) {
         // Obtener el monopatín
@@ -67,9 +64,7 @@ public class MantenimientoService {
         return convertirAResponseDTO(savedMantenimiento);
     }
 
-    /**
-     * Registrar fin de mantenimiento
-     */
+
     @Transactional
     public MantenimientoResponseDTO finalizarMantenimiento(Long mantenimientoId, FinalizarMantenimientoRequestDTO request) {
         // Obtener el mantenimiento
@@ -90,7 +85,6 @@ public class MantenimientoService {
 
         MantenimientoEntity savedMantenimiento = mantenimientoRepository.save(mantenimiento);
 
-        // Marcar el monopatín como disponible
         monopatinService.marcarDisponible(mantenimiento.getMonopatinId().getId());
 
         return convertirAResponseDTO(savedMantenimiento);
@@ -103,9 +97,7 @@ public class MantenimientoService {
         return convertirAResponseDTO(mantenimiento);
     }
 
-    /**
-     * Listar todos los mantenimientos
-     */
+
     @Transactional(readOnly = true)
     public List<MantenimientoResponseDTO> listarTodosLosMantenimientos() {
         return mantenimientoRepository.findAll().stream()
@@ -113,9 +105,7 @@ public class MantenimientoService {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Listar mantenimientos de un monopatín específico
-     */
+
     @Transactional(readOnly = true)
     public List<MantenimientoResponseDTO> listarMantenimientosPorMonopatin(Long monopatinId) {
         MonopatinEntity monopatin = monopatinService.obtenerMonopatinEntity(monopatinId);
@@ -128,10 +118,8 @@ public class MantenimientoService {
     private MantenimientoResponseDTO convertirAResponseDTO(MantenimientoEntity mantenimiento) {
         MantenimientoResponseDTO dto = modelMapper.map(mantenimiento, MantenimientoResponseDTO.class);
 
-        // Establecer el monopatinId manualmente porque viene de una relación
         dto.setMonopatinId(mantenimiento.getMonopatinId().getId());
 
-        // Calcular el estado del mantenimiento
         String estadoMantenimiento = mantenimiento.getFechaFin() == null ? "EN_CURSO" : "FINALIZADO";
         dto.setEstadoMantenimiento(estadoMantenimiento);
 

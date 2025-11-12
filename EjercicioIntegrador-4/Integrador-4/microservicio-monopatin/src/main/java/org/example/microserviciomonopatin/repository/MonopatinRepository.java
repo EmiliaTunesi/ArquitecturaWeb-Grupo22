@@ -12,6 +12,5 @@ import java.util.List;
 public interface MonopatinRepository extends JpaRepository<MonopatinEntity, Long> {
 
 
-    List<MonopatinEntity> findByEstado(EstadoMonopatin estado);
 
 }

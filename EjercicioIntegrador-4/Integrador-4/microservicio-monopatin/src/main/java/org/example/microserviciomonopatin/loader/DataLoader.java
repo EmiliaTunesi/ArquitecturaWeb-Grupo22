@@ -33,7 +33,7 @@ public class DataLoader implements CommandLineRunner {
         cargarMonopatines();
         cargarMantenimientos();
 
-        System.out.println("✅ Datos iniciales cargados correctamente desde CSV.");
+        System.out.println("Datos iniciales cargados ");
     }
 
     private void cargarMonopatines() throws Exception {
@@ -58,7 +58,6 @@ public class DataLoader implements CommandLineRunner {
             }
         }
 
-        System.out.println("✅ Monopatines cargados: " + monopatinRepository.count());
     }
 
     private void cargarMantenimientos() throws Exception {
@@ -83,6 +82,5 @@ public class DataLoader implements CommandLineRunner {
             }
         }
 
-        System.out.println("✅ Mantenimientos cargados: " + mantenimientoRepository.count());
     }
 }
