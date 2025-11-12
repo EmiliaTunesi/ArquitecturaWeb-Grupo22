@@ -1,14 +1,18 @@
 Sistema de Gestión de Monopatines y Mantenimientos
 ==================================================
 
-API REST — Spring Boot
+API REST — Spring Boot — PosgreSQL
 ----------------------
 
-Este microservicio forma parte del ecosistema de gestión y administracion de **monopatines eléctricos** y sus respectivos **mantenimientos**.
+Este microservicio forma parte del ecosistema de gestión y administracion de **monopatines** y sus respectivos **mantenimientos**.
 
 Brinda una API REST clara, con modelos bien definidos, endpoints organizados y soporte para documentación automática mediante Swagger / OpenAPI.
+Este microservicio utiliza **PostgreSQL** como base de datos.
+
 
 ---
+
+
 
 
 Características principales
