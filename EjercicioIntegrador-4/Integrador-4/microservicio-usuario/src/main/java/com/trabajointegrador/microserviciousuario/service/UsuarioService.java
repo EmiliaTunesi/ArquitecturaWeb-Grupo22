@@ -8,6 +8,7 @@ import com.trabajointegrador.microserviciousuario.repository.UsuarioRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -19,7 +20,6 @@ import java.util.stream.Collectors;
 
 
 @Service
-@Slf4j
 public class UsuarioService {
 
     private final UsuarioRepository repo;
@@ -30,6 +30,7 @@ public class UsuarioService {
         this.repo = repo;
     }
 
+    @Transactional
     public UsuarioDTO crearUsuario(UsuarioDTO dto) {
         Usuario usuario = UsuarioMapper.toEntity(dto);
 
@@ -40,6 +41,7 @@ public class UsuarioService {
         return UsuarioMapper.toDTO(guardado);
     }
 
+    @Transactional
     public UsuarioDTO actualizarUsuario(Long id, UsuarioDTO dto) {
         Usuario usuario = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
@@ -50,18 +52,21 @@ public class UsuarioService {
         return UsuarioMapper.toDTO(guardado);
     }
 
+    @Transactional(readOnly = true)
     public List<UsuarioDTO> listarUsuarios() {
         return repo.findAll().stream()
                 .map(UsuarioMapper::toDTO)
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public UsuarioDTO obtenerPorId(Long id) {
         return repo.findById(id)
                 .map(UsuarioMapper::toDTO)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
 
+    @Transactional(readOnly = true)
     public List<UsuarioSimpleDTO> obtenerPorActivo(boolean activo) {
         return repo.findByActivo(activo)
                 .stream()
@@ -69,6 +74,7 @@ public class UsuarioService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public UsuarioUsoDTO obtenerUso(Long idUsuario, Long idCuenta, LocalDate desde, LocalDate hasta) {
 
         DateTimeFormatter f = DateTimeFormatter.ISO_LOCAL_DATE;
@@ -96,6 +102,7 @@ public class UsuarioService {
         );
     }
 
+    @Transactional(readOnly = true)
     public List<UsuarioRankingDTO> obtenerTopUsuarios(int anio, Boolean activo) {
         // 1) Traer los viajes del microservicio VIAJES
         List<ViajeDTO> viajes = viajeClient.obtenerViajesPorAnio(anio);
@@ -136,6 +143,7 @@ public class UsuarioService {
         return ranking;
     }
 
+    @Transactional
     public void eliminarUsuario(Long id) {
         repo.deleteById(id);
     }
