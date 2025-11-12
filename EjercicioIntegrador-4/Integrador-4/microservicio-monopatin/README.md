@@ -10,23 +10,6 @@ Brinda una API REST clara, con modelos bien definidos, endpoints organizados y s
 
 ---
 
-Configuración de Base de Datos
-------------------------------
-
-Este microservicio utiliza **PostgreSQL** como base de datos.
-
-Configuración de ejemplo (`src/main/resources/application.properties`):
-
-```properties
-spring.application.name=microservicio-monopatin
-server.port=8085
-
-# Conexión a PostgreSQL
-spring.datasource.url=jdbc:postgresql://localhost:5432/microservicio_monopatin_db
-spring.datasource.username=postgres
-spring.datasource.password=tu_password
-spring.datasource.driver-class-name=org.postgresql.Driver
-
 
 Características principales
 ---------------------------
@@ -37,6 +20,8 @@ Características principales
 - Integración con Swagger para documentación automática.  
 
 ---
+
+
 
 Modelos del Sistema
 -------------------
