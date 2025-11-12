@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:8080/base-microservicio
     username: postgres
-    password: 1234
+    password:
     driver-class-name: org.postgresql.Driver
 
   jpa:
