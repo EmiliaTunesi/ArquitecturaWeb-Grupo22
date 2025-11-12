@@ -1,126 +1,90 @@
-Sistema de Gestión de Monopatines y su Mantenimiento
+Sistema de Gestión de Monopatines y Mantenimientos
+
+=======================================================
+
 API REST — Spring Boot
-Este proyecto implementa un sistema simple y extensible para manejar mantenimientos y su mantenimientocuentas. El resultado es una API clara, con modelos bien definidos, lógica desacoplada y documentación automática mediante Swagger.
+
+Este microservicio implementa la gestión de monopatines eléctricos y sus mantenimientos preventivos y correctivos, dentro de una arquitectura basada en microservicios.
+Provee endpoints REST claros y desacoplados para registrar, consultar y administrar monopatines, así como para gestionar los mantenimientos asociados a cada unidad.
+
+Incluye documentación automática con Swagger / OpenAPI.
 
 Características principales
-Gestión completa de Monopatines (CRUD).
 
+Gestión completa de Monopatines (altas, bajas, estados, reportes).
 
-Explicación de la Relación N a N
-La lógica del proyecto se basa en una relación muchos a muchos:
+Gestión de Mantenimientos asociados a monopatines.
 
-Un Usuario puede estar asociado a varias Cuentas.
+Control de estado de servicio (en servicio, fuera de servicio, disponible, etc.).
 
-Una Cuenta puede pertenecer a varios Usuarios.
+Generación de reportes de uso y consultas filtradas.
 
-En el código, la entidad intermedia entre ambos es UsuarioCuenta. Su existencia evita duplicar información, y permite agregar metadata futura sobre la relación (por ejemplo fecha de vinculación, permisos, rol dentro de la cuenta, etc.).
+Arquitectura limpia con capas bien separadas (Controller, Service, Repository).
 
 Modelos del Sistema
-Usuario
-Representa un cliente del sistema.
+🛴 Monopatín
 
-nombreUsuario
+Representa una unidad operativa del sistema de movilidad.
 
-nombre
+Atributos típicos:
 
-apellido
+id
 
-email
+latitud / longitud actual
 
-telefono
-
-fechaRegistro
-
-activo
-
-Cuenta
-Representa una cuenta operativa del sistema.
-
-número id
-
-fecha de alta
-
-tipo de cuenta (BÁSICA, PREMIUM)
-
-saldo de créditos
+estado (DISPONIBLE, EN_USO, FUERA_SERVICIO, MANTENIMIENTO)
 
 kilómetros recorridos
 
-activa/inactiva
+fecha de alta
 
-fecha de renovación de cupo
+fecha de última revisión
 
-integración con Mercado Pago (hardcodeado)
+activo/inactivo
 
-UsuarioCuenta
-Entidad que une usuario y cuenta.
+🧰 Mantenimiento
 
-Contiene solo los IDs y la relación.
+Representa una tarea de mantenimiento aplicada a un monopatín.
 
-Endpoints
-Usuarios
-GET /usuarios
+id
 
-POST /usuarios
+monopatinId (referencia al monopatín asociado)
 
-GET /usuarios/{id}
+tipo (PREVENTIVO o CORRECTIVO)
 
-PUT /usuarios/{id}
+fechaInicio
 
-DELETE /usuarios/{id}
+fechaFin
 
-Cuentas
-GET /cuentas
+descripción
 
-POST /cuentas
+técnico asignado
 
-GET /cuentas/{id}
+estado (EN_PROCESO, FINALIZADO)
 
-PUT /cuentas/{id}
+Endpoints disponibles
+🚲 Monopatines
 
-DELETE /cuentas/{id}
+Base path: /api/monopatines
 
-PATCH /cuentas/{id}/anular
-Inhabilita la cuenta (soft delete).
-Marca la cuenta como inactiva y setea fechaBaja si corresponde.
+Método	Endpoint	Descripción
+POST	/api/monopatines	Crea un nuevo monopatín.
+PUT	/api/monopatines/{id}/fuera-servicio	Marca un monopatín como fuera de servicio.
+GET	/api/monopatines/{id}/disponible	Marca o consulta la disponibilidad de un monopatín.
+PUT	/api/monopatines/{id}/finalizar	Finaliza un viaje o proceso asociado al monopatín.
+GET	/api/monopatines/{id}	Obtiene los datos de un monopatín específico.
+GET	/api/monopatines	Lista todos los monopatines.
+GET	/api/monopatines/reporte-uso	Devuelve un reporte agregado del uso de los monopatines.
+🔧 Mantenimientos
 
-PATCH /cuentas/{id}/reactivar
-Vuelve a activar una cuenta previamente anulada.
+Base path: /api/mantenimientos
 
-Vinculaciones Usuario–Cuenta
-POST /usuarios-cuentas/vincular?usuarioId=&cuentaId=
-
-GET /usuarios-cuentas
-
-GET /usuarios-cuentas/existe?usuarioId=&cuentaId=
-
-GET /usuarios-cuentas/cuenta/{cuentaId}/usuarios
-
+Método	Endpoint	Descripción
+POST	/api/mantenimientos	Registra un nuevo mantenimiento.
+PUT	/api/mantenimientos/{id}/finalizar	Marca un mantenimiento como finalizado.
+GET	/api/mantenimientos/{id}	Obtiene los datos de un mantenimiento específico.
+GET	/api/mantenimientos	Lista todos los mantenimientos.
+GET	/api/mantenimientos/monopatin/{monopatinId}	Lista los mantenimientos de un monopatín determinado.
 Documentación con Swagger
-El proyecto incluye Swagger / OpenAPI para documentar todos los endpoints y permitir probarlos desde el navegador.
 
-Acceso:
-
-http://localhost:8085/swagger-ui/index.html
-
-Arquitectura interna
-Controller → recibe requests
-
-Service → maneja lógica de negocio
-
-Repository → habla con la base de datos
-
-DTO / Mapper → evita fuga de entidades al exterior
-
-Entidad UsuarioCuenta → resuelve la relación N-a-N
-
-Cómo correr el proyecto
-Clonar el repo
-
-Importar en IntelliJ / Eclipse como proyecto Maven
-
-Configurar datasource en application.properties (esta aplicación esta configurada para usar postgress)
-
-Ejecutar la aplicación
-
-Abrir Swagger y probar
+El proyecto incluye Swagger / OpenAPI para documentar y probar los endpoints directamente desde el navegador.
