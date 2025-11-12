@@ -1,4 +1,4 @@
-package com.trabajointegrador.microserviciousuario.dto;
+package org.example.microservicioviaje.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UsuarioUsoDetalleDTO {
-    private Long usuarioId;
-    private String nombreUsuario;
+public class monopatinviajeDTO {
+    private Long monopatinId;
     private Long cantidadViajes;
 }

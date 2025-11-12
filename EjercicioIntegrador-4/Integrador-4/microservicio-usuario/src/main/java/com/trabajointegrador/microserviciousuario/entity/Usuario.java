@@ -42,7 +42,7 @@ public class Usuario {
             String email,
             String telefono,
             LocalDateTime fechaRegistro,
-            Boolean activo
+            boolean activo
     ) {
         this.nombreUsuario = nombreUsuario;
         this.nombre = nombre;
@@ -101,7 +101,7 @@ public class Usuario {
         this.fechaRegistro = fechaRegistro;
     }
 
-    public Boolean getActivo() {
+    public boolean isActivo() {
         return activo;
     }
 

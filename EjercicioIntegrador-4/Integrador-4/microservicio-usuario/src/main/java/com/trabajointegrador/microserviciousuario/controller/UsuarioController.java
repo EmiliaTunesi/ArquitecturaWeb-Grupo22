@@ -1,6 +1,7 @@
 package com.trabajointegrador.microserviciousuario.controller;
 
 import com.trabajointegrador.microserviciousuario.dto.UsuarioDTO;
+import com.trabajointegrador.microserviciousuario.dto.UsuarioRankingDTO;
 import com.trabajointegrador.microserviciousuario.dto.UsuarioSimpleDTO;
 import com.trabajointegrador.microserviciousuario.dto.UsuarioUsoDTO;
 import com.trabajointegrador.microserviciousuario.service.UsuarioService;
@@ -63,6 +64,16 @@ public class UsuarioController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate desde,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate hasta
     ) {
-        return ResponseEntity.ok(usuarioService.obtenerUso(idUsuario, idCuenta, desde, hasta));
+        UsuarioUsoDTO result = usuarioService.obtenerUso(idUsuario, idCuenta, desde, hasta);
+        return ResponseEntity.ok(result);
     }
+
+    @GetMapping("/top-usuarios")
+    public ResponseEntity<List<UsuarioRankingDTO>> topUsuarios(
+            @RequestParam int anio,
+            @RequestParam(required = false) Boolean activo
+    ) {
+        return ResponseEntity.ok(usuarioService.obtenerTopUsuarios(anio, activo));
+    }
+
 }
