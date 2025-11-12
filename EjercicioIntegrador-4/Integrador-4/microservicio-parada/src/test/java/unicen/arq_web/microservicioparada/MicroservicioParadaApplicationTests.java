@@ -1,10 +1,10 @@
-package org.example.microservicioadministrador;
+package unicen.arq_web.microservicioparada;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MicroservicioAdministradorApplicationTests {
+class MicroservicioParadaApplicationTests {
 
     @Test
     void contextLoads() {

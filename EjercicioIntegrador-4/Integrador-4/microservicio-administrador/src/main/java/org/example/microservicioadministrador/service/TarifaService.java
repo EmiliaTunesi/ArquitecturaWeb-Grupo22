@@ -143,13 +143,7 @@ public class TarifaService {
     private TarifaResponseDTO convertirTarifaResponseDTO(Tarifa tarifa) {
         TarifaResponseDTO responseDTO = new TarifaResponseDTO();
         responseDTO.setId(tarifa.getId());
-        responseDTO.setNombre(tarifa.getNombre());
         responseDTO.setPrecio_min(tarifa.getPrecio_min());
-        responseDTO.setTipo(tarifa.getTipo());
-        responseDTO.setTiempoEspera(tarifa.getTiempoEspera());
-        responseDTO.setVigenteDesde(tarifa.getVigenteDesde());
-        responseDTO.setVigenteHasta(tarifa.getVigenteHasta());
-
         return responseDTO;
     }
     private Tarifa convertirRequestAtarifa(TarifaRequestDTO dto) {

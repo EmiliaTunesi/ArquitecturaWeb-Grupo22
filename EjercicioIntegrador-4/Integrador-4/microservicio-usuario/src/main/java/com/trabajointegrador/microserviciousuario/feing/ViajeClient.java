@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@FeignClient(name = "viaje-service", url = "http://localhost:8083/api/viajes")
+@FeignClient(name = "viaje-service", url = "http://localhost:8083/viajes")
 public interface ViajeClient {
 
     @GetMapping("/conteo/usuario-cuenta")
