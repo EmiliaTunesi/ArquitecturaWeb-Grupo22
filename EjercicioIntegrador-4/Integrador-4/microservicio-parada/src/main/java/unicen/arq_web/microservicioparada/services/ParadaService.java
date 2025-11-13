@@ -3,14 +3,16 @@ package unicen.arq_web.microservicioparada.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import unicen.arq_web.microservicioparada.entities.Parada;
 import unicen.arq_web.microservicioparada.feignClients.MonopatinFeignClient;
 import unicen.arq_web.microservicioparada.models.Monopatin;
 import unicen.arq_web.microservicioparada.models.ParadaDto;
 import unicen.arq_web.microservicioparada.repositories.ParadaRepository;
-
 import java.util.ArrayList;
+import static java.lang.Double.MAX_VALUE;
+import static java.lang.Math.*;
 
 
 @Service
@@ -94,6 +96,24 @@ public class ParadaService {
         else  {
             throw new RuntimeException("No existe monopatin con el id: " + idMonopatin);
         }
+    }
+
+    public Pair<Double, Double> getCercanas(Double latOrigen, Double longitOrigen) {
+        ArrayList<Parada> paradas = this.pr.findAll();
+        Double distancia = MAX_VALUE;
+        Pair<Double, Double> salida = null;
+        for (Parada p : paradas) {
+            Double latDestino = p.getLatitud();
+            Double longitDestino = p.getLongitud();
+            Double latVectorDist = abs(latDestino - latOrigen);
+            Double longVectorDist = abs(longitDestino - longitOrigen);
+            Double nuevaDistancia = sqrt(pow(latVectorDist, 2) + pow(longVectorDist, 2)); //norma euclidiana para calcular distancia
+            if (nuevaDistancia < distancia && !p.getIdsEstacionados().isEmpty()) {
+                distancia = nuevaDistancia;
+                salida = Pair.of(latDestino, longitDestino);
+            }
+        }
+        return salida;
     }
 
 

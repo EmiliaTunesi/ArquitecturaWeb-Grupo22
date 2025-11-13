@@ -2,6 +2,7 @@ package unicen.arq_web.microservicioparada.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -89,6 +90,15 @@ public class ParadaController {
     }
 
 
+    @GetMapping("paradas/cercanas")
+    public ResponseEntity<?> getCercanas(@RequestParam Double lat, @RequestParam Double longit) {
+        Pair<Double, Double> salida = ps.getCercanas(lat, longit);
+        if (salida != null){
+            return ResponseEntity.ok(salida);
+        }else  {
+            return ResponseEntity.ok("No hay paradas cercanas con monopatines disponibles ");
+        }
+    }
 
 
 
