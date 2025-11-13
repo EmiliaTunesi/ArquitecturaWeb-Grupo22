@@ -8,35 +8,35 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import unicen.arq_web.microservicioparada.entities.Parada;
 import unicen.arq_web.microservicioparada.repositories.ParadaRepository;
-import java.io.FileReader;
+
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.time.LocalDate;
-
 
 @Component
 public class CSVReader implements CommandLineRunner {
 
-    private ParadaRepository pr;
+    private final ParadaRepository pr;
+
+    public CSVReader(ParadaRepository pr) {
+        this.pr = pr;
+    }
 
     @Override
     public void run(String... args) throws Exception {
-        // Solo cargar datos si la tabla está vacía
         if (pr.count() == 0) {
-            System.out.println("Cargando datos de viajes desde CSV...");
-            cargarViajesDesdeCSV();
+            System.out.println("Cargando datos de paradas desde CSV...");
+            cargarParadasDesdeCSV();
         }
     }
 
-    private void cargarViajesDesdeCSV() {
+    private void cargarParadasDesdeCSV() {
         try {
-            // Obtener el archivo desde la carpeta resources
             ClassPathResource resource = new ClassPathResource("Paradas.csv");
-
-            // Usar Reader para leer el archivo
-            try (Reader reader = new FileReader(resource.getFile());
+            try (Reader reader = new InputStreamReader(resource.getInputStream());
                  CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.builder()
-                         .setHeader() // Usa la primera fila como encabezado de columna
-                         .setSkipHeaderRecord(true) // No incluir la fila de encabezado en los registros
+                         .setHeader()
+                         .setSkipHeaderRecord(true)
                          .setIgnoreHeaderCase(true)
                          .setTrim(true)
                          .build())) {
@@ -46,37 +46,35 @@ public class CSVReader implements CommandLineRunner {
                         Parada p = new Parada();
 
                         String latitud = csvRecord.get("latitud");
-                        if (latitud.isEmpty())
+                        if (latitud == null || latitud.isBlank())
                             throw new IllegalArgumentException("Campo latitud es obligatorio.");
                         p.setLatitud(Double.parseDouble(latitud));
 
                         String longitud = csvRecord.get("longitud");
-                        if (longitud.isEmpty())
+                        if (longitud == null || longitud.isBlank())
                             throw new IllegalArgumentException("Campo longitud es obligatorio.");
                         p.setLongitud(Double.parseDouble(longitud));
 
                         String activa = csvRecord.get("activa");
-                        if (activa.isEmpty())
+                        if (activa == null || activa.isBlank())
                             throw new IllegalArgumentException("Campo activa es obligatorio.");
                         p.setActiva(Boolean.parseBoolean(activa));
 
                         String fechaAlta = csvRecord.get("fecha_alta");
-                        if (!fechaAlta.isEmpty()) {
+                        if (fechaAlta != null && !fechaAlta.isBlank()) {
                             p.setFechaAlta(LocalDate.parse(fechaAlta));
                         }
 
                         pr.save(p);
-
                     } catch (Exception e) {
-                        // Reporta el error y pasa al siguiente registro
-                        System.err.println(" ERROR procesando la fila " + csvRecord.getRecordNumber());
+                        System.err.println("Error procesando fila " + csvRecord.getRecordNumber() + ": " + e.getMessage());
                     }
                 }
-                System.out.println("Datos de viajes cargados exitosamente: " + pr.count() + " registros.");
+                System.out.println("Datos de paradas cargados exitosamente: " + pr.count() + " registros.");
             }
         } catch (Exception e) {
-            e.printStackTrace();
             System.err.println("ERROR AL CARGAR CSV: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
