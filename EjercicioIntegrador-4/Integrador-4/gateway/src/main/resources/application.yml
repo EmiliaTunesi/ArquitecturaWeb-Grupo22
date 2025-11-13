@@ -24,3 +24,7 @@ spring:
             uri: http://localhost:8083
             predicates:
               - Path=/viajes/**
+          - id: microservicio-parada
+            uri: http://localhost:8084
+            predicates:
+              - Path=/parada/**
