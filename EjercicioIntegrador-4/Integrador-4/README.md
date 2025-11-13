@@ -77,8 +77,8 @@ GET http://localhost:8082/api/usuarios/top-usuarios?fechaInicio=&fechaFin=&tipoU
 ## f. Ajuste de precios
 **Objetivo:** Permite registrar un nuevo ajuste de precios, que entrará en vigencia a partir de una fecha determinada.  
 **Endpoint:**  
-
-
+POST http://localhost:8088/tarifa/nueva
+**Microservicio:** tarifas-service
 ---
 
 ## g. Monopatines cercanos a mi ubicación
