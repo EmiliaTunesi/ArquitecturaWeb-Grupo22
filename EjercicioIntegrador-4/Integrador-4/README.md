@@ -4,18 +4,19 @@
 
 Podés acceder a la documentación interactiva de cada microservicio a través de los siguientes enlaces:
 
-- **Gateway / API Principal (Usuarios)** → [http://localhost:8081/swagger-ui/index.html](http://localhost:8081/swagger-ui/index.html)  
+- **Usuarios Service** → [http://localhost:8081/swagger-ui/index.html](http://localhost:8081/swagger-ui/index.html)  
 - **Viajes Service** → [http://localhost:8083/swagger-ui/index.html](http://localhost:8083/swagger-ui/index.html)  
 - **Monopatines Service** → [http://localhost:8085/swagger-ui/index.html](http://localhost:8085/swagger-ui/index.html)  
 - **Paradas Service** → [http://localhost:8084/swagger-ui/index.html](http://localhost:8084/swagger-ui/index.html)  
-- **Tarifas / Administrador Service** → [http://localhost:8088/swagger-ui/index.html](http://localhost:8088/swagger-ui/index.html)
+- **Tarifas Service** → [http://localhost:8088/swagger-ui/index.html](http://localhost:8088/swagger-ui/index.html)
 
 ---
 
 
 📘 **Notas generales**  
 - Todos los endpoints están accesibles a través del API Gateway (`localhost:8082`).  
-- Los campos de tipo fecha deben seguir el formato `yyyy-mm-dd`.  
+- Los campos de tipo fecha deben seguir el formato `yyyy-mm-dd`.
+- La base de datos utilizada es Postgres, crearlas con los siguientes nombres antes de levantar el proyecto: micro_viaje, base_paradas, microservicio_monopatin_db, base-microservicio, usuarios_db.
 
 
 ## a. Reporte de uso de monopatines
@@ -76,7 +77,8 @@ GET http://localhost:8082/api/usuarios/top-usuarios?fechaInicio=&fechaFin=&tipoU
 ## f. Ajuste de precios
 **Objetivo:** Permite registrar un nuevo ajuste de precios, que entrará en vigencia a partir de una fecha determinada.  
 **Endpoint:**  
-
+POST http://localhost:8082/tarifa/nueva
+**Microservicio:** tarifas-service
 
 ---
 
