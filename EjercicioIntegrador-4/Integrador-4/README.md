@@ -15,7 +15,8 @@ Podés acceder a la documentación interactiva de cada microservicio a través d
 
 📘 **Notas generales**  
 - Todos los endpoints están accesibles a través del API Gateway (`localhost:8082`).  
-- Los campos de tipo fecha deben seguir el formato `yyyy-mm-dd`.  
+- Los campos de tipo fecha deben seguir el formato `yyyy-mm-dd`.
+- La base de datos utilizada es Postgres, crearlas con los siguientes nombres antes de levantar el proyecto: micro_viaje, base_paradas, microservicio_monopatin_db, base-microservicio, usuarios_db.
 
 
 ## a. Reporte de uso de monopatines
