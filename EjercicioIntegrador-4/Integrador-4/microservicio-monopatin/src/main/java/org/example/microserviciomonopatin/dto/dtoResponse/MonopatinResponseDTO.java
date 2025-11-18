@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MonopatinResponseDTO {
-    private Long id;
+    private String id;
     private EstadoMonopatin estado;
     private Double latitudActual;
     private Double longitudActual;

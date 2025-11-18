@@ -1,30 +1,27 @@
 package org.example.microserviciomonopatin.entity;
 
-
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.microserviciomonopatin.utils.EstadoMonopatin;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
 
 @Getter
 @Setter
-@Entity
-@Table(name = "monopatin")
+@Document(collection = "monopatin")
 public class MonopatinEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;  // Mongo genera un ObjectId como String
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private EstadoMonopatin estado;
 
     private Double latitudActual;
     private Double longitudActual;
+
     private Double kilometrosTotales;
     private Double tiempoUsoTotal;
     private Double tiempoPausaTotal;

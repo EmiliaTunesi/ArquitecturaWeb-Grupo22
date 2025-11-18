@@ -15,7 +15,7 @@ import org.example.microserviciomonopatin.utils.EstadoMonopatin;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ReporteUsoMonopatinDTO {
 
-    private Long id;
+    private String id;
     private EstadoMonopatin estado;
     private Double kilometrosTotales;
     private Double tiempoUsoTotal;

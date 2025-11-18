@@ -1,12 +1,11 @@
 package org.example.microserviciomonopatin.service;
 
-
-import jakarta.persistence.EntityNotFoundException;
 import org.example.microserviciomonopatin.dto.dtoRequest.FinalizarMantenimientoRequestDTO;
 import org.example.microserviciomonopatin.dto.dtoRequest.IniciarMantenimientoRequestDTO;
 import org.example.microserviciomonopatin.dto.dtoResponse.MantenimientoResponseDTO;
 import org.example.microserviciomonopatin.entity.MantenimientoEntity;
 import org.example.microserviciomonopatin.entity.MonopatinEntity;
+import org.example.microserviciomonopatin.exception.ResourceNotFoundException;
 import org.example.microserviciomonopatin.repository.MantenimientoRepository;
 import org.example.microserviciomonopatin.utils.EstadoMonopatin;
 import org.modelmapper.ModelMapper;
@@ -34,69 +33,67 @@ public class MantenimientoService {
 
     @Transactional
     public MantenimientoResponseDTO registrarMantenimiento(IniciarMantenimientoRequestDTO request) {
-        // Obtener el monopatín
+
+        // Obtener monopatín (ahora devuelve uno con id String)
         MonopatinEntity monopatin = monopatinService.obtenerMonopatinEntity(request.getMonopatinId());
 
-        // Verificar que no esté ya en mantenimiento
-
+        // Verificar estado
         if (monopatin.getEstado() == EstadoMonopatin.EN_MANTENIMIENTO) {
             throw new IllegalStateException("El monopatín ya se encuentra en mantenimiento");
         }
 
-        // Verificar que no tenga un mantenimiento activo
-        mantenimientoRepository.findByMonopatinIdAndFechaFinIsNull(monopatin)
+        // Verificar mantenimiento activo
+        mantenimientoRepository.findByMonopatinIdAndFechaFinIsNull(monopatin.getId())
                 .ifPresent(m -> {
                     throw new IllegalStateException("El monopatín ya tiene un mantenimiento activo");
                 });
 
-        // Crear el registro de mantenimiento (mapeo manual porque ModelMapper se confunde con los IDs)
+        // Crear mantenimiento (monopatinId es String)
         MantenimientoEntity mantenimiento = new MantenimientoEntity();
-        mantenimiento.setMonopatinId(monopatin);
+        mantenimiento.setMonopatinId(monopatin.getId());
         mantenimiento.setFechaInicio(LocalDate.now());
         mantenimiento.setDescripcion(request.getDescripcion());
         mantenimiento.setTipoMantenimiento(request.getTipoMantenimiento());
 
-        MantenimientoEntity savedMantenimiento = mantenimientoRepository.save(mantenimiento);
+        MantenimientoEntity saved = mantenimientoRepository.save(mantenimiento);
 
-        // Marcar el monopatín como en mantenimiento
+        // Cambiar estado del monopatín
         monopatinService.marcarEnMantenimiento(monopatin.getId());
 
-        return convertirAResponseDTO(savedMantenimiento);
+        return convertirAResponseDTO(saved);
     }
 
-
     @Transactional
-    public MantenimientoResponseDTO finalizarMantenimiento(Long mantenimientoId, FinalizarMantenimientoRequestDTO request) {
-        // Obtener el mantenimiento
-        MantenimientoEntity mantenimiento = mantenimientoRepository.findById(mantenimientoId)
-                .orElseThrow(() -> new EntityNotFoundException("Mantenimiento no encontrado con id: " + mantenimientoId));
+    public MantenimientoResponseDTO finalizarMantenimiento(String mantenimientoId, FinalizarMantenimientoRequestDTO request) {
 
-        // Verificar que no esté ya finalizado
+        MantenimientoEntity mantenimiento = mantenimientoRepository.findById(mantenimientoId)
+                .orElseThrow(() -> new ResourceNotFoundException("Mantenimiento no encontrado con id: " + mantenimientoId));
+
         if (mantenimiento.getFechaFin() != null) {
             throw new IllegalStateException("Este mantenimiento ya ha sido finalizado");
         }
 
-        // Actualizar el mantenimiento
         mantenimiento.setFechaFin(LocalDate.now());
+
         if (request.getDescripcionFinal() != null && !request.getDescripcionFinal().isEmpty()) {
-            String descripcionActualizada = mantenimiento.getDescripcion() + " | Finalización: " + request.getDescripcionFinal();
-            mantenimiento.setDescripcion(descripcionActualizada);
+            String nuevaDesc = mantenimiento.getDescripcion() + " | Finalización: " + request.getDescripcionFinal();
+            mantenimiento.setDescripcion(nuevaDesc);
         }
 
-        MantenimientoEntity savedMantenimiento = mantenimientoRepository.save(mantenimiento);
+        MantenimientoEntity saved = mantenimientoRepository.save(mantenimiento);
 
-        monopatinService.marcarDisponible(mantenimiento.getMonopatinId().getId());
+        // Marcar monopatín como disponible
+        monopatinService.marcarDisponible(mantenimiento.getMonopatinId());
 
-        return convertirAResponseDTO(savedMantenimiento);
+        return convertirAResponseDTO(saved);
     }
 
     @Transactional(readOnly = true)
-    public MantenimientoResponseDTO obtenerMantenimientoPorId(Long id) {
+    public MantenimientoResponseDTO obtenerMantenimientoPorId(String id) {
         MantenimientoEntity mantenimiento = mantenimientoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Mantenimiento no encontrado con id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Mantenimiento no encontrado con id: " + id));
         return convertirAResponseDTO(mantenimiento);
     }
-
 
     @Transactional(readOnly = true)
     public List<MantenimientoResponseDTO> listarTodosLosMantenimientos() {
@@ -105,23 +102,22 @@ public class MantenimientoService {
                 .collect(Collectors.toList());
     }
 
-
     @Transactional(readOnly = true)
-    public List<MantenimientoResponseDTO> listarMantenimientosPorMonopatin(Long monopatinId) {
-        MonopatinEntity monopatin = monopatinService.obtenerMonopatinEntity(monopatinId);
-        return mantenimientoRepository.findByMonopatinId(monopatin).stream()
+    public List<MantenimientoResponseDTO> listarMantenimientosPorMonopatin(String monopatinId) {
+        return mantenimientoRepository.findByMonopatinId(monopatinId).stream()
                 .map(this::convertirAResponseDTO)
                 .collect(Collectors.toList());
     }
 
-    //Metodo auxiliar
     private MantenimientoResponseDTO convertirAResponseDTO(MantenimientoEntity mantenimiento) {
         MantenimientoResponseDTO dto = modelMapper.map(mantenimiento, MantenimientoResponseDTO.class);
 
-        dto.setMonopatinId(mantenimiento.getMonopatinId().getId());
+        // monopatinId ya es String
+        dto.setMonopatinId(mantenimiento.getMonopatinId());
 
-        String estadoMantenimiento = mantenimiento.getFechaFin() == null ? "EN_CURSO" : "FINALIZADO";
-        dto.setEstadoMantenimiento(estadoMantenimiento);
+        dto.setEstadoMantenimiento(
+                mantenimiento.getFechaFin() == null ? "EN_CURSO" : "FINALIZADO"
+        );
 
         return dto;
     }
