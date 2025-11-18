@@ -6,11 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 
 @Entity
 @Table(name = "Parada")
 @Getter
+@Setter
 public class Parada {
 
     @Id
@@ -44,7 +46,6 @@ public class Parada {
             this.fechaAlta = LocalDate.now();
         }
     }
-
 
     @PrePersist
     public void darDeAlta() {
