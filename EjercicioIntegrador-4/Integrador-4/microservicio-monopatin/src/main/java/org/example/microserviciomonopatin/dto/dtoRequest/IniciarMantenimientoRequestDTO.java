@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class IniciarMantenimientoRequestDTO {
 
-    private Long monopatinId;
+    private String monopatinId;
     private String descripcion;
     private String tipoMantenimiento;
 }

@@ -30,7 +30,7 @@ public class MantenimientoController {
     //Termina un mantenimiento
     @PutMapping("/{id}/finalizar")
     public ResponseEntity<MantenimientoResponseDTO> finalizarMantenimiento(
-            @PathVariable Long id,
+            @PathVariable String id,
             @RequestBody(required = false) FinalizarMantenimientoRequestDTO request) {
 
         if (request == null) {
@@ -43,7 +43,7 @@ public class MantenimientoController {
 
     //Me devuelve un mantenimiento por ID
     @GetMapping("/{id}")
-    public ResponseEntity<MantenimientoResponseDTO> obtenerMantenimiento(@PathVariable Long id) {
+    public ResponseEntity<MantenimientoResponseDTO> obtenerMantenimiento(@PathVariable String id) {
         MantenimientoResponseDTO response = mantenimientoService.obtenerMantenimientoPorId(id);
         return ResponseEntity.ok(response);
     }
@@ -58,7 +58,7 @@ public class MantenimientoController {
     //Me trae todos los mantenimientos por un monopatin
     @GetMapping("/monopatin/{monopatinId}")
     public ResponseEntity<List<MantenimientoResponseDTO>> listarMantenimientosPorMonopatin(
-            @PathVariable Long monopatinId) {
+            @PathVariable String monopatinId) {
         List<MantenimientoResponseDTO> response = mantenimientoService.listarMantenimientosPorMonopatin(monopatinId);
         return ResponseEntity.ok(response);
     }

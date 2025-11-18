@@ -1,13 +1,8 @@
 package org.example.microserviciomonopatin.service;
 
 
-import jakarta.persistence.EntityNotFoundException;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.example.microserviciomonopatin.dto.dtoRequest.ActualizacionMonopatinDTO;
-import org.example.microserviciomonopatin.dto.dtoRequest.ActualizarUbicacionDTO;
 import org.example.microserviciomonopatin.dto.dtoRequest.MonopatinRequestDTO;
-import org.example.microserviciomonopatin.dto.dtoRequest.UbicarMonopatinRequestDTO;
 import org.example.microserviciomonopatin.dto.dtoResponse.MonopatinResponseDTO;
 import org.example.microserviciomonopatin.dto.dtoResponse.ReporteUsoMonopatinDTO;
 import org.example.microserviciomonopatin.entity.MonopatinEntity;
@@ -15,10 +10,8 @@ import org.example.microserviciomonopatin.exception.ResourceNotFoundException;
 import org.example.microserviciomonopatin.repository.MonopatinRepository;
 import org.example.microserviciomonopatin.utils.EstadoMonopatin;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -51,7 +44,7 @@ public class MonopatinService {
 
 
     @Transactional
-    public MonopatinResponseDTO marcarFueraDeServicio(Long id) {
+    public MonopatinResponseDTO marcarFueraDeServicio(String id) {
         MonopatinEntity monopatin = monopatinRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Monopatín con ID " + id + " no encontrado"));
 
@@ -65,7 +58,7 @@ public class MonopatinService {
 
 
     @Transactional
-    public MonopatinResponseDTO marcarEnMantenimiento(Long id) {
+    public MonopatinResponseDTO marcarEnMantenimiento(String id) {
         MonopatinEntity monopatin = monopatinRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Monopatín no encontrado con id: " + id));
 
@@ -76,7 +69,7 @@ public class MonopatinService {
 
 
     @Transactional
-    public MonopatinResponseDTO marcarDisponible(Long id) {
+    public MonopatinResponseDTO marcarDisponible(String id) {
         MonopatinEntity monopatin = monopatinRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Monopatín no encontrado con id: " + id));
 
@@ -87,7 +80,7 @@ public class MonopatinService {
 
 
     @Transactional(readOnly = true)
-    public MonopatinResponseDTO obtenerMonopatinPorId(Long id) {
+    public MonopatinResponseDTO obtenerMonopatinPorId(String id) {
         MonopatinEntity monopatin = monopatinRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Monopatín no encontrado con id: " + id));
         return modelMapper.map(monopatin, MonopatinResponseDTO.class);
@@ -103,13 +96,13 @@ public class MonopatinService {
 
 
     @Transactional(readOnly = true)
-    public MonopatinEntity obtenerMonopatinEntity(Long id) {
+    public MonopatinEntity obtenerMonopatinEntity(String id) {
         return monopatinRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Monopatín no encontrado con id: " + id));
     }
 
 
-    //Limite de km en mantenimiento
+    //Límite de km en mantenimiento
     private static final double LIMITE_KM_MANTENIMIENTO = 100.0;
 
     public List<ReporteUsoMonopatinDTO> generarReporte(boolean incluirPausas) {
@@ -136,24 +129,26 @@ public class MonopatinService {
 
 
     //Me devuelve si el monopatin esta disponible
-    @Transactional(readOnly = true)
-    public boolean estaDisponible(Long id) {
+    @Transactional
+    public boolean estaDisponible(String id) {
         MonopatinEntity monopatin = monopatinRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Monopatín no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Monopatín no encontrado con id: " + id));
+
         boolean disponible = monopatin.getEstado() == EstadoMonopatin.DISPONIBLE;
 
-        if  (disponible) {
+        if (disponible) {
             monopatin.setEstado(EstadoMonopatin.EN_USO);
+            monopatinRepository.save(monopatin); // Importante
         }
+
         return disponible;
     }
 
-
-    public void finalizarUso(Long id, ActualizacionMonopatinDTO dto) {
+    @Transactional
+    public void finalizarUso(String id, ActualizacionMonopatinDTO dto) {
         MonopatinEntity monopatin = monopatinRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Monopatín no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Monopatín no encontrado con id: " + id));
 
-        // Actualizar métricas
         monopatin.setKilometrosTotales(
                 monopatin.getKilometrosTotales() + dto.getKilometrosRecorridos());
         monopatin.setTiempoUsoTotal(
@@ -161,12 +156,10 @@ public class MonopatinService {
         monopatin.setTiempoPausaTotal(
                 monopatin.getTiempoPausaTotal() + dto.getTiempoPausa());
 
-        // Cambiar estado automáticamente
         monopatin.setEstado(EstadoMonopatin.DISPONIBLE);
 
         monopatinRepository.save(monopatin);
     }
-
 
 }
 
