@@ -18,6 +18,7 @@ public class CuentaMapper {
         dto.setKmRecorridosMes(cuenta.getKmRecorridosMes());
         dto.setSaldoCreditos(cuenta.getSaldoCreditos());
         dto.setFechaRenovacionCupo(cuenta.getFechaRenovacionCupo());
+
         return dto;
     }
 

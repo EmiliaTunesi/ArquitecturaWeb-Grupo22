@@ -119,7 +119,7 @@ public class MonopatinService {
                     m.getEstado(),
                     m.getKilometrosTotales(),
                     m.getTiempoUsoTotal(),
-                    tiempoPausa, // 👈 si incluirPausas=false, será null → no aparece en JSON
+                    tiempoPausa,
                     requiereMantenimiento
             );
         }).collect(Collectors.toList());
@@ -128,9 +128,11 @@ public class MonopatinService {
 }
 
 
+
     //Me devuelve si el monopatin esta disponible
     @Transactional
     public boolean estaDisponible(String id) {
+>>>>>>> c1b541bcb42101e8c106c93a3e76c8701bf58abf
         MonopatinEntity monopatin = monopatinRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Monopatín no encontrado con id: " + id));
 

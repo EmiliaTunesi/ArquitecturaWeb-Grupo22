@@ -18,6 +18,8 @@ public class UsuarioMapper {
         dto.setTelefono(usuario.getTelefono());
         dto.setFechaRegistro(usuario.getFechaRegistro());
         dto.setActivo(usuario.isActivo());
+        dto.setRol(usuario.getRol());
+        dto.setPassword(usuario.getPassword());
 
         System.out.println("DTO GENERADO: " + dto);
         return dto;
@@ -36,6 +38,8 @@ public class UsuarioMapper {
         usuario.setTelefono(dto.getTelefono());
         usuario.setFechaRegistro(dto.getFechaRegistro());
         usuario.setActivo(dto.getActivo());
+        usuario.setRol(dto.getRol());
+        usuario.setPassword(dto.getPassword());
         return usuario;
     }
 
@@ -51,9 +55,13 @@ public class UsuarioMapper {
         usuario.setEmail(dto.getEmail());
         usuario.setTelefono(dto.getTelefono());
 
+
         if (dto.getFechaRegistro() != null) {
             usuario.setFechaRegistro(dto.getFechaRegistro());
         }
         usuario.setActivo(dto.getActivo());
+
+        usuario.setRol(dto.getRol());
+        usuario.setPassword(dto.getPassword());
     }
 }

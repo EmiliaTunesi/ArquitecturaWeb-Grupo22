@@ -7,6 +7,7 @@ import com.trabajointegrador.microserviciousuario.entity.UsuarioCuentaid;
 import com.trabajointegrador.microserviciousuario.repository.CuentaRepository;
 import com.trabajointegrador.microserviciousuario.repository.UsuarioCuentaRepository;
 import com.trabajointegrador.microserviciousuario.repository.UsuarioRepository;
+import com.trabajointegrador.microserviciousuario.utils.Rol;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
@@ -84,6 +85,8 @@ public class DataLoader implements CommandLineRunner {
                 usuario.setTelefono(u[5]);
                 usuario.setFechaRegistro(LocalDateTime.parse(u[6]));
                 usuario.setActivo(Boolean.parseBoolean(u[7]));
+                usuario.setRol(Rol.valueOf(u[8]));
+                usuario.setPassword(u[9]);
 
                 usuarioRepo.save(usuario);
             }

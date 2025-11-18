@@ -1,9 +1,15 @@
 package com.trabajointegrador.microserviciousuario.entity;
+import com.trabajointegrador.microserviciousuario.utils.Rol;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.Date;
 
+
+@Getter
+@Setter
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
@@ -33,6 +39,13 @@ public class Usuario {
     @Column(nullable = false)
     private Boolean activo;
 
+    @Column(name = "rol")
+    private Rol rol;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
+
     public Usuario() {}
 
     public Usuario(
@@ -42,7 +55,9 @@ public class Usuario {
             String email,
             String telefono,
             LocalDateTime fechaRegistro,
-            boolean activo
+            boolean activo,
+            Rol rol,
+            String password
     ) {
         this.nombreUsuario = nombreUsuario;
         this.nombre = nombre;
@@ -51,71 +66,19 @@ public class Usuario {
         this.telefono = telefono;
         this.fechaRegistro = fechaRegistro;
         this.activo = activo;
+        this.rol = rol;
+        this.password = password;
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNombreUsuario() {
-        return nombreUsuario;
-    }
-
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public LocalDateTime getFechaRegistro() {
-        return fechaRegistro;
-    }
-
-    public void setFechaRegistro(LocalDateTime fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
-    }
 
     public boolean isActivo() {
         return activo;
     }
 
-    public void setActivo(Boolean activo) {
-        this.activo = activo;
-    }
 
-    public String getApellido() {
-        return apellido;
-    }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
+
 
     @Override
     public String toString() {
