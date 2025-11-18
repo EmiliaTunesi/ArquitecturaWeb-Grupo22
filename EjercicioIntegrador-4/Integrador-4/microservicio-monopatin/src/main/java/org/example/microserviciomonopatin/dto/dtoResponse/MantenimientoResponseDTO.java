@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MantenimientoResponseDTO {
 
-    private Long id;
-    private Long monopatinId;
+    private String id;
+    private String monopatinId;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private String descripcion;

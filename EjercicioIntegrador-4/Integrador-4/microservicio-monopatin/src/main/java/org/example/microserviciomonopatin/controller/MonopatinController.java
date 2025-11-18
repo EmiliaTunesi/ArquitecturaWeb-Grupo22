@@ -38,7 +38,7 @@ public class MonopatinController {
 
     //Borrado logico de un monopatin donde monopatin = FUERA_DE_SERVICIO
     @PutMapping("/{id}/fuera-servicio")
-    public ResponseEntity<MonopatinResponseDTO> marcarFueraDeServicio(@PathVariable Long id) {
+    public ResponseEntity<MonopatinResponseDTO> marcarFueraDeServicio(@PathVariable String id) {
         MonopatinResponseDTO monopatinActualizado = monopatinService.marcarFueraDeServicio(id);
         return ResponseEntity.ok(monopatinActualizado);
     }
@@ -47,7 +47,7 @@ public class MonopatinController {
 
     //Devuelve true o false, si es true cambia el estado del monopatin=EN_USO
     @GetMapping("/{id}/disponible")
-    public ResponseEntity<Boolean> verificarDisponibilidad(@PathVariable Long id) {
+    public ResponseEntity<Boolean> verificarDisponibilidad(@PathVariable String id) {
         boolean disponible = monopatinService.estaDisponible(id);
         return ResponseEntity.ok(disponible);
     }
@@ -59,7 +59,7 @@ public class MonopatinController {
     //Finaliza el uso del monopatin
     @PutMapping("/{id}/finalizar")
     public ResponseEntity<String> finalizarUso(
-            @PathVariable Long id,
+            @PathVariable String id,
             @RequestBody ActualizacionMonopatinDTO actualizacionDTO) {
         monopatinService.finalizarUso(id, actualizacionDTO);
         return ResponseEntity.ok("Monopatín actualizado y disponible nuevamente");
@@ -69,7 +69,7 @@ public class MonopatinController {
 
     //Traer un monopatin
     @GetMapping("/{id}")
-    public ResponseEntity<MonopatinResponseDTO> obtenerMonopatin(@PathVariable Long id) {
+    public ResponseEntity<MonopatinResponseDTO> obtenerMonopatin(@PathVariable String id) {
         MonopatinResponseDTO response = monopatinService.obtenerMonopatinPorId(id);
         return ResponseEntity.ok(response);
     }

@@ -11,6 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MantenimientoFinRequestDTO {
-    private Long mantenimientoId;
+    private String mantenimientoId;
 
 }
