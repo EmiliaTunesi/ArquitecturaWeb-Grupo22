@@ -6,25 +6,102 @@ spring:
     name: gateway
   cloud:
     gateway:
-      mvc:
-        routes:
-          - id: usuario-service
-            uri: http://localhost:8081
-            predicates:
-              - Path=/api/usuarios/**
-          - id: microservicio-monopatin
-            uri: http://localhost:8085
-            predicates:
-              - Path=/api/monopatines/**
-          - id: microservicio-administrador
-            uri: http://localhost:8088
-            predicates:
-              - Path=/tarifa/**
-          - id: microservicio-viajes
-            uri: http://localhost:8083
-            predicates:
-              - Path=/viajes/**
-          - id: microservicio-parada
-            uri: http://localhost:8084
-            predicates:
-              - Path=/parada/**
+      routes:
+        # ==========================================
+        # 1. ZONA PÚBLICA (Sin Token)
+        # ==========================================
+        - id: auth-login
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/authenticate
+          # SIN FILTROS
+
+        - id: auth-register
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/usuarios
+            - Method=POST
+          # SIN FILTROS (Para poder crear usuario nuevo)
+
+        # ==========================================
+        # 2. ZONA DE ADMINISTRADOR (EL JEFE)
+        # ==========================================
+
+        # ADMIN: Tarifas (Todo)
+        - id: admin-tarifas
+          uri: http://localhost:8088
+          predicates:
+            - Path=/tarifa/**
+          filters:
+            - name: AuthFilter
+              args:
+                role: ROLE_ADMIN
+
+        # ADMIN: Gestión de Usuarios (Rutas específicas de admin)
+        - id: admin-usuarios-gestion
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/usuarios/admin/**
+          filters:
+            - name: AuthFilter
+              args:
+                role: ROLE_ADMIN
+
+        # ADMIN: Crear/Borrar Cuentas (POST, PUT, DELETE)
+        # Aquí está el truco: Si intentas POST con usuario normal, fallará.
+        - id: admin-cuentas-write
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/cuentas/**
+            - Method=POST,PUT,DELETE,PATCH
+          filters:
+            - name: AuthFilter
+              args:
+                role: ROLE_ADMIN
+
+        # ADMIN: Gestión de Monopatines (Agregar/Quitar)
+        - id: admin-monopatines-write
+          uri: http://localhost:8085
+          predicates:
+            - Path=/api/monopatines/**
+            - Method=POST,PUT,DELETE,GET
+          filters:
+            - name: AuthFilter
+              args:
+                role: ROLE_ADMIN
+
+        # ==========================================
+        # 3. ZONA DE USUARIO (EL CLIENTE)
+        # ==========================================
+
+        # USER: Ver Cuentas (Solo GET)
+        - id: user-cuentas-read
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/cuentas/**
+            - Method=GET
+          filters:
+            - name: AuthFilter
+              args:
+                role: USER
+
+        # USER: Usar Monopatines / Viajes
+        - id: user-viajes
+          uri: http://localhost:8083
+          predicates:
+            - Path=/viajes/**
+            - Method=GET,POST,PUT
+          filters:
+            - name: AuthFilter
+              args:
+                role: USER
+
+        # USER: Vincular su cuenta (POST)
+        - id: user-vincular-cuenta
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/usuarios-cuentas/**
+          filters:
+            - name: AuthFilter
+              args:
+                role: USER
