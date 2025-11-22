@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -82,5 +83,33 @@ public class CuentaController {
     public ResponseEntity<Boolean> isCuentaActiva(@PathVariable Long id) {
         boolean estaActiva = cuentaService.isCuentaDisponible(id);
         return ResponseEntity.ok(estaActiva);
+    }
+
+    //Vincula la cuenta interna con una cuenta simulada de MercadoPago.
+    @PostMapping("/{id}/vincular-mp")
+    public ResponseEntity<?> vincularMercadoPago(
+            @PathVariable Long id,
+            @RequestParam String email
+    ) {
+        try {
+            CuentaDTO cuenta = cuentaService.vincularMercadoPago(id, email);
+            return ResponseEntity.ok(cuenta);
+        } catch (RuntimeException e) {
+            // Devuelve un error 400 si falla la vinculación (ej. email inválido)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+    //Simula un débito/pago usando la cuenta vinculada.
+    @PostMapping("/{id}/procesar-pago")
+    public ResponseEntity<?> procesarPago(
+            @PathVariable Long id,
+            @RequestParam BigDecimal monto
+    ) {
+        try {
+            cuentaService.procesarPago(id, monto);
+            return ResponseEntity.ok("Pago procesado correctamente con MercadoPago.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }

@@ -7,7 +7,11 @@ import com.trabajointegrador.microserviciousuario.mappers.CuentaMapper;
 import com.trabajointegrador.microserviciousuario.repository.CuentaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.trabajointegrador.microserviciousuario.dto.RespuestaDTO;
+import com.trabajointegrador.microserviciousuario.dto.DatosVinculacionDTO;
+import com.trabajointegrador.microserviciousuario.feing.MercadoPagoClient;
+import com.trabajointegrador.microserviciousuario.feing.MercadoPagoClientMock;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,9 +20,11 @@ import java.util.stream.Collectors;
 public class CuentaService {
 
     private final CuentaRepository cuentaRepository;
+    private final MercadoPagoClient mercadoPagoClient;
 
-    public CuentaService(CuentaRepository cuentaRepository) {
+    public CuentaService(CuentaRepository cuentaRepository, MercadoPagoClient mercadoPagoClient) {
         this.cuentaRepository = cuentaRepository;
+        this.mercadoPagoClient = mercadoPagoClient;
     }
 
     @Transactional
@@ -131,5 +137,52 @@ public class CuentaService {
         Cuenta cuenta = cuentaRepository.findById(idCuenta)
                 .orElseThrow(() -> new RuntimeException("Cuenta no encontrada"));
         return cuenta.getTipoCuenta() == Cuenta.TipoCuenta.PREMIUM;
+    }
+
+    @Transactional
+    public CuentaDTO vincularMercadoPago(Long idCuenta, String email) {
+        Cuenta cuenta = cuentaRepository.findById(idCuenta)
+                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada: " + idCuenta));
+
+        try {
+            // INTENTA llamar al servicio externo
+            DatosVinculacionDTO datos = new DatosVinculacionDTO(email);
+            String idMP = mercadoPagoClient.vincularCuenta(datos);
+
+            // Si sale OK guarda
+            cuenta.setCuentaMercadoPagoId(idMP);
+            return CuentaMapper.toDTO(cuentaRepository.save(cuenta));
+
+        } catch (Exception e) {
+            // CAPTURA GENÉRICA: Atrapa IllegalArgumentException, Timeout, Error 500, etc.
+            System.err.println("Error al comunicar con MercadoPago: " + e.getMessage());
+
+            // Lanzamos una excepción de negocio para que el Controller devuelva un 400/500 limpio
+            throw new RuntimeException("No se pudo vincular con MercadoPago en este momento. Motivo: " + e.getMessage());
+        }
+    }
+
+    @Transactional
+    public void procesarPago(Long idCuenta, BigDecimal monto) {
+        Cuenta cuenta = cuentaRepository.findById(idCuenta)
+                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada"));
+
+        if (cuenta.getCuentaMercadoPagoId() == null) {
+            throw new RuntimeException("La cuenta no está vinculada a un medio de pago");
+        }
+
+        try {
+            // INTENTA cobrar
+            RespuestaDTO respuesta = mercadoPagoClient.realizarCobro(cuenta.getCuentaMercadoPagoId(), monto);
+
+            // Valida el estado de la respuesta (incluso si no hubo excepción técnica, puede ser un rechazo lógico)
+            if (!"APROBADO".equals(respuesta.getEstado())) {
+                throw new RuntimeException("El pago fue rechazado por la plataforma de pagos.");
+            }
+
+        } catch (Exception e) {
+            // CAPTURA GENÉRICA
+            throw new RuntimeException("Error al procesar el pago: " + e.getMessage());
+        }
     }
 }
