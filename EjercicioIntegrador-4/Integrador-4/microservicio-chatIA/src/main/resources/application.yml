@@ -17,7 +17,8 @@ spring:
           dialect: org.hibernate.dialect.PostgreSQLDialect
   data:
     mongodb:
-      uri: mongodb://localhost:27017/monopatin_db
+      uri: mongodb://localhost:27017/microservicio_monopatin_db
+      #uri: mongodb://localhost:27017/monopatin_db
 
 groq:
   api-key: ${GROQ_API_KEY}
