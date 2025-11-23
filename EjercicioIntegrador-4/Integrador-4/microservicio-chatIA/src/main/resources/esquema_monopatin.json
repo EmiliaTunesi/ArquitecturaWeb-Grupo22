@@ -1,0 +1,10 @@
+{
+  "_id": "ObjectId",
+  "estado": "string // DISPONIBLE | EN_USO | PAUSADO | MANTENIMIENTO | FUERA_DE_SERVICIO | EN_MANTENIMIENTO",
+  "latitudActual": "number",
+  "longitudActual": "number",
+  "kilometrosTotales": "number",
+  "tiempoUsoTotal": "number",
+  "tiempoPausaTotal": "number",
+  "fechaAlta": "string // ISODate ej: 2023-01-10"
+}
