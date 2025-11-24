@@ -21,5 +21,5 @@ public class ViajeResponseDTO {
     private Long tarifaId;
     private Integer tiempoTotalMinutos;
     private Integer pausaTotalMinutos;
-    private BigDecimal costo_total;
+    private BigDecimal costoTotal;
 }

@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/micro_viaje
+    url: jdbc:postgresql://localhost:8080/micro_viaje
     username: postgres
     password: 1234
     driver-class-name: org.postgresql.Driver
