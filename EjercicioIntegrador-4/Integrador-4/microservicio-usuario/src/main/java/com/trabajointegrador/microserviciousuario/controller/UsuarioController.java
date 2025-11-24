@@ -23,20 +23,11 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    @PostMapping
-    public ResponseEntity<UsuarioDTO> crear(@RequestBody UsuarioDTO dto) {
-        UsuarioDTO respuesta = usuarioService.crearUsuario(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(respuesta);
-    }
+    // ============ RUTAS SOLO ADMIN ============
 
     @GetMapping
     public ResponseEntity<List<UsuarioDTO>> listar() {
         return ResponseEntity.ok(usuarioService.listarUsuarios());
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<UsuarioDTO> obtener(@PathVariable Long id) {
-        return ResponseEntity.ok(usuarioService.obtenerPorId(id));
     }
 
     @PutMapping("/{id}")
@@ -57,17 +48,6 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.obtenerPorActivo(activo));
     }
 
-    @GetMapping("/uso")
-    public ResponseEntity<UsuarioUsoDTO> obtenerUso(
-            @RequestParam Long idUsuario,
-            @RequestParam Long idCuenta,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate desde,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate hasta
-    ) {
-        UsuarioUsoDTO result = usuarioService.obtenerUso(idUsuario, idCuenta, desde, hasta);
-        return ResponseEntity.ok(result);
-    }
-
     @GetMapping("/top-usuarios")
     public ResponseEntity<List<UsuarioRankingDTO>> topUsuarios(
             @RequestParam int anio,
@@ -76,4 +56,29 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.obtenerTopUsuarios(anio, activo));
     }
 
+    // ============ RUTAS PARA USER Y ADMIN (cualquier autenticado) ============
+
+    @PostMapping
+    public ResponseEntity<UsuarioDTO> crear(@RequestBody UsuarioDTO dto) {
+        UsuarioDTO respuesta = usuarioService.crearUsuario(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(respuesta);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UsuarioDTO> obtener(@PathVariable Long id) {
+        // Cualquier usuario puede ver un perfil específico
+        return ResponseEntity.ok(usuarioService.obtenerPorId(id));
+    }
+
+    @GetMapping("/uso")
+    public ResponseEntity<UsuarioUsoDTO> obtenerUso(
+            @RequestParam Long idUsuario,
+            @RequestParam Long idCuenta,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate desde,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate hasta
+    ) {
+        // Usuario puede consultar su propio uso
+        UsuarioUsoDTO result = usuarioService.obtenerUso(idUsuario, idCuenta, desde, hasta);
+        return ResponseEntity.ok(result);
+    }
 }
