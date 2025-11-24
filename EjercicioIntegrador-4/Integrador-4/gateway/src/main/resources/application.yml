@@ -27,8 +27,29 @@ spring:
 
 
         # ======================================================
-        # 2. ZONA USUARIO (CLIENTE)  ⚠ VA ANTES QUE ADMIN
+        # 2. ZONA USUARIO (CLIENTE)
         # ======================================================
+
+        # USER PREMIUM: Chat IA - Viajes
+        - id: chat-ia-viaje
+          uri: http://localhost:8089
+          predicates:
+            - Path=/api/ia/viaje/**
+          filters:
+            - name: AuthFilter
+              args:
+                role: USER
+
+        # USER PREMIUM: Chat IA - General
+        - id: chat-ia-general
+          uri: http://localhost:8089
+          predicates:
+            - Path=/api/ia/**
+          filters:
+            - name: AuthFilter
+              args:
+                role: USER
+
 
         # USER: Obtener uso personal
         - id: user-uso-personal

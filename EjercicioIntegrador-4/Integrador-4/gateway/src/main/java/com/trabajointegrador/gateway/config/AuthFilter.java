@@ -53,10 +53,14 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
 
             // 4. Validar PREMIUM para rutas del chat
             String path = exchange.getRequest().getPath().toString();
-            if (path.startsWith("/api/chat")) {
+            if (path.startsWith("/api/ia")) {
                 try {
                     Claims claims = jwtUtils.getClaims(token);
                     Long userId = claims.get("userId", Long.class);
+
+                    if (userId == null) {
+                        return onError(exchange, HttpStatus.UNAUTHORIZED);
+                    }
 
                     String url = "http://localhost:8081/api/usuarios/" + userId + "/tiene-premium";
                     Boolean tienePremium = restTemplate.getForObject(url, Boolean.class);
