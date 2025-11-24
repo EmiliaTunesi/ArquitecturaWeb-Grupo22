@@ -1,5 +1,5 @@
 id,nombre_usuario,nombre,apellido,email,telefono,fecha_registro,activo,rol,password
-1,azulr,Azul,Ramírez,azul.ramirez@example.com,1133224455,2024-01-12T10:20:00,true,ADMIN,1234
+1,nfaluci,admin,admin,admin.valdez@example.com,1122334455,2023-12-02T09:15:00,true,ADMIN,1234
 2,pvaldez,Pablo,Valdez,pablo.valdez@example.com,1122334455,2023-12-02T09:15:00,true,USER,1234
 3,mlopez,María,López,maria.lopez@example.com,1166778899,2024-02-18T14:30:00,true,USER,1234
 4,jmartin,Juan,Martín,juan.martin@example.com,1199887766,2023-09-25T17:00:00,false,USER,1234

@@ -19,8 +19,9 @@ public class UsuarioCuentaController {
         this.usuarioCuentaService = usuarioCuentaService;
     }
 
-    // Crear vínculo entre un usuario y una cuenta
-    @PostMapping("/vincular")
+    // ============ RUTAS SOLO ADMIN ============
+
+    @PostMapping("/admin/vincular")
     public ResponseEntity<UsuarioCuentaDTO> vincularUsuarioCuenta(
             @RequestParam Long usuarioId,
             @RequestParam Long cuentaId
@@ -29,19 +30,20 @@ public class UsuarioCuentaController {
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 
-    // Listar todas las vinculaciones
-    @GetMapping
+    @GetMapping("/admin")
     public ResponseEntity<List<UsuarioCuentaDTO>> listarVinculaciones() {
         List<UsuarioCuentaDTO> vinculaciones = usuarioCuentaService.listarVinculaciones();
         return new ResponseEntity<>(vinculaciones, HttpStatus.OK);
     }
 
-    // Consultar si un usuario está vinculado a una cuenta
+    // ============ RUTAS PARA USER Y ADMIN (cualquier autenticado) ============
+
     @GetMapping("/existe")
     public ResponseEntity<Boolean> verificarVinculacion(
             @RequestParam Long usuarioId,
             @RequestParam Long cuentaId
     ) {
+        // Usuario puede verificar su propia vinculación
         boolean existe = usuarioCuentaService.existeVinculacion(usuarioId, cuentaId);
         return new ResponseEntity<>(existe, HttpStatus.OK);
     }
@@ -50,6 +52,7 @@ public class UsuarioCuentaController {
     public ResponseEntity<List<UsuarioDTO>> obtenerUsuariosPorCuenta(
             @PathVariable Long cuentaId
     ) {
+        // Usuario puede ver quiénes están en su misma cuenta
         List<UsuarioDTO> usuarios = usuarioCuentaService.obtenerUsuariosPorCuenta(cuentaId);
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }

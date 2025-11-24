@@ -10,6 +10,7 @@ import com.trabajointegrador.microserviciousuario.repository.UsuarioRepository;
 import com.trabajointegrador.microserviciousuario.utils.Rol;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,19 +27,24 @@ public class DataLoader implements CommandLineRunner {
     private final UsuarioRepository usuarioRepo;
     private final UsuarioCuentaRepository usuarioCuentaRepo;
 
+    // 1. Declaramos el PasswordEncoder
+    private final PasswordEncoder passwordEncoder;
+
+    // 2. Lo inyectamos en el constructor
     public DataLoader(CuentaRepository cuentaRepo,
                       UsuarioRepository usuarioRepo,
-                      UsuarioCuentaRepository usuarioCuentaRepo) {
+                      UsuarioCuentaRepository usuarioCuentaRepo,
+                      PasswordEncoder passwordEncoder) { // <--- AQUI se inyecta
         this.cuentaRepo = cuentaRepo;
         this.usuarioRepo = usuarioRepo;
         this.usuarioCuentaRepo = usuarioCuentaRepo;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-
-        if (cuentaRepo.count() > 0) {
+        if (cuentaRepo.count() > 0) { // O valida usuarioRepo.count() si prefieres
             return;
         }
 
@@ -85,8 +91,14 @@ public class DataLoader implements CommandLineRunner {
                 usuario.setTelefono(u[5]);
                 usuario.setFechaRegistro(LocalDateTime.parse(u[6]));
                 usuario.setActivo(Boolean.parseBoolean(u[7]));
+
+                // Asumiendo que Rol es un Enum y coincide con el texto del CSV
                 usuario.setRol(Rol.valueOf(u[8]));
-                usuario.setPassword(u[9]);
+
+                // 3. ENCRIPTAMOS LA CONTRASEÑA ANTES DE GUARDAR
+                // Toma el "1234" del CSV y lo convierte en hash BCrypt
+                String passwordPlana = u[9];
+                usuario.setPassword(passwordEncoder.encode(passwordPlana)); // <--- CAMBIO CLAVE
 
                 usuarioRepo.save(usuario);
             }

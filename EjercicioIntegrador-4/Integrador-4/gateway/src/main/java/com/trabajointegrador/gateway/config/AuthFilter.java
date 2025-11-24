@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -15,10 +16,12 @@ import reactor.core.publisher.Mono;
 public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> {
 
     private final JwtUtils jwtUtils;
+    private final RestTemplate restTemplate;
 
-    public AuthFilter(JwtUtils jwtUtils) {
+    public AuthFilter(JwtUtils jwtUtils, RestTemplate restTemplate) {
         super(Config.class);
         this.jwtUtils = jwtUtils;
+        this.restTemplate = restTemplate;
     }
 
     @Override
@@ -40,24 +43,30 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
             // 3. Validar ROL (Si la ruta lo pide en el YAML)
             if (config.role != null) {
                 Claims claims = jwtUtils.getClaims(token);
-
                 Object rolesObject = claims.get("auth");
                 String rolesString = String.valueOf(rolesObject);
 
-                // NUEVO CÓDIGO DE DIAGNÓSTICO
-                System.out.println("---------------------------------");
-                System.out.println("YAML (config.role) requiere: " + config.role);
-                System.out.println("TOKEN (rolesString) lee: " + rolesString);
-                System.out.println("El Token contiene el rol requerido?: " + rolesString.contains(config.role));
-                System.out.println("---------------------------------");
-                // FIN DEL CÓDIGO DE DIAGNÓSTICO
-
-
-                // Si el rol requerido NO está en el token -> 403 FORBIDDEN
                 if (!rolesString.contains(config.role)) {
                     return onError(exchange, HttpStatus.FORBIDDEN);
                 }
+            }
 
+            // 4. Validar PREMIUM para rutas del chat
+            String path = exchange.getRequest().getPath().toString();
+            if (path.startsWith("/api/chat")) {
+                try {
+                    Claims claims = jwtUtils.getClaims(token);
+                    Long userId = claims.get("userId", Long.class);
+
+                    String url = "http://localhost:8081/api/usuarios/" + userId + "/tiene-premium";
+                    Boolean tienePremium = restTemplate.getForObject(url, Boolean.class);
+
+                    if (tienePremium == null || !tienePremium) {
+                        return onError(exchange, HttpStatus.FORBIDDEN);
+                    }
+                } catch (Exception e) {
+                    return onError(exchange, HttpStatus.INTERNAL_SERVER_ERROR);
+                }
             }
 
             return chain.filter(exchange);
