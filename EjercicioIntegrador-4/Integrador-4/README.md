@@ -70,10 +70,6 @@ La colección incluye:
 "¿Cuántos viajes he realizado este año?"
 ```
 
-```
-
-**Nota:** Solo usuarios autenticados con al menos una cuenta de tipo PREMIUM activa pueden acceder a este servicio.
-
 ---
 
 ## 📘 Notas generales  
