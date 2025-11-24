@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface viajeRepository extends JpaRepository<viaje, Long> {
     //Obtiene monopatines que tuvieron MÁS de 'cantidadMinima' viajes en un año.
-     @Query("""
+    @Query("""
     SELECT new org.example.microservicioviaje.DTO.monopatinviajeDTO(
         v.monopatinId, COUNT(v)
     )
@@ -77,7 +77,16 @@ public interface viajeRepository extends JpaRepository<viaje, Long> {
             @Param("mesInicio") int mesInicio,
             @Param("mesFin") int mesFin
     );
-    }
+
+    @Query(value = "SELECT * FROM viaje", nativeQuery = true)
+    List<Object[]> findAllViajes();
+
+    @Query(value = "SELECT * FROM viaje WHERE id_usuario = :idUsuario", nativeQuery = true)
+    List<Object[]> findAllByUsuario(@Param("idUsuario") Long idUsuario);
+
+}
+
+
 
 
 

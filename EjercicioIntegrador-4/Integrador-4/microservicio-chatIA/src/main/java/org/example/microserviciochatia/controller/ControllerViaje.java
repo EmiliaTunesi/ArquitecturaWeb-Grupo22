@@ -16,7 +16,7 @@ public class ControllerViaje {
     @Autowired
     private ServiceViaje serviceViaje;
 
-    @PostMapping(value = "/prompt", produces = "aplication/json")
+    @PostMapping(value = "/prompt", produces = "application/json")
     public ResponseEntity<?> procesarPrompt(@RequestBody String prompt) {
         try {
             return serviceViaje.gestionarPrompt(prompt);
@@ -24,5 +24,6 @@ public class ControllerViaje {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 }
 ////http://localhost:8080/api/ia/viaje/prompt

@@ -17,10 +17,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 public class ServiceViaje {
@@ -108,9 +110,9 @@ public class ServiceViaje {
                 if (sql.trim().regionMatches(true, 0, "SELECT", 0, 6)) {
                     @SuppressWarnings("unchecked")
                     List<Object[]> resultados = entityManager.createNativeQuery(sqlToExecute).getResultList();
-                    List<ViajeResponseDTO> dtoLista = convertirRowsAViajeDTO(resultados);
-                    return ResponseEntity.ok(new RespuestaApi<>(true, "Consulta SELECT ejecutada con éxito", dtoLista));
-                } else {//aca devuelvo los datos de la consulta-----------------------------------------------------------------------------
+                    List<ViajeResponseDTO> result = convertirRowsAViajeDTO(resultados);
+                    return ResponseEntity.ok(new RespuestaApi<>(true, "Consulta SELECT ejecutada con éxito", result));
+                } else {
                     int rows = entityManager.createNativeQuery(sqlToExecute).executeUpdate();
                     data = rows; // cantidad de filas afectadas
                     return ResponseEntity.ok(new RespuestaApi<>(true, "Sentencia DML ejecutada con éxito", data));
@@ -164,19 +166,22 @@ public class ServiceViaje {
                 .map(r -> {
                     ViajeResponseDTO dto = new ViajeResponseDTO();
 
-                    dto.setId(((Number) r[0]).longValue());
-                    dto.setIdUsuario(((Number) r[1]).longValue());
-                    dto.setIdCuenta(((Number) r[2]).longValue());
-                    dto.setMonopatinId(((Number) r[3]).longValue());
-                    dto.setFechaInicio((LocalDateTime) r[4]);
-                    dto.setFechaFin((LocalDateTime) r[5]);
-                    dto.setParadaInicioId(((Number) r[6]).longValue());
-                    dto.setParadaFinId(r[7] != null ? ((Number) r[7]).longValue() : null);
-                    dto.setKmRecorridos(r[8] != null ? (BigDecimal) r[8] : null);
-                    dto.setTarifaId(r[9] != null ? ((Number) r[9]).longValue() : null);
-                    dto.setTiempoTotalMinutos(r[10] != null ? ((Number) r[10]).intValue() : null);
-                    dto.setPausaTotalMinutos(r[11] != null ? ((Number) r[11]).intValue() : null);
-                    dto.setCosto_total(r[8] != null ? (BigDecimal) r[8] : null);
+                    dto.setCostoTotal(null);
+                    dto.setKmRecorridos(r[1] != null ? (BigDecimal) r[1] : null);
+                    dto.setPausaTotalMinutos(r[2] != null ? ((Number) r[2]).intValue() : null);
+                    dto.setTiempoTotalMinutos(r[3] != null ? ((Number) r[3]).intValue() : null);
+
+                    dto.setFechaFin(r[4] != null ? ((Timestamp) r[4]).toLocalDateTime() : null);
+                    dto.setFechaInicio(r[5] != null ? ((Timestamp) r[5]).toLocalDateTime() : null);
+
+                    dto.setId(r[6] != null ? ((Number) r[6]).longValue() : null);
+                    dto.setIdCuenta(r[7] != null ? ((Number) r[7]).longValue() : null);
+                    dto.setIdUsuario(r[8] != null ? ((Number) r[8]).longValue() : null);
+                    dto.setMonopatinId(r[9] != null ? ((Number) r[9]).longValue() : null);
+
+                    dto.setParadaFinId(r[10] != null ? ((Number) r[10]).longValue() : null);
+                    dto.setParadaInicioId(r[11] != null ? ((Number) r[11]).longValue() : null);
+                    dto.setTarifaId(r[12] != null ? ((Number) r[12]).longValue() : null);
 
                     return dto;
                 })
